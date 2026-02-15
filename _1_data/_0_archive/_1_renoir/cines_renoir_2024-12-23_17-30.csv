@@ -1,0 +1,458 @@
+Pelicula,Director,Duración,Sala,Horario,Fecha,Cine
+ANORA,Sean Baker,139,10,17:50,2024-12-23,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-23,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-23,Renoir Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-23,Renoir Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-23,Renoir Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-23,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-23,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-23,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:15,2024-12-23,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:30,2024-12-23,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-23,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-23,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,20:35,2024-12-23,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-23,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,03,20:35,2024-12-23,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-23,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-23,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-23,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-23,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,22:30,2024-12-23,Renoir Princesa
+LA ESTRELLA AZUL,Javier Macipe,128,08,22:15,2024-12-23,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,08,20:10,2024-12-23,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,20:10,2024-12-23,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,22:00,2024-12-23,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-23,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-23,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,20:15,2024-12-23,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,22:30,2024-12-23,Renoir Princesa
+PARTHENOPE,Paolo Sorrentino,137,11,19:00,2024-12-23,Renoir Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-23,Renoir Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-23,Renoir Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-23,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-23,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-23,Renoir Princesa
+WICKED,Jon M. Chu,160,11,21:35,2024-12-23,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-23,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-23,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:00,2024-12-23,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-23,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-24,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-24,Renoir Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-24,Renoir Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-24,Renoir Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-24,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-24,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-24,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-24,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-24,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-24,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-24,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-24,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-24,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-24,Renoir Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-24,Renoir Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-24,Renoir Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-24,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-24,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-24,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-24,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-25,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-25,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-25,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-25,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-25,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-25,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-25,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-25,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-25,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-25,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-25,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-25,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-25,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-25,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-25,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-25,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-25,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-25,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-25,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-25,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-25,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-25,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-25,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-25,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-25,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-25,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-25,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-25,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-26,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-26,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-26,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-26,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-26,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-26,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-26,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-26,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-26,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-26,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-26,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-26,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-26,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-26,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-26,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-26,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-26,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-26,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-26,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-26,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-26,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-26,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-26,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-26,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-26,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-26,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-26,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-26,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-26,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-26,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-26,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-26,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-26,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-26,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-26,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-27,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-27,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-27,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-27,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-27,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-27,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-27,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-27,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-27,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-27,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-27,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-27,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-27,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-27,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-27,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-27,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-27,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-27,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-27,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-27,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-27,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-27,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-27,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-27,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-27,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-27,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-27,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-27,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-27,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-27,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-27,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-27,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-27,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-27,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-27,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-28,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-28,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-28,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-28,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-28,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-28,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-28,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-28,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-28,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-28,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-28,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-28,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-28,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-28,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-28,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-28,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-28,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-28,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-28,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-28,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-28,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-28,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-28,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-28,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-28,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-28,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-28,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-28,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-28,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-28,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-28,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-28,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-28,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-28,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-28,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-29,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-29,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-29,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-29,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-29,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-29,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-29,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-29,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-29,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-29,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-29,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-29,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-29,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-29,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-29,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-29,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-29,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-29,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-29,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-29,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-29,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-29,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-29,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-29,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-29,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-29,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-29,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-29,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-29,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-29,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-29,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-29,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-29,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-29,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-29,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-29,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-29,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-29,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-29,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-30,Renoir Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-30,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-30,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-30,Renoir Princesa
+BIRD,Andrea Arnold,118,02,22:35,2024-12-30,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-30,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-30,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:30,2024-12-30,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,07,22:30,2024-12-30,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-30,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-30,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,20:35,2024-12-30,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-30,Renoir Princesa
+GLADIATOR II,Ridley Scott,147,08,20:35,2024-12-30,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-30,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-30,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-30,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-30,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,09,22:45,2024-12-30,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-30,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:05,2024-12-30,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-30,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,22:10,2024-12-30,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-30,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-30,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-30,Renoir Princesa
+NOSFERATU,Robert Eggers,132,01,19:00,2024-12-30,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,20:15,2024-12-30,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,22:20,2024-12-30,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-30,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-30,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,20:25,2024-12-30,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,22:45,2024-12-30,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-30,Renoir Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-30,Renoir Princesa
+WICKED,Jon M. Chu,160,01,21:35,2024-12-30,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-30,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-30,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,20:35,2024-12-30,Renoir Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-31,Renoir Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-31,Renoir Princesa
+BIRD,Andrea Arnold,118,08,16:00,2024-12-31,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,16:00,2024-12-31,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,18:15,2024-12-31,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,01,16:00,2024-12-31,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,18:10,2024-12-31,Renoir Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-31,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,16:00,2024-12-31,Renoir Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-31,Renoir Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,16:00,2024-12-31,Renoir Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,18:00,2024-12-31,Renoir Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,08,18:15,2024-12-31,Renoir Princesa
+NOSFERATU,Robert Eggers,132,05,16:00,2024-12-31,Renoir Princesa
+NOSFERATU,Robert Eggers,132,04,17:55,2024-12-31,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,04,16:00,2024-12-31,Renoir Princesa
+"OH, CANADA",Paul Schrader,94,05,18:25,2024-12-31,Renoir Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-31,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,16:00,2024-12-31,Renoir Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:05,2024-12-31,Renoir Princesa
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:10,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:20,2024-12-23,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-23,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:25,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,20:00,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:00,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-23,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-23,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-23,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,20:25,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-24,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-24,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-24,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-24,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-24,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-24,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-24,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-24,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-24,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-24,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-25,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-25,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-25,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-25,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-25,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-25,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-25,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-25,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-25,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-25,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-25,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-25,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-25,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-25,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-25,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-26,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-26,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-26,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-26,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-26,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-26,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-26,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-26,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-27,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-27,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-27,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-27,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-27,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-27,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-27,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-27,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-28,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-28,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-28,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-28,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-28,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-28,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-28,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-28,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-29,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-29,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-29,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-29,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-29,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-29,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-29,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-29,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-29,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-29,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-29,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-29,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-29,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-29,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-29,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-29,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-29,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-29,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-29,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-29,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-30,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-30,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:35,2024-12-30,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:40,2024-12-30,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-30,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-30,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:20,2024-12-30,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:30,2024-12-30,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-30,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,04,20:35,2024-12-30,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:40,2024-12-30,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-30,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-30,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-30,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-30,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-30,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-30,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-30,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,03,20:00,2024-12-30,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:30,2024-12-30,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-31,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,03,17:50,2024-12-31,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2024-12-31,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:10,2024-12-31,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:00,2024-12-31,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-31,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-31,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:35,2024-12-31,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,16:00,2024-12-31,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,01,18:00,2024-12-31,Renoir Plaza de España

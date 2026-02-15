@@ -1,0 +1,384 @@
+Pelicula,Director,Duración,Sala,Horario,Fecha,Cine
+ANORA,Sean Baker,139,07,16:00,2024-12-18,Cines Princesa
+ANORA,Sean Baker,139,11,19:50,2024-12-18,Cines Princesa
+ANORA,Sean Baker,139,09,21:40,2024-12-18,Cines Princesa
+ANSELM,Win Wenders,94,11,18:00,2024-12-18,Cines Princesa
+BIRD,Andrea Arnold,118,02,18:05,2024-12-18,Cines Princesa
+BIRD,Andrea Arnold,118,02,20:25,2024-12-18,Cines Princesa
+BIRD,Andrea Arnold,118,03,22:35,2024-12-18,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,09,16:00,2024-12-18,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,05,18:00,2024-12-18,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,09,19:00,2024-12-18,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,05,20:30,2024-12-18,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,22:25,2024-12-18,Cines Princesa
+GLADIATOR II,Ridley Scott,147,10,16:00,2024-12-18,Cines Princesa
+GLADIATOR II,Ridley Scott,147,10,18:50,2024-12-18,Cines Princesa
+GLADIATOR II,Ridley Scott,147,06,22:00,2024-12-18,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-18,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,18:35,2024-12-18,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,20:35,2024-12-18,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,22:35,2024-12-18,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,16:00,2024-12-18,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,18:10,2024-12-18,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,20:20,2024-12-18,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,22:30,2024-12-18,Cines Princesa
+LA FIANZA,Gonzalo Perdomo - Tafur,92,08,16:00,2024-12-18,Cines Princesa
+LA FIANZA,Gonzalo Perdomo - Tafur,92,08,17:50,2024-12-18,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,02,16:00,2024-12-18,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:30,2024-12-18,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,16:00,2024-12-18,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,18:00,2024-12-18,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,08,22:00,2024-12-18,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,05,16:00,2024-12-18,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,01,22:35,2024-12-18,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,08,19:40,2024-12-18,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-18,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-18,Cines Princesa
+WICKED,Jon M. Chu,160,10,21:35,2024-12-18,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,16:00,2024-12-18,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:35,2024-12-18,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:35,2024-12-18,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-18,Cines Princesa
+ANORA,Sean Baker,139,07,16:00,2024-12-19,Cines Princesa
+ANORA,Sean Baker,139,11,19:50,2024-12-19,Cines Princesa
+ANSELM,Win Wenders,94,11,18:00,2024-12-19,Cines Princesa
+BIRD,Andrea Arnold,118,02,18:05,2024-12-19,Cines Princesa
+BIRD,Andrea Arnold,118,02,20:25,2024-12-19,Cines Princesa
+BIRD,Andrea Arnold,118,03,22:35,2024-12-19,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,09,16:00,2024-12-19,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,05,18:00,2024-12-19,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,05,20:30,2024-12-19,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,22:25,2024-12-19,Cines Princesa
+GLADIATOR II,Ridley Scott,147,10,16:00,2024-12-19,Cines Princesa
+GLADIATOR II,Ridley Scott,147,10,18:50,2024-12-19,Cines Princesa
+GLADIATOR II,Ridley Scott,147,06,22:00,2024-12-19,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,11,16:00,2024-12-19,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,18:35,2024-12-19,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,20:35,2024-12-19,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,07,22:35,2024-12-19,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,16:00,2024-12-19,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,18:10,2024-12-19,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,20:20,2024-12-19,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,04,22:30,2024-12-19,Cines Princesa
+LA FIANZA,Gonzalo Perdomo - Tafur,92,08,16:00,2024-12-19,Cines Princesa
+LA FIANZA,Gonzalo Perdomo - Tafur,92,08,17:50,2024-12-19,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,02,16:00,2024-12-19,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,03,20:30,2024-12-19,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,03,16:00,2024-12-19,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,18:00,2024-12-19,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,08,22:00,2024-12-19,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,05,16:00,2024-12-19,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,01,22:35,2024-12-19,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,08,19:40,2024-12-19,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-19,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-19,Cines Princesa
+WICKED,Jon M. Chu,160,10,21:35,2024-12-19,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,16:00,2024-12-19,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,03,18:35,2024-12-19,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:35,2024-12-19,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-19,Cines Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-20,Cines Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-20,Cines Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-20,Cines Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-20,Cines Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-20,Cines Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-20,Cines Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-20,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-20,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,20:15,2024-12-20,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,22:30,2024-12-20,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-20,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-20,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,19:00,2024-12-20,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,20:35,2024-12-20,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-20,Cines Princesa
+GLADIATOR II,Ridley Scott,147,03,20:35,2024-12-20,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-20,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-20,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-20,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-20,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,22:30,2024-12-20,Cines Princesa
+LA ESTRELLA AZUL,Javier Macipe,128,08,22:15,2024-12-20,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,08,20:10,2024-12-20,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,20:10,2024-12-20,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,22:00,2024-12-20,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-20,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-20,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,20:15,2024-12-20,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,22:30,2024-12-20,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-20,Cines Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-20,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-20,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-20,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-20,Cines Princesa
+WICKED,Jon M. Chu,160,11,21:35,2024-12-20,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-20,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-20,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:00,2024-12-20,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-20,Cines Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-21,Cines Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-21,Cines Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-21,Cines Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-21,Cines Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-21,Cines Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-21,Cines Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-21,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-21,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,20:15,2024-12-21,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,22:30,2024-12-21,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-21,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-21,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,19:00,2024-12-21,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,20:35,2024-12-21,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-21,Cines Princesa
+GLADIATOR II,Ridley Scott,147,03,20:35,2024-12-21,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-21,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-21,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-21,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-21,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,22:30,2024-12-21,Cines Princesa
+LA ESTRELLA AZUL,Javier Macipe,128,08,22:15,2024-12-21,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,08,20:10,2024-12-21,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,20:10,2024-12-21,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,22:00,2024-12-21,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-21,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-21,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,20:15,2024-12-21,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,22:30,2024-12-21,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-21,Cines Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-21,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-21,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-21,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-21,Cines Princesa
+WICKED,Jon M. Chu,160,11,21:35,2024-12-21,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-21,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-21,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:00,2024-12-21,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-21,Cines Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-22,Cines Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-22,Cines Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-22,Cines Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-22,Cines Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-22,Cines Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-22,Cines Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-22,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-22,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,20:15,2024-12-22,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,22:30,2024-12-22,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-22,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-22,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,19:00,2024-12-22,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,20:35,2024-12-22,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-22,Cines Princesa
+GLADIATOR II,Ridley Scott,147,03,20:35,2024-12-22,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-22,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-22,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-22,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-22,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,22:30,2024-12-22,Cines Princesa
+LA ESTRELLA AZUL,Javier Macipe,128,08,22:15,2024-12-22,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,08,20:10,2024-12-22,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,20:10,2024-12-22,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,22:00,2024-12-22,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-22,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-22,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,20:15,2024-12-22,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,22:30,2024-12-22,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-22,Cines Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-22,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-22,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-22,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-22,Cines Princesa
+WICKED,Jon M. Chu,160,11,21:35,2024-12-22,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-22,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-22,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:00,2024-12-22,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-22,Cines Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-23,Cines Princesa
+ANORA,Sean Baker,139,10,20:25,2024-12-23,Cines Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-23,Cines Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-23,Cines Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-23,Cines Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-23,Cines Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-23,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-23,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,20:15,2024-12-23,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,22:30,2024-12-23,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-23,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-23,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,20:35,2024-12-23,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,06,22:00,2024-12-23,Cines Princesa
+GLADIATOR II,Ridley Scott,147,03,20:35,2024-12-23,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-23,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-23,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-23,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,20:20,2024-12-23,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,22:30,2024-12-23,Cines Princesa
+LA ESTRELLA AZUL,Javier Macipe,128,08,22:15,2024-12-23,Cines Princesa
+LA HABITACIÓN DE AL LADO (THE ROOM NEXT DOOR),Pedro Almodóvar,106,08,20:10,2024-12-23,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,02,20:10,2024-12-23,Cines Princesa
+LA SUSTANCIA,Coralie Fargeat,141,01,22:00,2024-12-23,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-23,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-23,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,20:15,2024-12-23,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,22:30,2024-12-23,Cines Princesa
+PARTHENOPE,Paolo Sorrentino,137,11,19:00,2024-12-23,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-23,Cines Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-23,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-23,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-23,Cines Princesa
+WICKED,Jon M. Chu,160,06,19:00,2024-12-23,Cines Princesa
+WICKED,Jon M. Chu,160,11,21:35,2024-12-23,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-23,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-23,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,01,20:00,2024-12-23,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,22:45,2024-12-23,Cines Princesa
+ANORA,Sean Baker,139,10,17:50,2024-12-24,Cines Princesa
+ANSELM,Win Wenders,94,10,16:00,2024-12-24,Cines Princesa
+BIRD,Andrea Arnold,118,03,16:00,2024-12-24,Cines Princesa
+BIRD,Andrea Arnold,118,03,18:15,2024-12-24,Cines Princesa
+CASA EN LLAMAS,Dani De La Orden,110,08,16:00,2024-12-24,Cines Princesa
+CÓNCLAVE,Edward Berger,120,04,16:00,2024-12-24,Cines Princesa
+CÓNCLAVE,Edward Berger,120,09,18:00,2024-12-24,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,11,16:00,2024-12-24,Cines Princesa
+EMILIA PÉREZ,Jacques Audiard,132,04,18:10,2024-12-24,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,16:00,2024-12-24,Cines Princesa
+HERE (AQUÍ),Robert Zemeckis,103,01,18:00,2024-12-24,Cines Princesa
+JURADO Nº 2,Clint Eastwood,117,07,18:10,2024-12-24,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,02,16:00,2024-12-24,Cines Princesa
+MUFASA: EL REY LEÓN,Barry Jenkins,120,05,18:00,2024-12-24,Cines Princesa
+POR DONDE PASA EL SILENCIO,Sandra Romero,99,09,16:00,2024-12-24,Cines Princesa
+SEGUNDO PREMIO,"Isaki Lacuesta, Pol Rodríguez",110,08,18:05,2024-12-24,Cines Princesa
+SOY NEVENKA,Icíar Bollaín,112,07,16:00,2024-12-24,Cines Princesa
+WICKED,Jon M. Chu,160,06,16:00,2024-12-24,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,05,16:00,2024-12-24,Cines Princesa
+¿ES EL ENEMIGO?,Alexis Morante,99,02,18:15,2024-12-24,Cines Princesa
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-18,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-18,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-18,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-18,Renoir Plaza de España
+EL 47,Marcel Barrena,110,04,18:15,2024-12-18,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:05,2024-12-18,Renoir Plaza de España
+EL BAÑO DEL DIABLO,"Veronika Franz, Severin Fiala",121,05,22:15,2024-12-18,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-18,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,20:20,2024-12-18,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:40,2024-12-18,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,16:00,2024-12-18,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,18:15,2024-12-18,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,20:30,2024-12-18,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,22:45,2024-12-18,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,18:05,2024-12-18,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,02,16:00,2024-12-18,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,02,18:00,2024-12-18,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,02,20:00,2024-12-18,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,02,22:00,2024-12-18,Renoir Plaza de España
+RAQA,Gerardo Herrero,106,05,16:00,2024-12-18,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,02,16:00,2024-12-19,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,02,18:05,2024-12-19,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,02,20:10,2024-12-19,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,02,22:15,2024-12-19,Renoir Plaza de España
+EL 47,Marcel Barrena,110,04,18:15,2024-12-19,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:05,2024-12-19,Renoir Plaza de España
+EL BAÑO DEL DIABLO,"Veronika Franz, Severin Fiala",121,05,22:15,2024-12-19,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-19,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,20:20,2024-12-19,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:40,2024-12-19,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,01,20:15,2024-12-19,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,16:00,2024-12-19,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,18:15,2024-12-19,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,20:30,2024-12-19,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,22:45,2024-12-19,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,18:05,2024-12-19,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,01,16:00,2024-12-19,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,01,18:00,2024-12-19,Renoir Plaza de España
+RAQA,Gerardo Herrero,106,05,16:00,2024-12-19,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-20,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-20,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-20,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-20,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-20,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:10,2024-12-20,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:20,2024-12-20,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-20,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:25,2024-12-20,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-20,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-20,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,20:00,2024-12-20,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:00,2024-12-20,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-20,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-20,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-20,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-20,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-20,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-20,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,20:25,2024-12-20,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-21,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-21,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-21,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-21,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-21,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:10,2024-12-21,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:20,2024-12-21,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-21,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:25,2024-12-21,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-21,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-21,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,20:00,2024-12-21,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:00,2024-12-21,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-21,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-21,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-21,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-21,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-21,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-21,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,20:25,2024-12-21,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-22,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-22,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-22,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-22,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-22,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:10,2024-12-22,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:20,2024-12-22,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-22,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:25,2024-12-22,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-22,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-22,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,20:00,2024-12-22,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:00,2024-12-22,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-22,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-22,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-22,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-22,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-22,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-22,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,20:25,2024-12-22,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,20:10,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,22:15,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:10,2024-12-23,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,22:20,2024-12-23,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-23,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,22:25,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,20:00,2024-12-23,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,22:00,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,20:30,2024-12-23,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,22:45,2024-12-23,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-23,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-23,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,20:25,2024-12-23,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,16:00,2024-12-24,Renoir Plaza de España
+CUANDO CAE EL OTOÑO,François Ozon,103,01,18:05,2024-12-24,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:00,2024-12-24,Renoir Plaza de España
+EL MINISTRO DE PROPAGANDA,Joachim A. Lang,123,04,16:00,2024-12-24,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,16:10,2024-12-24,Renoir Plaza de España
+LA GUITARRA FLAMENCA DE YERAI CORTÉS,C. Tangana ( Antón Álvarez),95,03,18:05,2024-12-24,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,16:00,2024-12-24,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,02,18:15,2024-12-24,Renoir Plaza de España
+LOS DESTELLOS,Pilar Palomero,100,05,16:00,2024-12-24,Renoir Plaza de España
+MARCO,"Jon Garaño, Aitor Arregi",101,04,18:25,2024-12-24,Renoir Plaza de España

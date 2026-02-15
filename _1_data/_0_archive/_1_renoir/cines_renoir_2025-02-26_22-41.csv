@@ -1,0 +1,530 @@
+Pelicula,Director,Duración,Sala,Horario,Fecha,Cine
+A REAL PAIN,Jesse Eisenberg,89,05,16:00,2025-02-26,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,06,18:30,2025-02-26,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,06,20:15,2025-02-26,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,05,22:45,2025-02-26,Renoir Princesa
+ANORA,Sean Baker,139,08,19:40,2025-02-26,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,06,16:00,2025-02-26,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,05,17:45,2025-02-26,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,05,20:15,2025-02-26,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,06,22:00,2025-02-26,Renoir Princesa
+BODEGÓN CON FANTASMAS,Enrique Buleo,87,01,16:00,2025-02-26,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,07,16:00,2025-02-26,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,17:30,2025-02-26,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,19:50,2025-02-26,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,22:15,2025-02-26,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,01,17:45,2025-02-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,16:00,2025-02-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,18:15,2025-02-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,20:30,2025-02-26,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,22:45,2025-02-26,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,17:50,2025-02-26,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,20:00,2025-02-26,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,22:15,2025-02-26,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,08,22:15,2025-02-26,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,20:10,2025-02-26,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,22:25,2025-02-26,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,10,16:00,2025-02-26,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,18:15,2025-02-26,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:30,2025-02-26,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,10,22:10,2025-02-26,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,08,17:50,2025-02-26,Renoir Princesa
+MIOCARDIO,José Manuel Carrasco,77,11,16:00,2025-02-26,Renoir Princesa
+SEPTIEMBRE 5,Tim Fehlbaum,94,08,16:00,2025-02-26,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,09,16:00,2025-02-26,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,04,17:00,2025-02-26,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,09,19:50,2025-02-26,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,04,20:50,2025-02-26,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,16:00,2025-02-26,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,10,18:20,2025-02-26,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,10,20:15,2025-02-26,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,07,22:45,2025-02-26,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,05,16:00,2025-02-27,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,06,18:30,2025-02-27,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,06,20:15,2025-02-27,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,05,22:45,2025-02-27,Renoir Princesa
+ANORA,Sean Baker,139,08,19:40,2025-02-27,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,06,16:00,2025-02-27,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,05,17:45,2025-02-27,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,05,20:15,2025-02-27,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,06,22:00,2025-02-27,Renoir Princesa
+BODEGÓN CON FANTASMAS,Enrique Buleo,87,01,16:00,2025-02-27,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,07,16:00,2025-02-27,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,17:30,2025-02-27,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,19:50,2025-02-27,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,11,22:15,2025-02-27,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,01,17:45,2025-02-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,16:00,2025-02-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,18:15,2025-02-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,20:30,2025-02-27,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,02,22:45,2025-02-27,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,17:50,2025-02-27,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,20:00,2025-02-27,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,03,22:15,2025-02-27,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,08,22:15,2025-02-27,Renoir Princesa
+LA MARSELLESA DE LOS BORRACHOS,Pablo Gil Rituerto,96,07,20:30,2025-02-27,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,20:10,2025-02-27,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,22:25,2025-02-27,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,10,16:00,2025-02-27,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,18:15,2025-02-27,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,10,22:10,2025-02-27,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,08,17:50,2025-02-27,Renoir Princesa
+MIOCARDIO,José Manuel Carrasco,77,11,16:00,2025-02-27,Renoir Princesa
+MUCHA MIERDA,Alba Sotorra,82,09,20:15,2025-02-27,Renoir Princesa
+SEPTIEMBRE 5,Tim Fehlbaum,94,08,16:00,2025-02-27,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,09,16:00,2025-02-27,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,04,17:00,2025-02-27,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,04,20:50,2025-02-27,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,16:00,2025-02-27,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,10,18:20,2025-02-27,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,10,20:15,2025-02-27,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,07,22:45,2025-02-27,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-02-28,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-02-28,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-02-28,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-02-28,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-02-28,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-02-28,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-02-28,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-02-28,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-02-28,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-02-28,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-02-28,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-02-28,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-02-28,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-02-28,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-02-28,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-02-28,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-02-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-02-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-02-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-02-28,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-02-28,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-02-28,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-02-28,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-02-28,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-02-28,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-02-28,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:45,2025-02-28,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-02-28,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-02-28,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-02-28,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-02-28,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-02-28,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-02-28,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-02-28,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-02-28,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-02-28,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-02-28,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-02-28,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-02-28,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-01,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-01,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-01,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-01,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-01,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-01,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-01,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-01,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-01,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-01,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-01,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-01,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-01,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-01,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-01,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-01,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-01,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-01,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-01,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-03-01,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-01,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-01,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-03-01,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-01,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-01,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-01,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:45,2025-03-01,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-01,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-01,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-01,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-01,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-01,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-01,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-01,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-01,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-01,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-01,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-01,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-01,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-02,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-02,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-02,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-02,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-02,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-02,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-02,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-02,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-02,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-02,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-02,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-02,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-02,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-02,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-02,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-02,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-02,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-02,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-02,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-03-02,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-02,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-02,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-03-02,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-02,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-02,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-02,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-02,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-02,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-02,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-02,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-02,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-02,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-02,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-02,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-02,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-02,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-02,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-02,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-03,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-03,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-03,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-03,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-03,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-03,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-03,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-03,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-03,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-03,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-03,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-03,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-03,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-03,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-03,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-03,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-03,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-03,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-03,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-03-03,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-03,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-03,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-03-03,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-03,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-03,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-03,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:40,2025-03-03,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-03,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-03,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-03,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-03,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-03,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-03,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-03,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-03,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-03,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-03,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-03,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-03,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-04,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-04,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-04,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-04,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-04,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-04,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-04,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-04,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-04,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-04,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-04,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-04,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-04,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-04,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-04,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-04,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-04,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-04,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-04,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-03-04,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-04,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-04,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-03-04,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-04,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-04,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-04,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:40,2025-03-04,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-04,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-04,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-04,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-04,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-04,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-04,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-04,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-04,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-04,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-04,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-04,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-04,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-05,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-05,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-05,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-05,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-05,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-05,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-05,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-05,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-05,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-05,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-05,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-05,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-05,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-05,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-05,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-05,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-05,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-05,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-05,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,20:05,2025-03-05,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-05,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-05,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,20:30,2025-03-05,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-05,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-05,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-05,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:40,2025-03-05,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-05,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-05,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-05,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-05,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-05,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-05,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-05,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-05,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-05,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-05,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-05,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-05,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,02,16:00,2025-03-06,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,17:50,2025-03-06,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,05,20:25,2025-03-06,Renoir Princesa
+A COMPLETE UNKNOWN,James Mangold,141,11,22:00,2025-03-06,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,16:00,2025-03-06,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,18:30,2025-03-06,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,10,20:15,2025-03-06,Renoir Princesa
+A REAL PAIN,Jesse Eisenberg,89,04,22:45,2025-03-06,Renoir Princesa
+ANORA,Sean Baker,139,02,18:30,2025-03-06,Renoir Princesa
+ANORA,Sean Baker,139,02,21:00,2025-03-06,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,16:00,2025-03-06,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,17:45,2025-03-06,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,04,20:15,2025-03-06,Renoir Princesa
+AÚN ESTOY AQUÍ,Walter Salles,138,10,22:00,2025-03-06,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,18:15,2025-03-06,Renoir Princesa
+BRIDGET JONES: LOCA POR ÉL,Michael Morris,130,03,22:20,2025-03-06,Renoir Princesa
+BYE BYE TIBERIAS [DOCS DEL MES],Lina Soualem,83,08,20:30,2025-03-06,Renoir Princesa
+CÓMO HACERSE MILLONARIO ANTES DE QUE MUERA LA ABUELA,Pat Boonnitipat,126,08,18:10,2025-03-06,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,03,16:00,2025-03-06,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,17:50,2025-03-06,Renoir Princesa
+CÓNCLAVE,Edward Berger,120,09,22:20,2025-03-06,Renoir Princesa
+DANIELA FOREVER,Nacho Vigalondo,118,08,16:00,2025-03-06,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,11,16:00,2025-03-06,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,07,18:15,2025-03-06,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,01,20:35,2025-03-06,Renoir Princesa
+EL SECRETO DEL ORFEBRE,Olga Osorio,99,08,22:40,2025-03-06,Renoir Princesa
+EMILIA PÉREZ,Jacques Audiard,132,07,22:30,2025-03-06,Renoir Princesa
+LA TUTORÍA,Halfdan Ullmann Tøndel,117,01,16:00,2025-03-06,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,16:00,2025-03-06,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,18:15,2025-03-06,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,07,20:10,2025-03-06,Renoir Princesa
+MARÍA CALLAS,Pablo Larraín,122,01,22:30,2025-03-06,Renoir Princesa
+MEMORIAS DE UN CARACOL,Adam Elliott,95,05,16:00,2025-03-06,Renoir Princesa
+MIOCARDIO,José Manuel Carrasco,77,09,20:30,2025-03-06,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,16:00,2025-03-06,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,11,18:00,2025-03-06,Renoir Princesa
+THE BRUTALIST,Brady Corbet,214,06,19:50,2025-03-06,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,09,16:00,2025-03-06,Renoir Princesa
+THE MONKEY,Osgood Perkins,95,03,20:30,2025-03-06,Renoir Princesa
+EL 47,Marcel Barrena,110,05,16:00,2025-02-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:15,2025-02-26,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-02-26,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-02-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,16:00,2025-02-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,18:15,2025-02-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,20:30,2025-02-26,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,22:45,2025-02-26,Renoir Plaza de España
+LA SEMILLA DE LA HIGUERA SAGRADA,Mohammad Rasoulof,166,05,20:25,2025-02-26,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,16:00,2025-02-26,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,18:15,2025-02-26,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,20:30,2025-02-26,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,22:45,2025-02-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-02-26,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-02-26,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,16:00,2025-02-26,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,18:15,2025-02-26,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,20:30,2025-02-26,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,22:45,2025-02-26,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-02-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,18:15,2025-02-27,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-02-27,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-02-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,16:00,2025-02-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,18:15,2025-02-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,20:30,2025-02-27,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,22:45,2025-02-27,Renoir Plaza de España
+LA SEMILLA DE LA HIGUERA SAGRADA,Mohammad Rasoulof,166,05,20:25,2025-02-27,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,16:00,2025-02-27,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,18:15,2025-02-27,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,20:30,2025-02-27,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,02,22:45,2025-02-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-02-27,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-02-27,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,16:00,2025-02-27,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,18:15,2025-02-27,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,20:30,2025-02-27,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,01,22:45,2025-02-27,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-02-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-02-28,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-02-28,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-02-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-02-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-02-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-02-28,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-02-28,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-02-28,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-02-28,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-02-28,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-02-28,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-02-28,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-02-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-02-28,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-02-28,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-02-28,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-02-28,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-02-28,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-02-28,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-01,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-01,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-01,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-01,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-03-01,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-03-01,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-03-01,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-03-01,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-01,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-01,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-03-01,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-03-01,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-03-01,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-03-01,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-01,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-01,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-01,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-01,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-01,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-01,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-02,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-02,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-02,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-02,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-03-02,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-03-02,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-03-02,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-03-02,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-02,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-02,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-03-02,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-03-02,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-03-02,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-03-02,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-02,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-02,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-02,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-02,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-02,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-02,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-03,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-03,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-03,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-03,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-03-03,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-03-03,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-03-03,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-03-03,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-03,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-03,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-03-03,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-03-03,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-03-03,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-03-03,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-03,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-03,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-03,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-03,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-03,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-03,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-04,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-04,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-04,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-04,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-03-04,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-03-04,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-03-04,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-03-04,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-04,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-04,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-03-04,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-03-04,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-03-04,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-03-04,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-04,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-04,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-04,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-04,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-04,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-04,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-05,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-05,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-05,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-05,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,16:00,2025-03-05,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,18:15,2025-03-05,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,20:30,2025-03-05,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,01,22:45,2025-03-05,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-05,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-05,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,16:05,2025-03-05,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,18:00,2025-03-05,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,20:00,2025-03-05,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,03,22:00,2025-03-05,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-05,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-05,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-05,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-05,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-05,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-05,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,16:00,2025-03-06,Renoir Plaza de España
+EL 47,Marcel Barrena,110,05,20:25,2025-03-06,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,16:10,2025-03-06,Renoir Plaza de España
+"FLOW, UN MUNDO QUE SALVAR","Gints Zilbalodis, Gints Zilbalodis",85,04,18:00,2025-03-06,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,16:00,2025-03-06,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,18:15,2025-03-06,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,20:30,2025-03-06,Renoir Plaza de España
+LA INFILTRADA,Arantxa Echevarría,118,03,22:45,2025-03-06,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,18:10,2025-03-06,Renoir Plaza de España
+LA ÚLTIMA REINA,Karim Aïnouz,120,05,22:35,2025-03-06,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,01,16:05,2025-03-06,Renoir Plaza de España
+MI ÚNICA FAMILIA (HARD TRUTHS),Mike Leigh,97,01,18:00,2025-03-06,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,19:50,2025-03-06,Renoir Plaza de España
+PARTHENOPE,Paolo Sorrentino,137,04,22:25,2025-03-06,Renoir Plaza de España
+TARDES DE SOLEDAD [PROYECTO VIRIDIANA],Albert Serra,126,01,20:15,2025-03-06,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,16:00,2025-03-06,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,18:15,2025-03-06,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,20:30,2025-03-06,Renoir Plaza de España
+VERMIGLIO,Maura Delpero,119,02,22:45,2025-03-06,Renoir Plaza de España
