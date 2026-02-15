@@ -4,12 +4,14 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime, timedelta
+from urllib.parse import urljoin
 
 class CinesRenoirScraper:
     def __init__(self, base_urls, days_in_advance=10):
         self.base_urls = base_urls
         self.days_in_advance = days_in_advance
         self.soup = None
+        self.current_page_url = None
         self.data = []
 
     def fetch_page(self, url, date):
@@ -18,8 +20,33 @@ class CinesRenoirScraper:
         response = requests.get(full_url)
         if response.status_code == 200:
             self.soup = BeautifulSoup(response.content, 'html.parser')
+            self.current_page_url = response.url
         else:
             raise Exception(f"Failed to fetch page for {date}: {response.status_code}")
+
+    def _extract_poster_url(self, block):
+        """Extracts and normalizes the movie poster URL from the movie block."""
+        poster_container = block.select_one('.row > .col-3')
+        if not poster_container:
+            return None
+
+        # Renoir exposes the full-size image in an <a> wrapping <img>.
+        poster_candidate = None
+        for anchor in poster_container.select('a[href]'):
+            if anchor.find('img'):
+                poster_candidate = anchor.get('href')
+                break
+
+        # Fallback to image src if href is unavailable.
+        if not poster_candidate:
+            image = poster_container.select_one('img[src]')
+            if image:
+                poster_candidate = image.get('src')
+
+        if not poster_candidate:
+            return None
+
+        return urljoin(self.current_page_url or '', poster_candidate.strip())
 
     def extract_movie_data(self, cine_name, date):
         """Extracts movie data from the HTML."""
@@ -31,6 +58,7 @@ class CinesRenoirScraper:
             title_element = movie_element.find('a')
             director_element = movie_element.find('small', style="color:#748294")
             duration_element = movie_element.find(string=lambda t: 'Duración' in t)
+            poster_url = self._extract_poster_url(block)
 
             title = title_element.text.strip() if title_element else None
             director = director_element.text.strip().replace('de ', '') if director_element else None
@@ -51,6 +79,7 @@ class CinesRenoirScraper:
                     'Pelicula': title,
                     'Director': director,
                     'Duración': duration,
+                    'Poster_URL': poster_url,
                     'Sala': room,
                     'Horario': time,
                     'Fecha': date,  # Directly use the date passed to the method

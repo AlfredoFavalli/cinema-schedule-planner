@@ -6,7 +6,7 @@ import pandas as pd
 import locale
 from datetime import datetime
 from tqdm import tqdm  # For progress bar
-from collections import Counter
+from urllib.parse import urljoin
 
 class GolemScraper:
     def __init__(self, base_url, days_in_advance=10):
@@ -14,6 +14,32 @@ class GolemScraper:
         self.days_in_advance = days_in_advance
         self.data = []
         self.cine_name = "Golem Madrid"
+
+    @staticmethod
+    def _normalize_url(base_url, raw_url):
+        if not raw_url:
+            return None
+        return urljoin(base_url, raw_url.strip())
+
+    def _extract_poster_url(self, soup, details_url):
+        """Extracts the movie poster URL from ticket detail page table cells."""
+        poster_img = None
+
+        # Prefer poster-like paths used by Golem (e.g. /golem/carteles/*.jpg).
+        for img in soup.select('td img[src]'):
+            src = img.get('src', '').strip()
+            if 'carteles' in src.lower():
+                poster_img = img
+                break
+
+        # Fallback: first image found inside a table cell.
+        if not poster_img:
+            poster_img = soup.select_one('td img[src]')
+
+        if not poster_img:
+            return None
+
+        return self._normalize_url(details_url, poster_img.get('src'))
 
     def fetch_perf_codes(self, date):
         """Fetches performance codes for a specific date."""
@@ -59,6 +85,7 @@ class GolemScraper:
             return None
 
         soup = BeautifulSoup(response.content, "html.parser")
+        poster_url = self._extract_poster_url(soup, details_url)
 
         # --- 1) TEXT-BASED PARSE (works with new layout) -------------------------
         page_text = soup.get_text("\n", strip=True)
@@ -151,6 +178,7 @@ class GolemScraper:
             "Pelicula": title,
             "Director": None,
             "Duración": duracion,
+            "Poster_URL": poster_url,
             "Sala": sala,
             "Horario": horario,
             "Fecha": fecha,
