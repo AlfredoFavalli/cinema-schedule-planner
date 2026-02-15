@@ -1,9 +1,3 @@
-import React, { useEffect, useMemo, useState } from 'https://esm.sh/react@18.3.1'
-import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client'
-import htm from 'https://esm.sh/htm@3.1.1/react'
-import Papa from 'https://esm.sh/papaparse@5.4.1'
-
-const html = htm.bind(React.createElement)
 const SALA_CAPACITY = {
   'Renoir Princesa': { 1: 87, 2: 107, 3: 83, 4: 175, 5: 191, 6: 170, 7: 120, 8: 76, 9: 195, 10: 190, 11: 190 },
   'Renoir Plaza de España': { 1: 139, 2: 95, 3: 149, 4: 71, 5: 68 },
@@ -11,16 +5,72 @@ const SALA_CAPACITY = {
 }
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+const state = {
+  allSessions: [],
+  catalogMode: 'full',
+  cinemaFilter: new Set(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid']),
+  dayFilter: new Set(DAYS),
+  bucketFilter: new Set(['morning', 'afternoon', 'evening']),
+  durationRange: [0, 300],
+  densityFilter: 'all',
+  sortBy: 'soonest',
+  langQuery: '',
+  dateRange: ['', ''],
+}
+
 const toMinutes = (timeString) => {
   const [h, m] = (timeString || '').split(':').map(Number)
   return Number.isNaN(h) || Number.isNaN(m) ? null : h * 60 + m
 }
 const timeBucket = (min) => (min == null ? 'unknown' : min < 720 ? 'morning' : min < 1080 ? 'afternoon' : 'evening')
-const duration = (raw) => Number(String(raw || '').match(/\d+/)?.[0] || NaN)
+const duration = (raw) => {
+  const m = String(raw || '').match(/\d+/)
+  return m ? Number(m[0]) : null
+}
 const cleanTitle = (t = '') => t.replace(/\(.*?\)/g, '').trim().toUpperCase()
 
+function parseCSV(text) {
+  const rows = []
+  let row = []
+  let field = ''
+  let inQuotes = false
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+    const next = text[i + 1]
+
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        field += '"'
+        i++
+      } else {
+        inQuotes = !inQuotes
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(field)
+      field = ''
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') i++
+      row.push(field)
+      field = ''
+      if (row.some((x) => x.length)) rows.push(row)
+      row = []
+    } else {
+      field += char
+    }
+  }
+
+  if (field.length || row.length) {
+    row.push(field)
+    if (row.some((x) => x.length)) rows.push(row)
+  }
+
+  const headers = rows.shift() || []
+  return rows.map((r) => Object.fromEntries(headers.map((h, idx) => [h, r[idx] || ''])))
+}
+
 const normalizeRows = (csvText, source) => {
-  const { data } = Papa.parse(csvText, { header: true, skipEmptyLines: true })
+  const data = parseCSV(csvText)
   return data.map((row, i) => {
     const startMin = toMinutes(row.Horario)
     const d = duration(row['Duración'])
@@ -37,8 +87,8 @@ const normalizeRows = (csvText, source) => {
       dayLabel: DAYS[dateObj?.getDay?.() ?? 0],
       time: row.Horario,
       startMin,
-      endMin: startMin != null && Number.isFinite(d) ? startMin + d : null,
-      duration: Number.isFinite(d) ? d : null,
+      endMin: startMin != null && d != null ? startMin + d : null,
+      duration: d,
       cinema: row.Cine || source,
       room: sala,
       roomCapacity: SALA_CAPACITY[row.Cine]?.[sala] ?? null,
@@ -57,112 +107,131 @@ const normalizeRows = (csvText, source) => {
   })
 }
 
-const trimRecommended = (sessions) => sessions.filter((s) => s.dateObj && s.startMin != null && s.duration != null && s.endMin != null && [1,2,3,4,5].includes(s.dayOfWeek) && s.startMin <= 1200 && s.endMin < 1260 && (s.roomCapacity ?? 0) > 100)
+const trimRecommended = (sessions) => sessions.filter((s) => s.dateObj && s.startMin != null && s.duration != null && s.endMin != null && [1, 2, 3, 4, 5].includes(s.dayOfWeek) && s.startMin <= 1200 && s.endMin < 1260 && (s.roomCapacity ?? 0) > 100)
 
-function App() {
-  const [allSessions, setAllSessions] = useState([])
-  const [catalogMode, setCatalogMode] = useState('full')
-  const [cinemaFilter, setCinemaFilter] = useState(new Set(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid']))
-  const [dayFilter, setDayFilter] = useState(new Set(DAYS))
-  const [bucketFilter, setBucketFilter] = useState(new Set(['morning', 'afternoon', 'evening']))
-  const [durationRange, setDurationRange] = useState([0, 300])
-  const [densityFilter, setDensityFilter] = useState('all')
-  const [sortBy, setSortBy] = useState('soonest')
-  const [langQuery, setLangQuery] = useState('')
-  const [dateRange, setDateRange] = useState(['', ''])
+function computeViewModel() {
+  const workingSessions = state.catalogMode === 'recommended' ? trimRecommended(state.allSessions) : state.allSessions
 
-  useEffect(() => {
-    Promise.all([
-      fetch('./_1_data/cines_renoir_2026-02-15_21-03.csv').then((r) => r.text()),
-      fetch('./_1_data/cines_golem_2026-02-16_00-24.csv').then((r) => r.text()),
-    ]).then(([r, g]) => {
-      const data = [...normalizeRows(r, 'Renoir'), ...normalizeRows(g, 'Golem')]
-      const dates = data.map((s) => s.date).filter(Boolean).sort()
-      setDateRange([dates[0], dates.at(-1)])
-      setAllSessions(data)
-    })
-  }, [])
+  const movieStats = new Map()
+  for (const s of workingSessions) movieStats.set(s.movieKey, (movieStats.get(s.movieKey) || 0) + 1)
 
-  const workingSessions = useMemo(() => catalogMode === 'recommended' ? trimRecommended(allSessions) : allSessions, [catalogMode, allSessions])
+  const filteredSessions = workingSessions.filter((s) =>
+    state.cinemaFilter.has(s.cinema) && state.dayFilter.has(s.dayLabel) && state.bucketFilter.has(s.bucket) &&
+    s.duration != null && s.duration >= state.durationRange[0] && s.duration <= state.durationRange[1] &&
+    (!state.dateRange[0] || s.date >= state.dateRange[0]) && (!state.dateRange[1] || s.date <= state.dateRange[1]) &&
+    `${s.languageTag} ${s.subtitles}`.toLowerCase().includes(state.langQuery.toLowerCase()) &&
+    (state.densityFilter === 'all' || (state.densityFilter === 'single' ? movieStats.get(s.movieKey) === 1 : movieStats.get(s.movieKey) > 1))
+  )
 
-  const movieStats = useMemo(() => {
-    const m = new Map()
-    workingSessions.forEach((s) => m.set(s.movieKey, (m.get(s.movieKey) || 0) + 1))
-    return m
-  }, [workingSessions])
+  const movieMap = new Map()
+  filteredSessions.forEach((s) => {
+    if (!movieMap.has(s.movieKey)) movieMap.set(s.movieKey, { ...s, sessions: [] })
+    movieMap.get(s.movieKey).sessions.push(s)
+  })
+  const movieCards = [...movieMap.values()]
+  movieCards.forEach((m) => m.sessions.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)))
 
-  const filteredSessions = useMemo(() => workingSessions.filter((s) =>
-    cinemaFilter.has(s.cinema) && dayFilter.has(s.dayLabel) && bucketFilter.has(s.bucket) &&
-    s.duration != null && s.duration >= durationRange[0] && s.duration <= durationRange[1] &&
-    (!dateRange[0] || s.date >= dateRange[0]) && (!dateRange[1] || s.date <= dateRange[1]) &&
-    `${s.languageTag} ${s.subtitles}`.toLowerCase().includes(langQuery.toLowerCase()) &&
-    (densityFilter === 'all' || (densityFilter === 'single' ? movieStats.get(s.movieKey) === 1 : movieStats.get(s.movieKey) > 1))
-  ), [workingSessions, cinemaFilter, dayFilter, bucketFilter, durationRange, dateRange, langQuery, densityFilter, movieStats])
-
-  const movieCards = useMemo(() => {
-    const map = new Map()
-    filteredSessions.forEach((s) => {
-      if (!map.has(s.movieKey)) map.set(s.movieKey, { ...s, sessions: [] })
-      map.get(s.movieKey).sessions.push(s)
-    })
-    const arr = [...map.values()]
-    const sorter = {
-      soonest: (a, b) => (a.sessions[0]?.date + a.sessions[0]?.time).localeCompare(b.sessions[0]?.date + b.sessions[0]?.time),
-      latest: (a, b) => (b.sessions.at(-1)?.date + b.sessions.at(-1)?.time).localeCompare(a.sessions.at(-1)?.date + a.sessions.at(-1)?.time),
-      shortest: (a, b) => (a.duration ?? 999) - (b.duration ?? 999),
-      sessions: (a, b) => b.sessions.length - a.sessions.length,
-    }
-    return arr.sort(sorter[sortBy])
-  }, [filteredSessions, sortBy])
-
-  const schedule = useMemo(() => {
-    const out = {}
-    filteredSessions.forEach((s) => {
-      out[s.date] ||= {}
-      out[s.date][s.cinema] ||= []
-      out[s.date][s.cinema].push(s)
-    })
-    return out
-  }, [filteredSessions])
-
-  const toggleSet = (setter, set, value) => {
-    const next = new Set(set)
-    next.has(value) ? next.delete(value) : next.add(value)
-    setter(next)
+  const sorter = {
+    soonest: (a, b) => (a.sessions[0]?.date + a.sessions[0]?.time).localeCompare(b.sessions[0]?.date + b.sessions[0]?.time),
+    latest: (a, b) => (b.sessions.at(-1)?.date + b.sessions.at(-1)?.time).localeCompare(a.sessions.at(-1)?.date + a.sessions.at(-1)?.time),
+    shortest: (a, b) => (a.duration ?? 999) - (b.duration ?? 999),
+    sessions: (a, b) => b.sessions.length - a.sessions.length,
   }
+  movieCards.sort(sorter[state.sortBy])
 
-  return html`
-    <div className="page">
-      <header>
-        <h1>Cinema Schedule Planner</h1>
-        <p>Renoir + Golem visual explorer with cards, schedule view, and smart filters.</p>
-      </header>
-      <section className="panel controls">
-        <div className="row two-col">
-          <div><label>Catalog</label><select value=${catalogMode} onChange=${(e) => setCatalogMode(e.target.value)}><option value="full">Full catalog</option><option value="recommended">Recommended / trimmed</option></select></div>
-          <div><label>Sort by</label><select value=${sortBy} onChange=${(e) => setSortBy(e.target.value)}><option value="soonest">Soonest screening</option><option value="latest">Latest screening</option><option value="shortest">Shortest duration</option><option value="sessions">Most total sessions</option></select></div>
-        </div>
-        <div className="row wrap"><label>Cinema</label>${['Renoir Princesa','Renoir Plaza de España','Golem Madrid'].map((x)=>html`<button className=${cinemaFilter.has(x)?'chip active':'chip'} onClick=${()=>toggleSet(setCinemaFilter, cinemaFilter, x)}>${x}</button>`)}</div>
-        <div className="row wrap"><label>Day of week</label>${DAYS.map((x)=>html`<button className=${dayFilter.has(x)?'chip active':'chip'} onClick=${()=>toggleSet(setDayFilter, dayFilter, x)}>${x.slice(0,3)}</button>`)}</div>
-        <div className="row wrap"><label>Time of day</label>${['morning','afternoon','evening'].map((x)=>html`<button className=${bucketFilter.has(x)?'chip active':'chip'} onClick=${()=>toggleSet(setBucketFilter, bucketFilter, x)}>${x}</button>`)}</div>
-        <div className="row two-col">
-          <div><label>Date from</label><input type="date" value=${dateRange[0]||''} onChange=${(e)=>setDateRange([e.target.value,dateRange[1]])} /></div>
-          <div><label>Date to</label><input type="date" value=${dateRange[1]||''} onChange=${(e)=>setDateRange([dateRange[0],e.target.value])} /></div>
-        </div>
-        <div className="row two-col">
-          <div><label>Duration min</label><input type="number" min="0" max="300" value=${durationRange[0]} onChange=${(e)=>setDurationRange([Number(e.target.value), durationRange[1]])}/></div>
-          <div><label>Duration max</label><input type="number" min="0" max="300" value=${durationRange[1]} onChange=${(e)=>setDurationRange([durationRange[0], Number(e.target.value)])}/></div>
-        </div>
-        <div className="row two-col">
-          <div><label>Language / subtitles</label><input value=${langQuery} onChange=${(e)=>setLangQuery(e.target.value)} placeholder="francés, VOSE..."/></div>
-          <div><label>Availability density</label><select value=${densityFilter} onChange=${(e)=>setDensityFilter(e.target.value)}><option value="all">All</option><option value="single">One-off</option><option value="multiple">Multiple sessions</option></select></div>
-        </div>
-        <div className="stats">Showing ${movieCards.length} films / ${filteredSessions.length} sessions</div>
-      </section>
-      <section><h2>Film catalog</h2><div className="cards">${movieCards.map((m)=>html`<article className="card panel" key=${m.movieKey}><img src=${m.posterUrl} alt=${m.movieTitle}/><div className="content"><h3>${m.movieTitle}</h3><p className="meta">${m.director} • ${m.year || 'Year n/a'} • ${m.duration || 'n/a'} min • ${m.sessions.length} sessions</p><p>${m.synopsis}</p><div className="tags"><span>${m.cinema}</span><span>${m.originalLanguage || 'Language n/a'}</span>${m.subtitles ? html`<span>${m.subtitles}</span>` : null}${m.rating ? html`<span>${m.rating}</span>` : null}</div><div className="links">${m.trailerUrl ? html`<a href=${m.trailerUrl} target="_blank">Trailer</a>` : null}${m.filmUrl ? html`<a href=${m.filmUrl} target="_blank">Details</a>` : null}</div></div></article>`)}</div></section>
-      <section><h2>Schedule view (by day / cinema)</h2><div className="schedule-grid">${Object.entries(schedule).sort(([a],[b])=>a.localeCompare(b)).map(([date,cinemas])=>html`<div className="panel day-block" key=${date}><h3>${date}</h3>${Object.entries(cinemas).map(([name,sessions])=>html`<div className="cinema-block" key=${name}><h4>${name}</h4><ul>${sessions.sort((a,b)=>a.startMin-b.startMin).map((s)=>html`<li key=${s.id}><strong>${s.time}</strong> — ${s.movieTitle} <span>Sala ${s.room || 'n/a'}</span></li>`)}</ul></div>`)}</div>`)}</div></section>
-    </div>
-  `
+  const schedule = {}
+  filteredSessions.forEach((s) => {
+    schedule[s.date] ||= {}
+    schedule[s.date][s.cinema] ||= []
+    schedule[s.date][s.cinema].push(s)
+  })
+
+  return { filteredSessions, movieCards, schedule }
 }
 
-createRoot(document.getElementById('root')).render(html`<${App} />`)
+function chipList(items, set, key) {
+  return items.map((item) => `<button class="chip ${set.has(item) ? 'active' : ''}" data-type="${key}" data-value="${item}">${item.length > 3 && key === 'day' ? item.slice(0, 3) : item}</button>`).join('')
+}
+
+function render() {
+  const root = document.getElementById('root')
+  const { filteredSessions, movieCards, schedule } = computeViewModel()
+
+  root.innerHTML = `
+  <div class="page">
+    <header>
+      <h1>Cinema Schedule Planner</h1>
+      <p>Renoir + Golem visual explorer with cards, schedule view, and smart filters.</p>
+    </header>
+    <section class="panel controls">
+      <div class="row two-col">
+        <div><label>Catalog</label><select id="catalogMode"><option value="full">Full catalog</option><option value="recommended">Recommended / trimmed</option></select></div>
+        <div><label>Sort by</label><select id="sortBy"><option value="soonest">Soonest screening</option><option value="latest">Latest screening</option><option value="shortest">Shortest duration</option><option value="sessions">Most total sessions</option></select></div>
+      </div>
+      <div class="row wrap"><label>Cinema</label>${chipList(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid'], state.cinemaFilter, 'cinema')}</div>
+      <div class="row wrap"><label>Day of week</label>${chipList(DAYS, state.dayFilter, 'day')}</div>
+      <div class="row wrap"><label>Time of day</label>${chipList(['morning', 'afternoon', 'evening'], state.bucketFilter, 'bucket')}</div>
+      <div class="row two-col">
+        <div><label>Date from</label><input id="dateFrom" type="date" value="${state.dateRange[0] || ''}" /></div>
+        <div><label>Date to</label><input id="dateTo" type="date" value="${state.dateRange[1] || ''}" /></div>
+      </div>
+      <div class="row two-col">
+        <div><label>Duration min</label><input id="durMin" type="number" min="0" max="300" value="${state.durationRange[0]}"/></div>
+        <div><label>Duration max</label><input id="durMax" type="number" min="0" max="300" value="${state.durationRange[1]}"/></div>
+      </div>
+      <div class="row two-col">
+        <div><label>Language / subtitles</label><input id="langQuery" value="${state.langQuery}" placeholder="francés, VOSE..."/></div>
+        <div><label>Availability density</label><select id="densityFilter"><option value="all">All</option><option value="single">One-off</option><option value="multiple">Multiple sessions</option></select></div>
+      </div>
+      <div class="stats">Showing ${movieCards.length} films / ${filteredSessions.length} sessions</div>
+    </section>
+    <section><h2>Film catalog</h2><div class="cards">
+      ${movieCards.map((m) => `<article class="card panel"><img src="${m.posterUrl}" alt="${m.movieTitle}"/><div class="content"><h3>${m.movieTitle}</h3><p class="meta">${m.director} • ${m.year || 'Year n/a'} • ${m.duration || 'n/a'} min • ${m.sessions.length} sessions</p><p>${m.synopsis}</p><div class="tags"><span>${m.cinema}</span><span>${m.originalLanguage || 'Language n/a'}</span>${m.subtitles ? `<span>${m.subtitles}</span>` : ''}${m.rating ? `<span>${m.rating}</span>` : ''}</div><div class="links">${m.trailerUrl ? `<a href="${m.trailerUrl}" target="_blank" rel="noreferrer">Trailer</a>` : ''}${m.filmUrl ? `<a href="${m.filmUrl}" target="_blank" rel="noreferrer">Details</a>` : ''}</div></div></article>`).join('')}
+    </div></section>
+    <section><h2>Schedule view (by day / cinema)</h2><div class="schedule-grid">
+      ${Object.entries(schedule).sort(([a], [b]) => a.localeCompare(b)).map(([date, cinemas]) => `<div class="panel day-block"><h3>${date}</h3>${Object.entries(cinemas).map(([name, sessions]) => `<div class="cinema-block"><h4>${name}</h4><ul>${sessions.sort((a, b) => a.startMin - b.startMin).map((s) => `<li><strong>${s.time}</strong> — ${s.movieTitle} <span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul></div>`).join('')}</div>`).join('')}
+    </div></section>
+  </div>`
+
+  document.getElementById('catalogMode').value = state.catalogMode
+  document.getElementById('sortBy').value = state.sortBy
+  document.getElementById('densityFilter').value = state.densityFilter
+
+  bindEvents()
+}
+
+function bindEvents() {
+  document.querySelectorAll('[data-type]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const { type, value } = el.dataset
+      const target = type === 'cinema' ? state.cinemaFilter : type === 'day' ? state.dayFilter : state.bucketFilter
+      target.has(value) ? target.delete(value) : target.add(value)
+      render()
+    })
+  })
+
+  document.getElementById('catalogMode').onchange = (e) => { state.catalogMode = e.target.value; render() }
+  document.getElementById('sortBy').onchange = (e) => { state.sortBy = e.target.value; render() }
+  document.getElementById('densityFilter').onchange = (e) => { state.densityFilter = e.target.value; render() }
+  document.getElementById('dateFrom').onchange = (e) => { state.dateRange[0] = e.target.value; render() }
+  document.getElementById('dateTo').onchange = (e) => { state.dateRange[1] = e.target.value; render() }
+  document.getElementById('durMin').onchange = (e) => { state.durationRange[0] = Number(e.target.value); render() }
+  document.getElementById('durMax').onchange = (e) => { state.durationRange[1] = Number(e.target.value); render() }
+  document.getElementById('langQuery').oninput = (e) => { state.langQuery = e.target.value; render() }
+}
+
+async function init() {
+  const [renoirCsv, golemCsv] = await Promise.all([
+    fetch('./_1_data/cines_renoir_2026-02-15_21-03.csv').then((r) => r.text()),
+    fetch('./_1_data/cines_golem_2026-02-16_00-24.csv').then((r) => r.text()),
+  ])
+  state.allSessions = [...normalizeRows(renoirCsv, 'Renoir'), ...normalizeRows(golemCsv, 'Golem')]
+  const dates = state.allSessions.map((s) => s.date).filter(Boolean).sort()
+  state.dateRange = [dates[0], dates.at(-1)]
+  render()
+}
+
+init().catch((error) => {
+  console.error(error)
+  document.getElementById('root').innerHTML = `<div class="page"><div class="panel controls"><h2>Unable to load data</h2><p>${error.message}</p></div></div>`
+})
