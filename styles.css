@@ -1,0 +1,42 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0f1d;
+  --panel: #12182b;
+  --text: #edf1ff;
+  --muted: #9ca9d3;
+  --accent: #6f7dff;
+  --accent-soft: #263171;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; background: radial-gradient(circle at top, #162042, var(--bg)); color: var(--text); }
+.page { max-width: 1200px; margin: 0 auto; padding: 24px; }
+header h1 { margin-bottom: 8px; }
+header p { color: var(--muted); }
+.panel { background: color-mix(in srgb, var(--panel) 90%, #fff 10%); border: 1px solid #2b345e; border-radius: 16px; box-shadow: 0 8px 30px #0008; }
+.controls { padding: 16px; margin: 18px 0 30px; display: grid; gap: 12px; }
+.row { display: grid; gap: 8px; }
+.row.two-col { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.row.wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+label { color: var(--muted); font-size: .85rem; }
+select, input { background: #0b1022; color: var(--text); border: 1px solid #36417c; border-radius: 10px; padding: 10px; }
+.chip { border: 1px solid #3f4f9a; color: #dce2ff; padding: 6px 10px; border-radius: 99px; background: transparent; cursor: pointer; }
+.chip.active { background: var(--accent-soft); border-color: var(--accent); }
+.stats { color: #c5cff8; font-size: .9rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card { overflow: hidden; }
+.card img { width: 100%; height: 360px; object-fit: cover; display: block; }
+.card .content { padding: 14px; }
+.meta { color: var(--muted); font-size: .9rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.tags span { border: 1px solid #3b467f; color: #c7d0f8; border-radius: 999px; font-size: .78rem; padding: 4px 8px; }
+.links { display: flex; gap: 12px; }
+a { color: #98a7ff; }
+.schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.day-block { padding: 14px; }
+.cinema-block h4 { margin: 10px 0 8px; color: #bfcbff; }
+ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+li { background: #0d1328; border: 1px solid #26305e; border-radius: 10px; padding: 8px; display: grid; gap: 2px; }
+@media (max-width: 700px) {
+  .page { padding: 14px; }
+  .card img { height: 280px; }
+}
