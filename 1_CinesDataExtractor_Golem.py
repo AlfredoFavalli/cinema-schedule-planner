@@ -7,6 +7,9 @@ import locale
 from datetime import datetime
 from tqdm import tqdm  # For progress bar
 from collections import Counter
+from urllib.parse import urljoin
+import unicodedata
+import re
 
 class GolemScraper:
     def __init__(self, base_url, days_in_advance=10):
@@ -14,6 +17,26 @@ class GolemScraper:
         self.days_in_advance = days_in_advance
         self.data = []
         self.cine_name = "Golem Madrid"
+        self.movie_cache = {}
+
+    def build_movie_slug(self, title):
+        import unicodedata, re
+
+        s = unicodedata.normalize("NFKD", title)
+        s = s.encode("ascii", "ignore").decode("ascii")
+
+        s = s.replace("(VOSE)", "(V.O.S.E.)")
+        s = s.replace("(VOSC)", "(V.O.S.C.)")
+
+        s = s.replace(" ", "-")
+        s = re.sub(r"-{2,}", "-", s)
+
+        return f"/golem/pelicula/{s}"
+
+    def extract_movie_page_url(self, soup):
+        """Finds the /golem/pelicula/... link from a performance page."""
+        a = soup.find("a", href=lambda h: h and h.startswith("/golem/pelicula/"))
+        return a["href"] if a else None
 
     def fetch_perf_codes(self, date):
         """Fetches performance codes for a specific date."""
@@ -30,132 +53,144 @@ class GolemScraper:
         return list(perf_codes)
 
     def fetch_movie_details(self, perf_code):
-        """Fetches movie details for a specific performance code (Golem Madrid)."""
         details_url = (
-            f"https://www.onlinecinematickets.com/index.php?"
-            f"s=GOLMADRID&p=tickets&perfCode={perf_code}"
+            "https://www.onlinecinematickets.com/index.php"
+            f"?s=GOLMADRID&p=tickets&perfCode={perf_code}"
         )
 
-        headers = {
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/126.0.0.0 Safari/537.36"
-            ),
-            "Referer": self.base_url,
-        }
-
-        try:
-            response = requests.get(details_url, headers=headers, timeout=15)
-        except Exception as e:
-            print(f"[WARN] Request error for perfCode {perf_code}: {e}")
+        r = requests.get(details_url, timeout=15)
+        if r.status_code != 200:
             return None
 
-        if response.status_code != 200:
-            print(
-                f"[WARN] Non-200 status for perfCode {perf_code}: "
-                f"{response.status_code} – skipping."
-            )
-            return None
-
-        soup = BeautifulSoup(response.content, "html.parser")
-
-        # --- 1) TEXT-BASED PARSE (works with new layout) -------------------------
-        page_text = soup.get_text("\n", strip=True)
-        lines = [l.strip() for l in page_text.splitlines() if l.strip()]
+        soup = BeautifulSoup(r.content, "html.parser")
+        text = soup.get_text("\n", strip=True)
+        lines = [l.strip() for l in text.splitlines() if l.strip()]
 
         title = None
         sala_line = None
         datetime_line = None
 
-        # Look for a line like "GOLEM MADRID | Sala 02"
-        sala_index = None
         for i, line in enumerate(lines):
             if "Sala" in line and "|" in line:
-                sala_index = i
                 sala_line = line
+                if i > 0:
+                    title = lines[i - 1]
+                if i + 1 < len(lines):
+                    datetime_line = lines[i + 1]
                 break
 
-        if sala_index is not None:
-            # Previous line is usually the movie title
-            if sala_index > 0:
-                title = lines[sala_index - 1]
-
-            # Next line is usually "Domingo 16 noviembre 2025 | 19:30"
-            if sala_index + 1 < len(lines):
-                datetime_line = lines[sala_index + 1]
-
-        # If we couldn't find the basic pattern, skip this perfCode
-        if not sala_line or not datetime_line:
-            print(f"[WARN] Could not parse basic info from text for perfCode {perf_code} – skipping.")
+        if not title or not datetime_line:
             return None
 
-        # --- 2) Parse Sala -------------------------------------------------------
-        # Example: "GOLEM MADRID | Sala 02"
-        sala = None
-        try:
-            # Split on "|" and take the part containing "Sala"
-            parts = [p.strip() for p in sala_line.split("|")]
-            sala_part = next((p for p in parts if "Sala" in p), None)
-            if sala_part:
-                # Keep just the number / name after "Sala"
-                sala = sala_part.split("Sala", 1)[-1].strip()
-        except Exception:
-            sala = None
+        parts = datetime_line.split("|")
+        fecha = self.format_date(parts[0].strip())
+        horario = parts[1].strip() if len(parts) > 1 else None
 
-        # --- 3) Parse Fecha + Horario -------------------------------------------
-        # Example: "Domingo 16 noviembre 2025 | 19:30"
-        horario = None
-        fecha = None
-        try:
-            dt_parts = [p.strip() for p in datetime_line.split("|")]
-            date_part = dt_parts[0] if len(dt_parts) > 0 else None
-            time_part = dt_parts[1] if len(dt_parts) > 1 else None
+        sala = sala_line.split("Sala", 1)[-1].strip()
 
-            horario = time_part
+        # 🔑 build movie slug from title
+        movie_slug = self.build_movie_slug(title)
+        movie_page_details = self.fetch_movie_page_details(movie_slug)
 
-            if date_part:
-                try:
-                    fecha = self.format_date(date_part)
-                except Exception as e:
-                    # If we can't normalize, keep the raw string
-                    print(f"[WARN] Error parsing date '{date_part}' for perfCode {perf_code}: {e}")
-                    fecha = date_part
-        except Exception as e:
-            print(f"[WARN] Error parsing datetime for perfCode {perf_code}: {e}")
-
-        # --- 4) Duration (not visible in snippet; keep None for now) ------------
-        duracion = None  # Adjust later if you find where duration lives in the new layout
-
-        # --- 5) Fallback title cleaning -----------------------------------------
-        if title:
-            # Avoid using generic header texts as title if something weird happened
-            for bad in ("Golem Madrid", "GOLEM MADRID", "Menú", "Seleccione el idioma"):
-                if bad.lower() in title.lower():
-                    title = None
-                    break
-
-        if not title:
-            # Last-resort title guess: find first line that looks like "X (VOSE)" or similar
-            for l in lines:
-                if "(VOSE" in l or "(VOSC" in l or "(V.O" in l or "(VO " in l:
-                    title = l
-                    break
-
-        if not title:
-            print(f"[WARN] Could not determine movie title for perfCode {perf_code} – skipping.")
-            return None
-
-        # --- 6) Return parsed record --------------------------------------------
-        return {
+        record = {
             "Pelicula": title,
-            "Director": None,
-            "Duración": duracion,
             "Sala": sala,
             "Horario": horario,
             "Fecha": fecha,
             "Cine": self.cine_name,
         }
+
+        record.update(movie_page_details)
+        return record
+
+    def fetch_movie_page_details(self, relative_url):
+        if not relative_url:
+            return {}
+
+        if relative_url in self.movie_cache:
+            return self.movie_cache[relative_url]
+
+        full_url = urljoin("https://golem.es", relative_url)
+        print("🔍 Fetching movie page:", full_url)
+
+        r = requests.get(full_url, timeout=15)
+        if r.status_code != 200:
+            print("❌ Movie page not found:", full_url)
+            return {}
+
+        soup = BeautifulSoup(r.content, "html.parser")
+
+        # -------------------------------
+        # Helper: read ficha técnica rows
+        # -------------------------------
+        def find_value(label):
+            td = soup.find("td", string=lambda t: t and label in t)
+            if not td:
+                return None
+            sibling = td.find_next_sibling("td")
+            return sibling.get_text(" ", strip=True) if sibling else None
+
+        # -------------------------------
+        # Poster
+        # -------------------------------
+        img = soup.find("img", src=lambda s: s and "/golem/carteles/" in s)
+        poster_url = urljoin("https://golem.es", img["src"]) if img else None
+
+        # -------------------------------
+        # Trailer (YouTube iframe)
+        # -------------------------------
+        trailer_url = None
+        iframe = soup.find("iframe", src=lambda s: s and "youtube.com" in s)
+        if iframe:
+            trailer_url = iframe["src"]
+
+        # -------------------------------
+        # Ficha Artística (Reparto)
+        # -------------------------------
+        reparto = None
+        ficha_label = soup.find("strong", string=lambda t: t and "Ficha Artística" in t)
+
+        if ficha_label:
+            tr = ficha_label.find_parent("tr")
+            if tr:
+                next_tr = tr.find_next_sibling("tr")
+                if next_tr:
+                    td = next_tr.find("td", class_="txtLectura")
+                    if td:
+                        reparto = td.get_text(" ", strip=True)
+
+        # -------------------------------
+        # Sinopsis (Golem layout)
+        # -------------------------------
+        sinopsis = None
+        sin_label = soup.find("strong", string=lambda t: t and "Sinopsis" in t)
+
+        if sin_label:
+            tr = sin_label.find_parent("tr")
+            if tr:
+                next_tr = tr.find_next_sibling("tr")
+                if next_tr:
+                    td = next_tr.find("td", class_="txtNegLJust")
+                    if td:
+                        sinopsis = td.get_text(" ", strip=True)
+
+        # -------------------------------
+        # Final payload
+        # -------------------------------
+        details = {
+            "Pelicula_URL": full_url,
+            "Titulo_Original": find_value("Título original"),
+            "Director": find_value("Dirigida por"),
+            "Duración": find_value("Duración"),
+            "Nacionalidad": find_value("Nacionalidad"),
+            "Reparto": reparto,
+            "Sinopsis": sinopsis,
+            "Trailer_URL": trailer_url,
+            "Poster_URL": poster_url,
+        }
+
+        self.movie_cache[relative_url] = details
+        return details
 
     @staticmethod
     def format_date(raw_date):

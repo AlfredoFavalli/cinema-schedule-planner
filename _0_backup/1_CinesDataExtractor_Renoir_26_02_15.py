@@ -4,52 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime, timedelta
-from urllib.parse import urljoin
 
 class CinesRenoirScraper:
-    def __init__(self, base_urls, days_in_advance=1):
+    def __init__(self, base_urls, days_in_advance=10):
         self.base_urls = base_urls
         self.days_in_advance = days_in_advance
         self.soup = None
         self.data = []
-        self.film_cache = {}  # NEW: avoid re-scraping same film
-
-    def fetch_film_details(self, film_relative_url):
-        """Fetches and parses a film detail page. Cached by URL."""
-        if film_relative_url in self.film_cache:
-            return self.film_cache[film_relative_url]
-
-        film_url = urljoin("https://www.cinesrenoir.com", film_relative_url)
-        r = requests.get(film_url)
-        if r.status_code != 200:
-            return {}
-
-        soup = BeautifulSoup(r.content, "html.parser")
-
-        def get_text(label):
-            h6 = soup.find("h6", string=label)
-            if not h6:
-                return None
-            p = h6.find_next("p")
-            return p.get_text(strip=True) if p else None
-
-        # Poster
-        poster_img = soup.select_one(".single_product_thumb img")
-        poster_url = poster_img["src"] if poster_img else None
-
-        details = {
-            "Film_URL": film_url,
-            "Poster_URL": poster_url,
-            "Idioma_Original": get_text("Idioma original"),
-            "Calificación": get_text("Calificación"),
-            "Estreno": get_text("Estreno"),
-            "Intérpretes": get_text("Intérpretes"),
-            "Sinopsis": get_text("Sinopsis"),
-        }
-
-        self.film_cache[film_relative_url] = details
-        return details
-
 
     def fetch_page(self, url, date):
         """Fetches the webpage content for a specific date and parses it with BeautifulSoup."""
@@ -68,14 +29,6 @@ class CinesRenoirScraper:
             # Extract movie details
             movie_element = block.find('div', class_='col-4 pl-0 pr-0')
             title_element = movie_element.find('a')
-            film_relative_url = title_element["href"] if title_element else None
-            title = title_element.text.strip() if title_element else None
-
-            film_details = (
-                self.fetch_film_details(film_relative_url)
-                if film_relative_url
-                else {}
-            )
             director_element = movie_element.find('small', style="color:#748294")
             duration_element = movie_element.find(string=lambda t: 'Duración' in t)
 
@@ -94,18 +47,15 @@ class CinesRenoirScraper:
                 room = room_element.text.strip().replace('sala ', '') if room_element else None
                 time = time_element.text.strip() if time_element else None
 
-                row = {
+                self.data.append({
                     'Pelicula': title,
                     'Director': director,
                     'Duración': duration,
                     'Sala': room,
                     'Horario': time,
-                    'Fecha': date,
-                    'Cine': cine_name,
-                }
-
-                row.update(film_details)
-                self.data.append(row)
+                    'Fecha': date,  # Directly use the date passed to the method
+                    'Cine': cine_name
+                })
 
     def scrape_for_date_range(self):
         """Scrapes the website for today's date and the specified number of days in advance."""
