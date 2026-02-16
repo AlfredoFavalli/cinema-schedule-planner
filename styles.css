@@ -96,13 +96,13 @@ body {
 .cinema-chip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cinema-chip-grid .chip {
   width: 100%;
-  min-width: 150px;
-  min-height: 38px;
+  min-width: 0;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 12px;
+  padding: 0 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
