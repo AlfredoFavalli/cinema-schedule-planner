@@ -22,25 +22,95 @@ HEADERS = {
 
 
 def extract_attr(tag, attr_name):
-    match = re.search(rf'{attr_name}\s*=\s*(["\'])(.*?)\1', tag, flags=re.IGNORECASE | re.DOTALL)
-    return unescape(match.group(2).strip()) if match else ''
+    # 1) quoted value: attr="..." or attr='...'
+    quoted = re.search(
+        rf'\b{re.escape(attr_name)}\s*=\s*(["\'])(.*?)\1',
+        tag,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if quoted:
+        return unescape(quoted.group(2).strip())
+
+    # 2) unquoted value: attr=value
+    unquoted = re.search(
+        rf'\b{re.escape(attr_name)}\s*=\s*([^\s>]+)',
+        tag,
+        flags=re.IGNORECASE,
+    )
+    return unescape(unquoted.group(1).strip()) if unquoted else ''
+
+
+def parse_float(text):
+    if text is None:
+        return None
+    match = re.search(r'-?\d+(?:\.\d+)?', str(text))
+    return float(match.group(0)) if match else None
 
 
 def extract_style_position(style):
     if not style:
         return None, None
-    left_match = re.search(r'left\s*:\s*([\d.]+)px', style, flags=re.IGNORECASE)
-    top_match = re.search(r'top\s*:\s*([\d.]+)px', style, flags=re.IGNORECASE)
-    left = float(left_match.group(1)) if left_match else None
-    top = float(top_match.group(1)) if top_match else None
+
+    def pick(prop):
+        match = re.search(rf'{prop}\s*:\s*(-?\d+(?:\.\d+)?)(?:px)?', style, flags=re.IGNORECASE)
+        return float(match.group(1)) if match else None
+
+    left = pick('left')
+    top = pick('top')
+
+    if left is None or top is None:
+        # Some pages place elements using transform translate(Xpx,Ypx)
+        translate = re.search(
+            r'transform\s*:\s*translate\(\s*(-?\d+(?:\.\d+)?)px\s*,\s*(-?\d+(?:\.\d+)?)px\s*\)',
+            style,
+            flags=re.IGNORECASE,
+        )
+        if translate:
+            left = left if left is not None else float(translate.group(1))
+            top = top if top is not None else float(translate.group(2))
+
     return left, top
 
 
 def classify_from_src(src):
+    src_l = (src or '').lower()
     for icon_name, seat_type in ICON_TO_TYPE.items():
-        if icon_name in src.lower():
+        if icon_name in src_l:
             return seat_type
     return None
+
+
+def extract_position_from_tag(tag):
+    # Priority 1: style coordinates
+    style = extract_attr(tag, 'style')
+    x, y = extract_style_position(style)
+
+    # Priority 2: direct data attributes
+    if x is None:
+        x = parse_float(extract_attr(tag, 'data-x'))
+    if y is None:
+        y = parse_float(extract_attr(tag, 'data-y'))
+
+    # Priority 3: alternative semantic attrs (column/row)
+    col = parse_float(extract_attr(tag, 'data-col'))
+    if col is None:
+        col = parse_float(extract_attr(tag, 'data-columna'))
+    if col is None:
+        col = parse_float(extract_attr(tag, 'columna'))
+
+    row = parse_float(extract_attr(tag, 'data-row'))
+    if row is None:
+        row = parse_float(extract_attr(tag, 'data-fila'))
+    if row is None:
+        row = parse_float(extract_attr(tag, 'fila'))
+
+    # If true pixel coords are missing, synthesize from row/column indices.
+    if x is None and col is not None:
+        x = col
+    if y is None and row is not None:
+        y = row
+
+    return x, y
 
 
 def nearest_index(values, target, tolerance=3.0):
@@ -53,19 +123,19 @@ def nearest_index(values, target, tolerance=3.0):
 
 
 def parse_seat_map(html, ticket_url=''):
-    img_tags = re.findall(r'<img\b[^>]*>', html, flags=re.IGNORECASE)
+    # Include both <img> and <input ... type=image> seats.
+    seat_tags = re.findall(r'<(?:img|input)\b[^>]*>', html, flags=re.IGNORECASE)
     seats = []
     x_values = []
     y_values = []
 
-    for tag in img_tags:
+    for tag in seat_tags:
         src = extract_attr(tag, 'src')
         seat_type = classify_from_src(src)
         if not seat_type:
             continue
 
-        style = extract_attr(tag, 'style')
-        x, y = extract_style_position(style)
+        x, y = extract_position_from_tag(tag)
         if x is None or y is None:
             continue
 
