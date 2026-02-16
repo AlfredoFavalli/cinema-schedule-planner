@@ -5,6 +5,7 @@ const SALA_CAPACITY = {
 }
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DAY_CHIPS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MONTHS_ES = {
   enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
   julio: 6, agosto: 7, septiembre: 8, setiembre: 8, octubre: 9, noviembre: 10, diciembre: 11,
@@ -15,6 +16,7 @@ const state = {
   catalogMode: 'full',
   mainView: 'catalog',
   sidebarHidden: false,
+  favoritesOnly: false,
   cinemaFilter: new Set(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid']),
   dayFilter: new Set(DAYS),
   durationRange: [0, 300],
@@ -37,6 +39,20 @@ const duration = (raw) => {
 }
 const cleanTitle = (title = '') => title.replace(/\(.*?\)/g, '').trim().toUpperCase()
 const slugify = (v = '') => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+function formatMinutesAsTime(totalMinutes) {
+  if (totalMinutes == null) return 'n/a'
+  const dayMinutes = ((totalMinutes % 1440) + 1440) % 1440
+  const hours = String(Math.floor(dayMinutes / 60)).padStart(2, '0')
+  const mins = String(dayMinutes % 60).padStart(2, '0')
+  return `${hours}:${mins}`
+}
+
+function sessionTooltip(s) {
+  const seats = s.roomCapacity ? `${s.roomCapacity} seats` : 'Seat count unavailable'
+  const end = s.startMin != null && s.duration != null ? formatMinutesAsTime(s.startMin + s.duration) : 'n/a'
+  return `${seats} • Ends at ${end}`
+}
 
 function parseSpanishEstreno(value) {
   if (!value) return null
@@ -156,11 +172,16 @@ function normalizeRows(csvText, source) {
   })
 }
 
-const trimRecommended = (sessions) => sessions.filter((s) => (
-  s.dateObj && s.startMin != null && s.duration != null && s.endMin != null
-  && [1, 2, 3, 4, 5].includes(s.dayOfWeek)
-  && s.startMin <= 1200 && s.endMin < 1260 && (s.roomCapacity ?? 0) > 100
-))
+const trimRecommended = (sessions) => sessions.filter((s) => {
+  if (!s.dateObj || s.startMin == null || s.duration == null || s.endMin == null) return false
+  const isWeekday = [1, 2, 3, 4].includes(s.dayOfWeek)
+  const isFriday = s.dayOfWeek === 5
+  const hasCapacity = (s.roomCapacity ?? 0) > 100
+  if (!hasCapacity || (!isWeekday && !isFriday)) return false
+
+  if (isFriday) return true
+  return s.startMin <= 1200 && s.endMin < 1260
+})
 
 function saveFavorites() {
   localStorage.setItem('cinema-favorites-v1', JSON.stringify([...state.favorites]))
@@ -182,7 +203,14 @@ function moviePassesReleaseFilter(movie) {
 }
 
 function computeViewModel() {
-  const workingSessions = state.catalogMode === 'recommended' ? trimRecommended(state.allSessions) : state.allSessions
+  const recommendedSessions = trimRecommended(state.allSessions)
+  const recommendedIds = new Set(recommendedSessions.map((s) => s.id))
+  const catalogModes = {
+    full: state.allSessions,
+    recommended: recommendedSessions,
+    unrecommended: state.allSessions.filter((s) => !recommendedIds.has(s.id)),
+  }
+  const workingSessions = catalogModes[state.catalogMode] || state.allSessions
   const movieStats = new Map()
   workingSessions.forEach((s) => movieStats.set(s.movieKey, (movieStats.get(s.movieKey) || 0) + 1))
 
@@ -193,6 +221,7 @@ function computeViewModel() {
     && (!state.dateRange[0] || s.date >= state.dateRange[0])
     && (!state.dateRange[1] || s.date <= state.dateRange[1])
     && `${s.languageTag} ${s.subtitles}`.toLowerCase().includes(state.langQuery.toLowerCase())
+    && (!state.favoritesOnly || state.favorites.has(s.movieKey))
     && (state.densityFilter === 'all' || (state.densityFilter === 'single' ? movieStats.get(s.movieKey) === 1 : movieStats.get(s.movieKey) > 1))
   ))
 
@@ -255,6 +284,11 @@ function cinemaTag(cinema) {
 
 function renderMovieBody(m, asModal = false) {
   const grouped = groupSessionsByDay(m.sessions)
+  const uniqueCinemas = [...new Set(m.sessions.map((s) => s.cinema))]
+  const capacities = m.sessions.map((s) => s.roomCapacity).filter((v) => Number.isFinite(v))
+  const avgCapacity = capacities.length ? Math.round(capacities.reduce((acc, cur) => acc + cur, 0) / capacities.length) : null
+  const firstSession = m.sessions[0]
+  const lastSession = m.sessions.at(-1)
   return `
     <article class="card panel ${state.favorites.has(m.movieKey) ? 'favorite' : ''} ${asModal ? 'modal-card' : ''}" id="${m.anchorId}">
       <div class="poster-wrap"><img src="${m.posterUrl}" alt="${m.movieTitle}" /></div>
@@ -276,12 +310,25 @@ function renderMovieBody(m, asModal = false) {
           ${m.trailerUrl ? `<a href="${m.trailerUrl}" target="_blank" rel="noreferrer">Trailer</a>` : ''}
           ${m.filmUrl ? `<a href="${m.filmUrl}" target="_blank" rel="noreferrer">Details</a>` : ''}
         </div>
-        <details class="sessions-expand" open>
+        ${asModal ? `
+          <section class="modal-metadata panel">
+            <h4>At a glance</h4>
+            <dl>
+              <div><dt>Release week</dt><dd>${weekLabel(m.weeksSinceRelease)}</dd></div>
+              <div><dt>Language / subs</dt><dd>${m.originalLanguage || 'n/a'}${m.subtitles ? ` · ${m.subtitles}` : ''}</dd></div>
+              <div><dt>Awards / buzz</dt><dd>${m.rating || 'Not listed'}</dd></div>
+              <div><dt>Session span</dt><dd>${firstSession ? `${firstSession.date} ${firstSession.time}` : 'n/a'} → ${lastSession ? `${lastSession.date} ${lastSession.time}` : 'n/a'}</dd></div>
+              <div><dt>Cinemas</dt><dd>${uniqueCinemas.join(' • ') || 'n/a'}</dd></div>
+              <div><dt>Avg. seats / room</dt><dd>${avgCapacity ?? 'n/a'} seats</dd></div>
+            </dl>
+          </section>
+        ` : ''}
+        <details class="sessions-expand" ${asModal ? 'open' : ''}>
           <summary>Upcoming sessions (${m.sessions.length})</summary>
           ${Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([date, list]) => `
             <div class="session-day-group">
               <h5>${date}</h5>
-              <ul>${list.map((s) => `<li><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul>
+              <ul>${list.map((s) => `<li title="${sessionTooltip(s)}"><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul>
             </div>
           `).join('')}
         </details>
@@ -312,11 +359,11 @@ function renderSchedule(scheduleByDayHour) {
                 <ul>
                   ${list.map((s) => `
                     <li class="timeline-item ${state.favorites.has(s.movieKey) ? 'favorite' : ''}">
-                      <button class="open-modal-link" data-open-modal="${s.movieKey}">${s.movieTitle}</button>
+                      <button class="open-modal-link" data-open-modal="${s.movieKey}" title="${sessionTooltip(s)}">${s.movieTitle}</button>
                       <div class="timeline-tags">
                         <span class="time-inline">${s.time}</span>
                         <span class="${cinemaTag(s.cinema)}">${s.cinema}</span>
-                        <span>Sala ${s.room || 'n/a'}</span>
+                        <span title="${sessionTooltip(s)}">Sala ${s.room || 'n/a'}</span>
                         <button class="mini-favorite ${state.favorites.has(s.movieKey) ? 'is-favorite' : ''}" data-favorite="${s.movieKey}">★</button>
                       </div>
                     </li>
@@ -368,7 +415,7 @@ function render() {
           <div class="row two-col">
             <div>
               <label>Catalog mode</label>
-              <select id="catalogMode"><option value="full">Full catalog</option><option value="recommended">Recommended / trimmed</option></select>
+              <select id="catalogMode"><option value="full">Full catalog</option><option value="recommended">Recommended / trimmed</option><option value="unrecommended">Not recommended / trimmed out</option></select>
             </div>
             <div>
               <label>Sort movies</label>
@@ -395,8 +442,14 @@ function render() {
             </select>
           </div>
 
-          <div class="row wrap"><label>Cinema</label>${chipList(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid'], state.cinemaFilter, 'cinema')}</div>
-          <div class="row wrap"><label>Day of week</label>${chipList(DAYS, state.dayFilter, 'day', (v) => v.slice(0, 3))}</div>
+          <div class="row sidebar-section cinema-section">
+            <label>Cinema</label>
+            <div class="chip-grid cinema-chip-grid">${chipList(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid'], state.cinemaFilter, 'cinema')}</div>
+          </div>
+          <div class="row sidebar-section day-section">
+            <label>Day of week</label>
+            <div class="chip-grid day-chip-row">${chipList(DAY_CHIPS, state.dayFilter, 'day', (v) => ({ Monday: 'M', Tuesday: 'T', Wednesday: 'W', Thursday: 'T', Friday: 'F', Saturday: 'S', Sunday: 'S' }[v]))}</div>
+          </div>
 
           <div class="row two-col">
             <div><label>Date from</label><input id="dateFrom" type="date" value="${state.dateRange[0] || ''}" /></div>
@@ -416,6 +469,7 @@ function render() {
           <div class="row favorite-tools">
             <label>Favorites (${favoritesCount})</label>
             <div class="tool-actions">
+              <button id="favoritesOnly" class="icon-btn ${state.favoritesOnly ? 'active' : ''}" title="Show only favorites">★ only</button>
               <button id="exportFavorites" class="icon-btn" title="Export favorites">⤓</button>
               <label class="icon-btn" title="Import favorites">⤒<input id="importFavorites" type="file" accept="application/json" /></label>
             </div>
@@ -487,6 +541,9 @@ function bindEvents() {
 
   const showSidebarFloating = document.getElementById('showSidebarFloating')
   if (showSidebarFloating) showSidebarFloating.onclick = () => { state.sidebarHidden = false; render() }
+
+  const favoritesOnly = document.getElementById('favoritesOnly')
+  if (favoritesOnly) favoritesOnly.onclick = () => { state.favoritesOnly = !state.favoritesOnly; render() }
 
   document.getElementById('catalogMode').onchange = (e) => { state.catalogMode = e.target.value; render() }
   document.getElementById('sortBy').onchange = (e) => { state.sortBy = e.target.value; render() }
