@@ -27,6 +27,7 @@ const state = {
   dateRange: ['', ''],
   favorites: new Set(),
   modalMovieKey: null,
+  loadWarnings: [],
 }
 
 const toMinutes = (timeString) => {
@@ -378,6 +379,17 @@ function renderSchedule(scheduleByDayHour) {
   `
 }
 
+
+function renderWarnings() {
+  if (!state.loadWarnings.length) return ''
+  return `
+    <section class="warning-banner panel" role="status" aria-live="polite">
+      <strong>Partial data loaded:</strong>
+      <ul>${state.loadWarnings.map((w) => `<li>${w}</li>`).join('')}</ul>
+    </section>
+  `
+}
+
 function renderModal(modalMovie) {
   if (!modalMovie) return ''
   return `
@@ -482,6 +494,7 @@ function render() {
           <h1>Cinema Schedule Planner</h1>
           <p>Personal planning dashboard with release-age intelligence and favorites sync.</p>
         </header>
+        ${renderWarnings()}
         ${state.mainView === 'catalog' ? renderCatalog(movieCards) : renderSchedule(scheduleByDayHour)}
       </main>
     </div>
@@ -584,14 +597,65 @@ function bindEvents() {
 
 async function init() {
   loadFavorites()
-  const [renoirCsv, golemCsv] = await Promise.all([
-    fetch('./_1_data/cines_renoir_2026-02-15_21-03.csv').then((r) => r.text()),
-    fetch('./_1_data/cines_golem_2026-02-16_00-24.csv').then((r) => r.text()),
+  state.loadWarnings = []
+
+  const discoverLatestCsv = async (prefix) => {
+    try {
+      const listingResp = await fetch('./_1_data/')
+      if (!listingResp.ok) return null
+      const html = await listingResp.text()
+      const pattern = new RegExp(`${prefix}_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.csv`, 'g')
+      const matches = [...new Set([...html.matchAll(pattern)].map((m) => m[0]))]
+      return matches.sort().at(-1) || null
+    } catch {
+      return null
+    }
+  }
+
+  let manifest = {}
+  try {
+    const manifestResp = await fetch('./_1_data/latest.json')
+    if (manifestResp.ok) manifest = await manifestResp.json()
+  } catch {
+    manifest = {}
+  }
+
+  const loadSource = async (key, sourceName, prefix) => {
+    const manifestFile = manifest[key]
+    const fallbackFile = await discoverLatestCsv(prefix)
+    const candidates = [...new Set([manifestFile, fallbackFile].filter(Boolean))]
+
+    if (!candidates.length) {
+      state.loadWarnings.push(`${sourceName} data could not be discovered (manifest or directory listing).`)
+      return []
+    }
+
+    for (const csvFile of candidates) {
+      try {
+        const response = await fetch(`./_1_data/${csvFile}`)
+        if (!response.ok) continue
+        const csvText = await response.text()
+        if (manifestFile && csvFile !== manifestFile) {
+          state.loadWarnings.push(`${sourceName} loaded from fallback file (${csvFile}) because manifest file was unavailable (${manifestFile}).`)
+        }
+        return normalizeRows(csvText, sourceName)
+      } catch {
+        // Try next candidate
+      }
+    }
+
+    state.loadWarnings.push(`${sourceName} data files could not be loaded (${candidates.join(', ')}).`)
+    return []
+  }
+
+  const [renoirRows, golemRows] = await Promise.all([
+    loadSource('renoir', 'Renoir', 'cines_renoir'),
+    loadSource('golem', 'Golem', 'cines_golem'),
   ])
 
-  state.allSessions = [...normalizeRows(renoirCsv, 'Renoir'), ...normalizeRows(golemCsv, 'Golem')]
+  state.allSessions = [...renoirRows, ...golemRows]
   const dates = state.allSessions.map((s) => s.date).filter(Boolean).sort()
-  state.dateRange = [dates[0], dates.at(-1)]
+  state.dateRange = dates.length ? [dates[0], dates.at(-1)] : ['', '']
   render()
 }
 
