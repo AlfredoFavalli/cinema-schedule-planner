@@ -35,7 +35,11 @@ class CinesRenoirScraper:
 
         # Poster
         poster_img = soup.select_one(".single_product_thumb img")
-        poster_url = poster_img["src"] if poster_img else None
+        poster_url = (
+            urljoin("https://www.cinesrenoir.com", poster_img["src"])
+            if poster_img and poster_img.get("src")
+            else None
+        )
 
         details = {
             "Film_URL": film_url,
