@@ -599,32 +599,58 @@ async function init() {
   loadFavorites()
   state.loadWarnings = []
 
-  const manifestResp = await fetch('./_1_data/latest.json')
-  if (!manifestResp.ok) {
-    throw new Error('Missing _1_data/latest.json. Run the extractors to generate the latest data manifest.')
+  const discoverLatestCsv = async (prefix) => {
+    try {
+      const listingResp = await fetch('./_1_data/')
+      if (!listingResp.ok) return null
+      const html = await listingResp.text()
+      const pattern = new RegExp(`${prefix}_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.csv`, 'g')
+      const matches = [...new Set([...html.matchAll(pattern)].map((m) => m[0]))]
+      return matches.sort().at(-1) || null
+    } catch {
+      return null
+    }
   }
-  const manifest = await manifestResp.json()
 
-  const loadSource = async (key, sourceName) => {
-    const csvFile = manifest[key]
-    if (!csvFile) {
-      state.loadWarnings.push(`${sourceName} data is not listed in _1_data/latest.json.`)
+  let manifest = {}
+  try {
+    const manifestResp = await fetch('./_1_data/latest.json')
+    if (manifestResp.ok) manifest = await manifestResp.json()
+  } catch {
+    manifest = {}
+  }
+
+  const loadSource = async (key, sourceName, prefix) => {
+    const manifestFile = manifest[key]
+    const fallbackFile = await discoverLatestCsv(prefix)
+    const candidates = [...new Set([manifestFile, fallbackFile].filter(Boolean))]
+
+    if (!candidates.length) {
+      state.loadWarnings.push(`${sourceName} data could not be discovered (manifest or directory listing).`)
       return []
     }
 
-    const response = await fetch(`./_1_data/${csvFile}`)
-    if (!response.ok) {
-      state.loadWarnings.push(`${sourceName} data file could not be loaded (${csvFile}).`)
-      return []
+    for (const csvFile of candidates) {
+      try {
+        const response = await fetch(`./_1_data/${csvFile}`)
+        if (!response.ok) continue
+        const csvText = await response.text()
+        if (manifestFile && csvFile !== manifestFile) {
+          state.loadWarnings.push(`${sourceName} loaded from fallback file (${csvFile}) because manifest file was unavailable (${manifestFile}).`)
+        }
+        return normalizeRows(csvText, sourceName)
+      } catch {
+        // Try next candidate
+      }
     }
 
-    const csvText = await response.text()
-    return normalizeRows(csvText, sourceName)
+    state.loadWarnings.push(`${sourceName} data files could not be loaded (${candidates.join(', ')}).`)
+    return []
   }
 
   const [renoirRows, golemRows] = await Promise.all([
-    loadSource('renoir', 'Renoir'),
-    loadSource('golem', 'Golem'),
+    loadSource('renoir', 'Renoir', 'cines_renoir'),
+    loadSource('golem', 'Golem', 'cines_golem'),
   ])
 
   state.allSessions = [...renoirRows, ...golemRows]
