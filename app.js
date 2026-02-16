@@ -157,11 +157,16 @@ function normalizeRows(csvText, source) {
   })
 }
 
-const trimRecommended = (sessions) => sessions.filter((s) => (
-  s.dateObj && s.startMin != null && s.duration != null && s.endMin != null
-  && [1, 2, 3, 4, 5].includes(s.dayOfWeek)
-  && s.startMin <= 1200 && s.endMin < 1260 && (s.roomCapacity ?? 0) > 100
-))
+const trimRecommended = (sessions) => sessions.filter((s) => {
+  if (!s.dateObj || s.startMin == null || s.duration == null || s.endMin == null) return false
+  const isWeekday = [1, 2, 3, 4].includes(s.dayOfWeek)
+  const isFriday = s.dayOfWeek === 5
+  const hasCapacity = (s.roomCapacity ?? 0) > 100
+  if (!hasCapacity || (!isWeekday && !isFriday)) return false
+
+  if (isFriday) return true
+  return s.startMin <= 1200 && s.endMin < 1260
+})
 
 function saveFavorites() {
   localStorage.setItem('cinema-favorites-v1', JSON.stringify([...state.favorites]))
