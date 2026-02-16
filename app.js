@@ -5,6 +5,7 @@ const SALA_CAPACITY = {
 }
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DAY_CHIPS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MONTHS_ES = {
   enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
   julio: 6, agosto: 7, septiembre: 8, setiembre: 8, octubre: 9, noviembre: 10, diciembre: 11,
@@ -38,6 +39,20 @@ const duration = (raw) => {
 }
 const cleanTitle = (title = '') => title.replace(/\(.*?\)/g, '').trim().toUpperCase()
 const slugify = (v = '') => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+function formatMinutesAsTime(totalMinutes) {
+  if (totalMinutes == null) return 'n/a'
+  const dayMinutes = ((totalMinutes % 1440) + 1440) % 1440
+  const hours = String(Math.floor(dayMinutes / 60)).padStart(2, '0')
+  const mins = String(dayMinutes % 60).padStart(2, '0')
+  return `${hours}:${mins}`
+}
+
+function sessionTooltip(s) {
+  const seats = s.roomCapacity ? `${s.roomCapacity} seats` : 'Seat count unavailable'
+  const end = s.startMin != null && s.duration != null ? formatMinutesAsTime(s.startMin + s.duration) : 'n/a'
+  return `${seats} • Ends at ${end}`
+}
 
 function parseSpanishEstreno(value) {
   if (!value) return null
@@ -313,7 +328,7 @@ function renderMovieBody(m, asModal = false) {
           ${Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([date, list]) => `
             <div class="session-day-group">
               <h5>${date}</h5>
-              <ul>${list.map((s) => `<li title="${s.roomCapacity ? `${s.roomCapacity} seats` : 'Seat count unavailable'}"><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul>
+              <ul>${list.map((s) => `<li title="${sessionTooltip(s)}"><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul>
             </div>
           `).join('')}
         </details>
@@ -344,11 +359,11 @@ function renderSchedule(scheduleByDayHour) {
                 <ul>
                   ${list.map((s) => `
                     <li class="timeline-item ${state.favorites.has(s.movieKey) ? 'favorite' : ''}">
-                      <button class="open-modal-link" data-open-modal="${s.movieKey}" title="${s.roomCapacity ? `${s.roomCapacity} seats in Sala ${s.room || 'n/a'}` : 'Seat count unavailable'}">${s.movieTitle}</button>
+                      <button class="open-modal-link" data-open-modal="${s.movieKey}" title="${sessionTooltip(s)}">${s.movieTitle}</button>
                       <div class="timeline-tags">
                         <span class="time-inline">${s.time}</span>
                         <span class="${cinemaTag(s.cinema)}">${s.cinema}</span>
-                        <span title="${s.roomCapacity ? `${s.roomCapacity} seats` : 'Seat count unavailable'}">Sala ${s.room || 'n/a'}</span>
+                        <span title="${sessionTooltip(s)}">Sala ${s.room || 'n/a'}</span>
                         <button class="mini-favorite ${state.favorites.has(s.movieKey) ? 'is-favorite' : ''}" data-favorite="${s.movieKey}">★</button>
                       </div>
                     </li>
@@ -427,8 +442,14 @@ function render() {
             </select>
           </div>
 
-          <div class="row wrap"><label>Cinema</label>${chipList(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid'], state.cinemaFilter, 'cinema')}</div>
-          <div class="row wrap"><label>Day of week</label>${chipList(DAYS, state.dayFilter, 'day', (v) => v.slice(0, 3))}</div>
+          <div class="row sidebar-section cinema-section">
+            <label>Cinema</label>
+            <div class="chip-grid cinema-chip-grid">${chipList(['Renoir Princesa', 'Renoir Plaza de España', 'Golem Madrid'], state.cinemaFilter, 'cinema')}</div>
+          </div>
+          <div class="row sidebar-section day-section">
+            <label>Day of week</label>
+            <div class="chip-grid day-chip-row">${chipList(DAY_CHIPS, state.dayFilter, 'day', (v) => ({ Monday: 'M', Tuesday: 'T', Wednesday: 'W', Thursday: 'T', Friday: 'F', Saturday: 'S', Sunday: 'S' }[v]))}</div>
+          </div>
 
           <div class="row two-col">
             <div><label>Date from</label><input id="dateFrom" type="date" value="${state.dateRange[0] || ''}" /></div>

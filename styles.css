@@ -91,6 +91,12 @@ body {
 .row { display: grid; gap: 10px; }
 .row.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .row.wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sidebar-section { gap: 8px; }
+.chip-grid { display: grid; gap: 8px; }
+.cinema-chip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cinema-chip-grid .chip { width: 100%; text-align: center; }
+.day-chip-row { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.day-chip-row .chip { width: 100%; min-width: 0; text-align: center; padding-inline: 0; }
 label { color: var(--muted); font-size: .85rem; }
 
 select, input, button { font: inherit; }
@@ -235,17 +241,28 @@ a { color: #9ba8ff; }
 .modal-content { overflow: auto; padding: 20px; }
 .modal-card {
   margin: 0;
-  grid-template-columns: clamp(240px, 27vw, 360px) minmax(420px, 1fr);
-  grid-template-rows: 1fr;
+  display: grid;
+  grid-template-columns: clamp(240px, 27vw, 360px) minmax(440px, 1fr);
+  grid-template-areas: "poster content";
   align-items: start;
-  column-gap: 20px;
+  column-gap: 24px;
+  overflow: visible;
 }
 .modal-card .poster-wrap {
+  grid-area: poster;
+  align-self: start;
   aspect-ratio: 2 / 3;
-  height: 100%;
-  max-height: 100%;
+  width: 100%;
+  max-height: none;
+  border-radius: 12px;
 }
-.modal-card .content { display: grid; gap: 12px; min-width: 0; }
+.modal-card .content {
+  grid-area: content;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  align-content: start;
+}
 .modal-card .content p { max-width: 78ch; }
 .modal-metadata {
   padding: 12px;
@@ -273,8 +290,12 @@ a { color: #9ba8ff; }
 }
 
 @media (max-width: 980px) {
+  .cinema-chip-grid { grid-template-columns: 1fr; }
   .modal-card {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "poster"
+      "content";
     justify-items: center;
   }
   .modal-card .poster-wrap {
@@ -283,5 +304,6 @@ a { color: #9ba8ff; }
     border-radius: 12px;
   }
   .modal-card .content { width: 100%; }
+  .day-chip-row { gap: 6px; }
   .modal-metadata dl { grid-template-columns: 1fr; }
 }
