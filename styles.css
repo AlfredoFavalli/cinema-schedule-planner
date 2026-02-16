@@ -94,7 +94,19 @@ body {
 .sidebar-section { gap: 8px; }
 .chip-grid { display: grid; gap: 8px; }
 .cinema-chip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.cinema-chip-grid .chip { width: 100%; text-align: center; }
+.cinema-chip-grid .chip {
+  width: 100%;
+  min-width: 150px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .day-chip-row { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .day-chip-row .chip { width: 100%; min-width: 0; text-align: center; padding-inline: 0; }
 label { color: var(--muted); font-size: .85rem; }
