@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 import requests
 from bs4 import BeautifulSoup
@@ -144,7 +145,23 @@ class CinesRenoirScraper:
         # Save the new file
         df = pd.DataFrame(self.data)
         df.to_csv(filename, index=False)
+
+        # Update manifest with the latest CSV filenames
+        manifest_path = os.path.join(data_dir, 'latest.json')
+        manifest = {}
+        if os.path.exists(manifest_path):
+            try:
+                with open(manifest_path, 'r', encoding='utf-8') as manifest_file:
+                    manifest = json.load(manifest_file)
+            except json.JSONDecodeError:
+                manifest = {}
+
+        manifest['renoir'] = os.path.basename(filename)
+        with open(manifest_path, 'w', encoding='utf-8') as manifest_file:
+            json.dump(manifest, manifest_file, ensure_ascii=False, indent=2)
+
         print(f"Data saved to {filename}")
+        print(f"Manifest updated at {manifest_path}")
 
 
 if __name__ == "__main__":

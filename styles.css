@@ -318,3 +318,8 @@ a { color: #9ba8ff; }
   .day-chip-row { gap: 6px; }
   .modal-metadata dl { grid-template-columns: 1fr; }
 }
+
+
+.warning-banner { border: 1px solid rgba(255, 184, 77, 0.45); background: rgba(255, 184, 77, 0.12); margin-bottom: 14px; }
+.warning-banner strong { display: block; margin-bottom: 6px; color: #ffd28b; }
+.warning-banner ul { margin: 0; padding-left: 18px; color: #ffd28b; }

@@ -27,6 +27,7 @@ const state = {
   dateRange: ['', ''],
   favorites: new Set(),
   modalMovieKey: null,
+  loadWarnings: [],
 }
 
 const toMinutes = (timeString) => {
@@ -378,6 +379,17 @@ function renderSchedule(scheduleByDayHour) {
   `
 }
 
+
+function renderWarnings() {
+  if (!state.loadWarnings.length) return ''
+  return `
+    <section class="warning-banner panel" role="status" aria-live="polite">
+      <strong>Partial data loaded:</strong>
+      <ul>${state.loadWarnings.map((w) => `<li>${w}</li>`).join('')}</ul>
+    </section>
+  `
+}
+
 function renderModal(modalMovie) {
   if (!modalMovie) return ''
   return `
@@ -482,6 +494,7 @@ function render() {
           <h1>Cinema Schedule Planner</h1>
           <p>Personal planning dashboard with release-age intelligence and favorites sync.</p>
         </header>
+        ${renderWarnings()}
         ${state.mainView === 'catalog' ? renderCatalog(movieCards) : renderSchedule(scheduleByDayHour)}
       </main>
     </div>
@@ -584,14 +597,39 @@ function bindEvents() {
 
 async function init() {
   loadFavorites()
-  const [renoirCsv, golemCsv] = await Promise.all([
-    fetch('./_1_data/cines_renoir_2026-02-15_21-03.csv').then((r) => r.text()),
-    fetch('./_1_data/cines_golem_2026-02-16_00-24.csv').then((r) => r.text()),
+  state.loadWarnings = []
+
+  const manifestResp = await fetch('./_1_data/latest.json')
+  if (!manifestResp.ok) {
+    throw new Error('Missing _1_data/latest.json. Run the extractors to generate the latest data manifest.')
+  }
+  const manifest = await manifestResp.json()
+
+  const loadSource = async (key, sourceName) => {
+    const csvFile = manifest[key]
+    if (!csvFile) {
+      state.loadWarnings.push(`${sourceName} data is not listed in _1_data/latest.json.`)
+      return []
+    }
+
+    const response = await fetch(`./_1_data/${csvFile}`)
+    if (!response.ok) {
+      state.loadWarnings.push(`${sourceName} data file could not be loaded (${csvFile}).`)
+      return []
+    }
+
+    const csvText = await response.text()
+    return normalizeRows(csvText, sourceName)
+  }
+
+  const [renoirRows, golemRows] = await Promise.all([
+    loadSource('renoir', 'Renoir'),
+    loadSource('golem', 'Golem'),
   ])
 
-  state.allSessions = [...normalizeRows(renoirCsv, 'Renoir'), ...normalizeRows(golemCsv, 'Golem')]
+  state.allSessions = [...renoirRows, ...golemRows]
   const dates = state.allSessions.map((s) => s.date).filter(Boolean).sort()
-  state.dateRange = [dates[0], dates.at(-1)]
+  state.dateRange = dates.length ? [dates[0], dates.at(-1)] : ['', '']
   render()
 }
 
