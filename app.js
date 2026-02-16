@@ -11,6 +11,26 @@ const MONTHS_ES = {
   julio: 6, agosto: 7, septiembre: 8, setiembre: 8, octubre: 9, noviembre: 10, diciembre: 11,
 }
 
+
+const SEATMAP_API_BASE = (() => {
+  const configured = typeof window !== 'undefined' ? window.SEATMAP_API_BASE : ''
+  if (configured) return String(configured).replace(/\/$/, '')
+
+  if (typeof window !== 'undefined' && ['http:', 'https:'].includes(window.location.protocol)) {
+    return window.location.origin.replace(/\/$/, '')
+  }
+
+  return 'http://127.0.0.1:8765'
+})()
+
+function buildSeatMapApiUrl(ticketUrl) {
+  const encodedTicket = encodeURIComponent(ticketUrl)
+  if (/^https?:\/\//i.test(SEATMAP_API_BASE)) {
+    return `${SEATMAP_API_BASE}/api/seatmap?ticket_url=${encodedTicket}`
+  }
+  return `/api/seatmap?ticket_url=${encodedTicket}`
+}
+
 const state = {
   allSessions: [],
   catalogMode: 'full',
@@ -361,15 +381,15 @@ async function openSeatMap(sessionId) {
   state.seatMapModal = { open: true, loading: true, error: '', data: null, sessionId }
   render()
   try {
-    const response = await fetch(`http://127.0.0.1:8765/api/seatmap?ticket_url=${encodeURIComponent(session.ticketUrl)}`)
-    const payload = await response.json()
+    const response = await fetch(buildSeatMapApiUrl(session.ticketUrl))
+    const payload = await response.json().catch(() => ({}))
     if (!response.ok) throw new Error(payload.error || `Seat map service error (${response.status}).`)
     state.seatMapModal = { open: true, loading: false, error: '', data: payload, sessionId }
   } catch (error) {
     state.seatMapModal = {
       open: true,
       loading: false,
-      error: `Unable to load seat map. Start 3_PillalasSeatMapService.py and try again. (${error.message})`,
+      error: `Unable to load seat map. Make sure the seat-map API is reachable at ${SEATMAP_API_BASE}/api/seatmap (or set window.SEATMAP_API_BASE). (${error.message})`,
       data: null,
       sessionId,
     }
