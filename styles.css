@@ -199,6 +199,18 @@ a { color: #9ba8ff; }
 .session-day-group h5 { margin: 10px 0 6px; color: #bcd0ff; }
 .session-day-group ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .session-day-group li { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; background: #0d1328; border: 1px solid #26305e; border-radius: 10px; padding: 8px; }
+.seatmap-btn {
+  border: 1px solid #5070e6;
+  background: #16275d;
+  color: #dbe5ff;
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+.seatmap-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 .timeline-days {
   display: grid;
@@ -290,6 +302,63 @@ a { color: #9ba8ff; }
 .modal-metadata div { display: grid; gap: 2px; }
 .modal-metadata dt { color: var(--muted); font-size: .78rem; }
 .modal-metadata dd { margin: 0; font-size: .9rem; }
+
+.seatmap-shell { width: min(1024px, calc(100vw - 56px)); }
+.seatmap-content { display: grid; gap: 14px; }
+.seatmap-error { color: #ff9da2; }
+.seatmap-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  padding: 10px;
+}
+.seatmap-summary div {
+  background: #121c3f;
+  border: 1px solid #2f417f;
+  border-radius: 10px;
+  padding: 8px;
+  display: grid;
+  gap: 3px;
+}
+.seatmap-summary strong { font-size: 1.2rem; }
+.seatmap-summary span { color: var(--muted); font-size: .78rem; }
+
+.seat-grid-wrap {
+  overflow: auto;
+  border: 1px solid #29366f;
+  border-radius: 12px;
+  background: #0e1531;
+  padding: 10px;
+}
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--seat-cols), minmax(14px, 22px));
+  grid-template-rows: repeat(var(--seat-rows), minmax(14px, 22px));
+  gap: 6px;
+  justify-content: start;
+}
+.seat-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid #111;
+}
+.seat-dot.normal { background: #24dd2e; }
+.seat-dot.vendida { background: #f44242; }
+.seat-dot.minusvalido { background: #2ba5ff; }
+.seat-dot.noactiva { background: #8f8f8f; }
+
+.seat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.seat-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d6defd;
+}
 
 .empty { padding: 18px; }
 
