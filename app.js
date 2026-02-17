@@ -11,6 +11,26 @@ const MONTHS_ES = {
   julio: 6, agosto: 7, septiembre: 8, setiembre: 8, octubre: 9, noviembre: 10, diciembre: 11,
 }
 
+
+const SEATMAP_API_BASE = (() => {
+  const configured = typeof window !== 'undefined' ? window.SEATMAP_API_BASE : ''
+  if (configured) return String(configured).replace(/\/$/, '')
+
+  if (typeof window !== 'undefined' && ['http:', 'https:'].includes(window.location.protocol)) {
+    return window.location.origin.replace(/\/$/, '')
+  }
+
+  return 'http://127.0.0.1:8765'
+})()
+
+function buildSeatMapApiUrl(ticketUrl) {
+  const encodedTicket = encodeURIComponent(ticketUrl)
+  if (/^https?:\/\//i.test(SEATMAP_API_BASE)) {
+    return `${SEATMAP_API_BASE}/api/seatmap?ticket_url=${encodedTicket}`
+  }
+  return `/api/seatmap?ticket_url=${encodedTicket}`
+}
+
 const state = {
   allSessions: [],
   catalogMode: 'full',
@@ -28,6 +48,13 @@ const state = {
   favorites: new Set(),
   modalMovieKey: null,
   loadWarnings: [],
+  seatMapModal: {
+    open: false,
+    loading: false,
+    error: '',
+    data: null,
+    sessionId: null,
+  },
 }
 
 const toMinutes = (timeString) => {
@@ -161,6 +188,7 @@ function normalizeRows(csvText, source) {
       posterUrl: row.Poster_URL || 'https://placehold.co/360x540?text=No+Poster',
       trailerUrl: row.Trailer_URL || '',
       filmUrl: row.Film_URL || row.Pelicula_URL || '',
+      ticketUrl: row.Tickets_URL || row.Ticket_URL || row.Pillalas_URL || '',
       year: row.Estreno?.match(/\b(19|20)\d{2}\b/)?.[0] || null,
       originalLanguage: row.Idioma_Original || '',
       subtitles: isVose ? 'Spanish subtitles (VOSE)' : '',
@@ -278,6 +306,97 @@ function groupSessionsByDay(sessions) {
   return map
 }
 
+function seatTypeLabel(type) {
+  return {
+    normal: 'Available',
+    vendida: 'Sold',
+    minusvalido: 'PMR',
+    noactiva: 'Not available',
+  }[type] || type
+}
+
+function seatTypeClass(type) {
+  return `seat-dot ${type || 'unknown'}`
+}
+
+function renderSeatMapModal() {
+  if (!state.seatMapModal.open) return ''
+  const { loading, error, data } = state.seatMapModal
+
+  const totals = data?.totals || {}
+  const seats = data?.seats || []
+  const seatGrid = seats.length ? `
+    <div class="seat-grid-wrap">
+      <div class="seat-grid" style="--seat-cols:${Math.max(...seats.map((s) => s.column || 1))};--seat-rows:${Math.max(...seats.map((s) => s.row || 1))};">
+        ${seats.map((seat) => `<span
+          class="${seatTypeClass(seat.type)}"
+          style="grid-column:${seat.column || 1};grid-row:${seat.row || 1};"
+          title="${seat.label || `Row ${seat.row || '?'} · Seat ${seat.column || '?'}`} (${seatTypeLabel(seat.type)})"
+        ></span>`).join('')}
+      </div>
+    </div>
+  ` : '<p>No seat positions found for this session.</p>'
+
+  return `
+    <div class="modal-backdrop" id="seatMapBackdrop">
+      <div class="modal-shell panel seatmap-shell" role="dialog" aria-modal="true" aria-label="Session seat map">
+        <div class="modal-head">
+          <h3>Tickets / Seats</h3>
+          <button id="closeSeatMap" class="icon-btn" title="Close">✕</button>
+        </div>
+        <div class="modal-content seatmap-content">
+          ${loading ? '<p>Loading live seat map from Pillalas…</p>' : ''}
+          ${error ? `<p class="seatmap-error">${error}</p>` : ''}
+          ${!loading && !error && data ? `
+            <section class="seatmap-summary panel">
+              <div><strong>${totals.available_normal ?? 0}</strong><span>Available</span></div>
+              <div><strong>${totals.sold_vendida ?? 0}</strong><span>Sold</span></div>
+              <div><strong>${totals.pmr_minusvalido ?? 0}</strong><span>PMR</span></div>
+              <div><strong>${totals.unavailable_noactiva ?? 0}</strong><span>Not available</span></div>
+              <div><strong>${totals.total_seats ?? 0}</strong><span>Total</span></div>
+            </section>
+            ${seatGrid}
+            <div class="seat-legend">
+              <span><i class="seat-dot normal"></i>Available</span>
+              <span><i class="seat-dot vendida"></i>Sold</span>
+              <span><i class="seat-dot minusvalido"></i>PMR</span>
+              <span><i class="seat-dot noactiva"></i>Not available</span>
+            </div>
+            ${data.ticket_url ? `<p><a href="${data.ticket_url}" target="_blank" rel="noreferrer">Open ticket page</a></p>` : ''}
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `
+}
+
+async function openSeatMap(sessionId) {
+  const session = state.allSessions.find((s) => s.id === sessionId)
+  if (!session || !session.ticketUrl) {
+    state.seatMapModal = { open: true, loading: false, error: 'This session has no ticket URL.', data: null, sessionId }
+    render()
+    return
+  }
+
+  state.seatMapModal = { open: true, loading: true, error: '', data: null, sessionId }
+  render()
+  try {
+    const response = await fetch(buildSeatMapApiUrl(session.ticketUrl))
+    const payload = await response.json().catch(() => ({}))
+    if (!response.ok) throw new Error(payload.error || `Seat map service error (${response.status}).`)
+    state.seatMapModal = { open: true, loading: false, error: '', data: payload, sessionId }
+  } catch (error) {
+    state.seatMapModal = {
+      open: true,
+      loading: false,
+      error: `Unable to load seat map. Make sure the seat-map API is reachable at ${SEATMAP_API_BASE}/api/seatmap (or set window.SEATMAP_API_BASE). (${error.message})`,
+      data: null,
+      sessionId,
+    }
+  }
+  render()
+}
+
 function cinemaTag(cinema) {
   if (cinema.includes('Golem')) return 'tag golem'
   return cinema.includes('Plaza') ? 'tag plaza' : 'tag renoir'
@@ -329,7 +448,7 @@ function renderMovieBody(m, asModal = false) {
           ${Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([date, list]) => `
             <div class="session-day-group">
               <h5>${date}</h5>
-              <ul>${list.map((s) => `<li title="${sessionTooltip(s)}"><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span></li>`).join('')}</ul>
+              <ul>${list.map((s) => `<li title="${sessionTooltip(s)}"><strong>${s.time}</strong><span class="${cinemaTag(s.cinema)}">${s.cinema}</span><span>Sala ${s.room || 'n/a'}</span><button class="seatmap-btn" data-seatmap="${s.id}" ${s.ticketUrl ? '' : 'disabled'}>Tickets / Seats</button></li>`).join('')}</ul>
             </div>
           `).join('')}
         </details>
@@ -365,6 +484,7 @@ function renderSchedule(scheduleByDayHour) {
                         <span class="time-inline">${s.time}</span>
                         <span class="${cinemaTag(s.cinema)}">${s.cinema}</span>
                         <span title="${sessionTooltip(s)}">Sala ${s.room || 'n/a'}</span>
+                        <button class="seatmap-btn" data-seatmap="${s.id}" ${s.ticketUrl ? '' : 'disabled'}>Tickets / Seats</button>
                         <button class="mini-favorite ${state.favorites.has(s.movieKey) ? 'is-favorite' : ''}" data-favorite="${s.movieKey}">★</button>
                       </div>
                     </li>
@@ -499,6 +619,7 @@ function render() {
       </main>
     </div>
     ${renderModal(modalMovie)}
+    ${renderSeatMapModal()}
   `
 
   document.getElementById('catalogMode').value = state.catalogMode
@@ -548,6 +669,31 @@ function bindEvents() {
       }
     }
   }
+
+  const seatMapBackdrop = document.getElementById('seatMapBackdrop')
+  if (seatMapBackdrop) {
+    seatMapBackdrop.onclick = (e) => {
+      if (e.target.id === 'seatMapBackdrop') {
+        state.seatMapModal.open = false
+        render()
+      }
+    }
+  }
+
+  const closeSeatMap = document.getElementById('closeSeatMap')
+  if (closeSeatMap) {
+    closeSeatMap.onclick = () => {
+      state.seatMapModal.open = false
+      render()
+    }
+  }
+
+  document.querySelectorAll('[data-seatmap]').forEach((btn) => {
+    btn.onclick = (e) => {
+      e.preventDefault()
+      openSeatMap(btn.dataset.seatmap)
+    }
+  })
 
   const toggleSidebar = document.getElementById('toggleSidebar')
   if (toggleSidebar) toggleSidebar.onclick = () => { state.sidebarHidden = true; render() }

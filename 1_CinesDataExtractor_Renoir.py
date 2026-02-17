@@ -95,6 +95,11 @@ class CinesRenoirScraper:
             for slot in time_slots:
                 room_element = slot.find('span', style="font-size:12px")
                 time_element = slot.find('a', class_='btn btn-primary')
+                ticket_url = (
+                    urljoin("https://www.pillalas.com", time_element.get('href'))
+                    if time_element and time_element.get('href')
+                    else None
+                )
 
                 room = room_element.text.strip().replace('sala ', '') if room_element else None
                 time = time_element.text.strip() if time_element else None
@@ -107,6 +112,7 @@ class CinesRenoirScraper:
                     'Horario': time,
                     'Fecha': date,
                     'Cine': cine_name,
+                    'Tickets_URL': ticket_url,
                 }
 
                 row.update(film_details)
