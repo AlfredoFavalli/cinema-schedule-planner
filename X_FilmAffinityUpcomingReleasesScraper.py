@@ -3,7 +3,8 @@ import csv
 import json
 import re
 import shutil
-from datetime import date, datetime
+from datetime import UTC, date, datetime
+from html import unescape
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from urllib.error import URLError
@@ -35,6 +36,11 @@ def normalize(value: Optional[str]) -> str:
     return re.sub(r"\s+", " ", value or "").strip()
 
 
+def strip_html(html_fragment: Optional[str]) -> str:
+    text = unescape(re.sub(r"<[^>]+>", " ", html_fragment or ""))
+    return normalize(text)
+
+
 def parse_int(value: Optional[str]) -> Optional[int]:
     if value is None:
         return None
@@ -45,12 +51,11 @@ def parse_int(value: Optional[str]) -> Optional[int]:
 def parse_float(value: Optional[str]) -> Optional[float]:
     if not value:
         return None
-    if "--" in value:
+    value = value.strip()
+    if value == "--":
         return None
     match = re.search(r"\d+(?:[\.,]\d+)?", value)
-    if not match:
-        return None
-    return float(match.group(0).replace(",", "."))
+    return float(match.group(0).replace(",", ".")) if match else None
 
 
 def split_srcset(srcset: str) -> Optional[str]:
@@ -74,86 +79,151 @@ def split_srcset(srcset: str) -> Optional[str]:
 
 
 def fetch_page(url: str) -> str:
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urlopen(req, timeout=30) as resp:
-        return resp.read().decode('utf-8', errors='replace')
+        return resp.read().decode("utf-8", errors="replace")
+
+
+def find_matching_div_end(html: str, open_start: int) -> int:
+    open_tag_end = html.find('>', open_start)
+    if open_tag_end == -1:
+        return len(html)
+
+    depth = 1
+    pos = open_tag_end + 1
+    token_re = re.compile(r"<div\b|</div>", re.IGNORECASE)
+    while depth > 0:
+        match = token_re.search(html, pos)
+        if not match:
+            return len(html)
+        token = match.group(0).lower()
+        if token.startswith("<div"):
+            depth += 1
+        else:
+            depth -= 1
+        pos = match.end()
+    return pos
+
+
+def extract_div_blocks(html: str, class_tokens: List[str], id_pattern: Optional[str] = None) -> List[Tuple[str, Optional[str]]]:
+    blocks: List[Tuple[str, Optional[str]]] = []
+    start_tag_re = re.compile(r"<div\b[^>]*>", re.IGNORECASE)
+    id_re = re.compile(id_pattern) if id_pattern else None
+
+    for m in start_tag_re.finditer(html):
+        tag = m.group(0)
+        class_m = re.search(r'class\s*=\s*"([^"]+)"', tag, re.IGNORECASE)
+        if not class_m:
+            continue
+        classes = class_m.group(1)
+        if not all(token in classes for token in class_tokens):
+            continue
+
+        id_value = None
+        if id_re:
+            id_m = re.search(r'id\s*=\s*"([^"]+)"', tag, re.IGNORECASE)
+            if not id_m or not id_re.search(id_m.group(1)):
+                continue
+            id_value = id_m.group(1)
+
+        end = find_matching_div_end(html, m.start())
+        blocks.append((html[m.start():end], id_value))
+    return blocks
 
 
 def extract_date_groups(html: str) -> List[Tuple[str, str]]:
-    groups = []
-    pattern = re.compile(r'(<div class="fa-content-card rdate-cat" id="date-(\d{4}-\d{2}-\d{2})".*?</div>\s*</div>)', re.DOTALL)
-    for block, date_str in pattern.findall(html):
-        groups.append((date_str, block))
-    return groups
+    out: List[Tuple[str, str]] = []
+    for block, raw_id in extract_div_blocks(html, ["fa-content-card", "rdate-cat"], id_pattern=r"^date-\d{4}-\d{2}-\d{2}$"):
+        if not raw_id:
+            continue
+        out.append((raw_id.replace("date-", "", 1), block))
+    return out
 
 
-def extract_people(block: str, css_hint: str) -> List[Dict[str, Optional[str]]]:
-    section = re.search(rf'<div[^>]*class="[^"]*{css_hint}[^"]*"[^>]*>(.*?)</div>', block, re.DOTALL)
+def extract_people(card: str, class_name: str) -> List[Dict[str, Optional[str]]]:
+    section = re.search(rf'<div[^>]*class="[^"]*{class_name}[^"]*"[^>]*>(.*?)</div>', card, re.IGNORECASE | re.DOTALL)
     if not section:
         return []
     people = []
-    for href, name in re.findall(r'<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', section.group(1), re.DOTALL):
-        clean_name = normalize(re.sub(r'<[^>]+>', ' ', name))
+    for href, name in re.findall(r'<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', section.group(1), re.IGNORECASE | re.DOTALL):
+        clean_name = strip_html(name)
         if clean_name:
-            people.append({'name': clean_name, 'url': urljoin(FA_BASE, href)})
+            people.append({"name": clean_name, "url": urljoin(FA_BASE, href)})
     return people
 
 
 def extract_movie_rows(group_html: str, release_date: str) -> List[Dict[str, object]]:
     rows = []
-    for card in re.findall(r'(<div[^>]*class="[^"]*row movie-card[^"]*"[^>]*>.*?</div>\s*</div>)', group_html, re.DOTALL):
-        movie_id = normalize(re.search(r'data-movie-id="([^"]+)"', card).group(1) if re.search(r'data-movie-id="([^"]+)"', card) else '')
-        title_match = re.search(r'class="[^"]*mc-title[^"]*"[^>]*>\s*<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', card, re.DOTALL)
-        film_url = urljoin(FA_BASE, title_match.group(1)) if title_match else None
-        title = normalize(re.sub(r'<[^>]+>', ' ', title_match.group(2) if title_match else ''))
+    for card, _ in extract_div_blocks(group_html, ["row", "movie-card"]):
+        movie_id_m = re.search(r'data-movie-id="(\d+)"', card)
+        movie_id = movie_id_m.group(1) if movie_id_m else ""
 
-        srcset_match = re.search(r'(?:data-srcset|srcset)="([^"]+)"', card)
-        src_match = re.search(r'(?:data-src|src)="([^"]+)"', card)
-        poster_url = split_srcset(srcset_match.group(1)) if srcset_match else (urljoin(FA_BASE, src_match.group(1)) if src_match else None)
+        title_m = re.search(r'<div class="fs-6 mc-title">.*?<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
+        filmaffinity_url = urljoin(FA_BASE, title_m.group(1)) if title_m else None
+        title = strip_html(title_m.group(2)) if title_m else ""
 
-        runtime = parse_int(re.search(r'(\d+)\s*min', card, re.IGNORECASE).group(1) if re.search(r'(\d+)\s*min', card, re.IGNORECASE) else None)
-        year = parse_int(re.search(r'\b(19|20)\d{2}\b', card).group(0) if re.search(r'\b(19|20)\d{2}\b', card) else None)
+        data_srcset_m = re.search(r'data-srcset="([^"]+)"', card, re.IGNORECASE)
+        srcset_m = re.search(r'srcset="([^"]+)"', card, re.IGNORECASE)
+        src_m = re.search(r'\ssrc="([^"]+)"', card, re.IGNORECASE)
+        poster_url = None
+        if data_srcset_m:
+            poster_url = split_srcset(data_srcset_m.group(1))
+        elif srcset_m:
+            poster_url = split_srcset(srcset_m.group(1))
+        elif src_m:
+            poster_url = urljoin(FA_BASE, src_m.group(1))
 
-        country_code = None
-        cc = re.search(r'/imgs/countries2/([A-Za-z]{2})\.png', card)
-        if cc:
-            country_code = cc.group(1).upper()
+        duration_m = re.search(r'(\d+)\s*min\.', card, re.IGNORECASE)
+        duration_min = parse_int(duration_m.group(1) if duration_m else None)
 
-        genres = [normalize(re.sub(r'<[^>]+>', ' ', g)) for g in re.findall(r'<[^>]*class="[^"]*type[^"]*"[^>]*>(.*?)</', card, re.DOTALL)]
-        synopsis = normalize(re.sub(r'<[^>]+>', ' ', re.search(r'class="[^"]*synopsis[^"]*"[^>]*>(.*?)</', card, re.DOTALL).group(1) if re.search(r'class="[^"]*synopsis[^"]*"[^>]*>(.*?)</', card, re.DOTALL) else ''))
+        genres = [strip_html(x) for x in re.findall(r'<span class="type">(.*?)</span>', card, re.IGNORECASE | re.DOTALL)]
+        genres = [g for g in genres if g]
 
-        director = extract_people(card, 'direct')
-        cast_top = extract_people(card, 'cast')
+        country_code_m = re.search(r'/imgs/countries2/([A-Za-z]{2})\.png', card)
+        country_code = country_code_m.group(1).upper() if country_code_m else None
 
-        rating_avg = parse_float(re.search(r'class="[^"]*avgrat[^"]*"[^>]*>(.*?)</', card, re.DOTALL).group(1) if re.search(r'class="[^"]*avgrat[^"]*"[^>]*>(.*?)</', card, re.DOTALL) else None)
-        rating_count = parse_int(re.search(r'class="[^"]*ratcount[^"]*"[^>]*>(.*?)</', card, re.DOTALL).group(1) if re.search(r'class="[^"]*ratcount[^"]*"[^>]*>(.*?)</', card, re.DOTALL) else None)
+        year_m = re.search(r'<span class="mc-year[^"]*">\s*(\d{4})', card, re.IGNORECASE)
+        year = parse_int(year_m.group(1) if year_m else None)
 
-        theaters_match = re.search(r'<a[^>]*href="([^"]*cityTheaters[^"]*)"[^>]*>(.*?)</a>', card, re.DOTALL | re.IGNORECASE)
-        theaters_url = urljoin(FA_BASE, theaters_match.group(1)) if theaters_match else None
-        theaters_count = parse_int(theaters_match.group(2) if theaters_match else None)
+        synopsis_m = re.search(r'<div class="text-secondary synop"[^>]*>(.*?)</div>', card, re.IGNORECASE | re.DOTALL)
+        synopsis_short = strip_html(synopsis_m.group(1)) if synopsis_m else ""
 
-        trailer_available = bool(re.search(r'trailer', card, re.IGNORECASE))
+        directors = extract_people(card, "mc-director")
+        cast_top = extract_people(card, "mc-cast")
+
+        theaters_m = re.search(r'href="([^"]*cityTheaters[^"]*)"[^>]*>.*?<span[^>]*badge[^>]*>(\d+)</span>', card, re.IGNORECASE | re.DOTALL)
+        theaters_url = urljoin(FA_BASE, theaters_m.group(1)) if theaters_m else None
+        theaters_count = parse_int(theaters_m.group(2) if theaters_m else None)
+
+        trailer_available = bool(re.search(r'play-trailer', card, re.IGNORECASE))
+
+        avg_m = re.search(r'<div class="avg[^"]*">\s*([\d,.-]+)', card, re.IGNORECASE)
+        rating_avg = parse_float(avg_m.group(1) if avg_m else None)
+
+        ratcount_m = re.search(r'class="[^"]*ratcount[^"]*"[^>]*>(.*?)</', card, re.IGNORECASE | re.DOTALL)
+        rating_count = parse_int(strip_html(ratcount_m.group(1)) if ratcount_m else None)
 
         rows.append({
-            'movie_id': movie_id,
-            'release_date': release_date,
-            'title': title,
-            'filmaffinity_url': film_url,
-            'poster_url': poster_url,
-            'duration_min': runtime,
-            'year': year,
-            'country_code': country_code,
-            'genres': json.dumps([g for g in genres if g], ensure_ascii=False),
-            'synopsis_short': synopsis,
-            'director': json.dumps(director, ensure_ascii=False),
-            'cast_top': json.dumps(cast_top, ensure_ascii=False),
-            'rating_avg': rating_avg,
-            'rating_count': rating_count,
-            'theaters_count': theaters_count,
-            'theaters_url': theaters_url,
-            'trailer_available': trailer_available,
-            'scraped_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+            "movie_id": movie_id,
+            "release_date": release_date,
+            "title": title,
+            "filmaffinity_url": filmaffinity_url,
+            "poster_url": poster_url,
+            "duration_min": duration_min,
+            "year": year,
+            "country_code": country_code,
+            "genres": json.dumps(genres, ensure_ascii=False),
+            "synopsis_short": synopsis_short,
+            "director": json.dumps(directors, ensure_ascii=False),
+            "cast_top": json.dumps(cast_top, ensure_ascii=False),
+            "rating_avg": rating_avg,
+            "rating_count": rating_count,
+            "theaters_count": theaters_count,
+            "theaters_url": theaters_url,
+            "trailer_available": trailer_available,
+            "scraped_at": datetime.now(UTC).isoformat(timespec="seconds").replace("+00:00", "Z"),
         })
+
     return rows
 
 
@@ -162,15 +232,12 @@ def scrape_window(start: date, end: date, max_stale_scrolls: int) -> List[Dict[s
     stale = 0
     offset = 0
 
-    # Consent is browser-managed; for HTTP scraping we keep this step explicit/no-op.
-    accepted_banner = False
-
     while stale < max_stale_scrolls:
         url = BASE_URL if offset == 0 else f"{BASE_URL}&{urlencode({'offset': offset})}"
         html = fetch_page(url)
 
-        if not accepted_banner and 'id="accept-btn"' in html:
-            accepted_banner = True
+        # Safe banner handling for non-browser scrape path.
+        _banner_present = 'id="accept-btn"' in html
 
         groups = extract_date_groups(html)
         if not groups:
@@ -180,13 +247,16 @@ def scrape_window(start: date, end: date, max_stale_scrolls: int) -> List[Dict[s
 
         newest_seen = None
         before = len(all_rows)
-        for release_str, block in groups:
-            release = datetime.strptime(release_str, '%Y-%m-%d').date()
-            newest_seen = release if newest_seen is None or release > newest_seen else newest_seen
-            if not (start <= release <= end):
+
+        for release_str, group_html in groups:
+            release_date = datetime.strptime(release_str, "%Y-%m-%d").date()
+            if newest_seen is None or release_date > newest_seen:
+                newest_seen = release_date
+            if not (start <= release_date <= end):
                 continue
-            for row in extract_movie_rows(block, release_str):
-                key = (str(row.get('movie_id', '')), str(row.get('release_date', '')))
+
+            for row in extract_movie_rows(group_html, release_str):
+                key = (str(row.get("movie_id", "")), str(row.get("release_date", "")))
                 all_rows[key] = row
 
         if newest_seen and newest_seen > end:
@@ -202,9 +272,9 @@ def read_existing(path: Path) -> Dict[Tuple[str, str], Dict[str, object]]:
     if not path.exists():
         return {}
     out = {}
-    with path.open('r', encoding='utf-8', newline='') as fh:
+    with path.open("r", encoding="utf-8", newline="") as fh:
         for row in csv.DictReader(fh):
-            out[(row.get('movie_id', ''), row.get('release_date', ''))] = row
+            out[(row.get("movie_id", ""), row.get("release_date", ""))] = row
     return out
 
 
@@ -212,10 +282,10 @@ def backup_file(path: Path, keep: int) -> None:
     if not path.exists():
         return
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    copy = BACKUP_DIR / f'filmAffinity_upcoming_releases_{stamp}.csv'
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    copy = BACKUP_DIR / f"filmAffinity_upcoming_releases_{stamp}.csv"
     shutil.copy2(path, copy)
-    files = sorted(BACKUP_DIR.glob('filmAffinity_upcoming_releases_*.csv'))
+    files = sorted(BACKUP_DIR.glob("filmAffinity_upcoming_releases_*.csv"))
     while len(files) > keep:
         files.pop(0).unlink(missing_ok=True)
 
@@ -224,12 +294,12 @@ def merge(existing: Dict[Tuple[str, str], Dict[str, object]], fresh: List[Dict[s
     added = 0
     updated = 0
     for row in fresh:
-        key = (str(row.get('movie_id', '')), str(row.get('release_date', '')))
-        normalized = {k: '' if v is None else v for k, v in row.items()}
+        key = (str(row.get("movie_id", "")), str(row.get("release_date", "")))
+        normalized = {k: "" if v is None else v for k, v in row.items()}
         if key not in existing:
             existing[key] = normalized
             added += 1
-        elif any(str(existing[key].get(k, '')) != str(v) for k, v in normalized.items()):
+        elif any(str(existing[key].get(k, "")) != str(v) for k, v in normalized.items()):
             existing[key] = normalized
             updated += 1
     return added, updated
@@ -238,12 +308,12 @@ def merge(existing: Dict[Tuple[str, str], Dict[str, object]], fresh: List[Dict[s
 def write_canonical(path: Path, rows: Dict[Tuple[str, str], Dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fields = [
-        'movie_id', 'release_date', 'title', 'filmaffinity_url', 'poster_url', 'duration_min', 'year',
-        'country_code', 'genres', 'synopsis_short', 'director', 'cast_top', 'rating_avg', 'rating_count',
-        'theaters_count', 'theaters_url', 'trailer_available', 'scraped_at',
+        "movie_id", "release_date", "title", "filmaffinity_url", "poster_url", "duration_min", "year",
+        "country_code", "genres", "synopsis_short", "director", "cast_top", "rating_avg", "rating_count",
+        "theaters_count", "theaters_url", "trailer_available", "scraped_at",
     ]
-    sorted_rows = sorted(rows.values(), key=lambda r: (r.get('release_date', ''), r.get('title', '')))
-    with path.open('w', encoding='utf-8', newline='') as fh:
+    sorted_rows = sorted(rows.values(), key=lambda r: (r.get("release_date", ""), r.get("title", "")))
+    with path.open("w", encoding="utf-8", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=fields)
         writer.writeheader()
         writer.writerows(sorted_rows)
@@ -271,5 +341,5 @@ def main() -> None:
     print(f"Saved to: {CANONICAL_PATH}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
