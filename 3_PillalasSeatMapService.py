@@ -1,5 +1,7 @@
 import argparse
+import csv
 import json
+import os
 import re
 from datetime import datetime, timezone
 from html import unescape
@@ -19,6 +21,35 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) CinemaSchedulePlanner/1.0',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 }
+
+UPCOMING_CSV_PATH = os.path.join('0_data', 'filmAffinity_upcoming_releases.csv')
+
+
+def load_upcoming_releases(path=UPCOMING_CSV_PATH):
+    if not os.path.exists(path):
+        return []
+
+    rows = []
+    with open(path, 'r', encoding='utf-8', newline='') as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            parsed = dict(row)
+            parsed['duration_min'] = int(row['duration_min']) if row.get('duration_min') else None
+            parsed['year'] = int(row['year']) if row.get('year') else None
+            parsed['rating_avg'] = float(row['rating_avg']) if row.get('rating_avg') else None
+            parsed['rating_count'] = int(row['rating_count']) if row.get('rating_count') else None
+            parsed['theaters_count'] = int(row['theaters_count']) if row.get('theaters_count') else None
+            parsed['trailer_available'] = str(row.get('trailer_available', '')).lower() in ('1', 'true', 'yes')
+
+            for field in ('genres', 'director', 'cast_top'):
+                value = row.get(field)
+                try:
+                    parsed[field] = json.loads(value) if value else []
+                except json.JSONDecodeError:
+                    parsed[field] = []
+
+            rows.append(parsed)
+    return rows
 
 
 def extract_attr(tag, attr_name):
@@ -223,6 +254,11 @@ class SeatMapHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path in ('/api/upcoming-releases', '/upcoming-releases'):
+            releases = load_upcoming_releases()
+            self._send_json(200, {'rows': releases, 'count': len(releases)})
+            return
+
         if parsed.path not in ('/api/seatmap', '/seatmap'):
             self._send_json(404, {'error': 'Not found'})
             return

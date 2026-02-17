@@ -71,7 +71,7 @@ body {
 
 .view-toggle {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -359,6 +359,14 @@ a { color: #9ba8ff; }
   gap: 6px;
   color: #d6defd;
 }
+
+
+.upcoming-subtitle { color: var(--muted); margin-top: -8px; }
+.upcoming-groups { display: grid; gap: 14px; }
+.upcoming-day { padding: 12px; }
+.upcoming-day h3 { margin-top: 0; }
+.upcoming-cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.upcoming-card .poster-wrap { max-height: 380px; }
 
 .empty { padding: 18px; }
 
