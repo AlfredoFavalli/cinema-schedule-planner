@@ -10,6 +10,7 @@ This repository is organized by **process domains** and **data lifecycle**.
 - `apps/frontend/`: browser UI assets and frontend server helper.
 - `data/raw/`: source data directly collected from providers.
 - `data/interim/`: intermediate outputs between scraping and presentation.
+  - `data/interim/cinema_sessions/archive/{renoir,golem}` stores historical backup snapshots.
 - `data/processed/`: curated datasets for downstream use.
 - `data/outputs/`: final workflow outputs and exports.
 
@@ -23,6 +24,7 @@ This repository is organized by **process domains** and **data lifecycle**.
   - Outputs:
     - `data/interim/cinema_sessions/*.csv`
     - `data/interim/cinema_sessions/latest.json`
+    - archives moved to `data/interim/cinema_sessions/archive/{renoir,golem}`
     - `data/raw/film_affinity/upcoming_releases.csv`
 
 - **Run individual scrapers**
