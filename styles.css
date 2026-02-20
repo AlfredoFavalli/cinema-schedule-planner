@@ -387,12 +387,13 @@ a { color: #9ba8ff; }
   display: grid;
   place-items: center;
   background: #0f1630;
-  padding: 10px;
+  overflow: hidden;
+  padding: 0;
 }
 .upcoming-poster-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 .upcoming-card .content {
@@ -406,11 +407,15 @@ a { color: #9ba8ff; }
   margin: 0;
 }
 
+.upcoming-filters-panel { border-radius: 12px; padding: 8px 10px; }
+.upcoming-filters-panel summary { cursor: pointer; color: #d8e0ff; font-weight: 600; }
+.upcoming-filters-panel[open] summary { margin-bottom: 10px; }
+.upcoming-filters-body { display: grid; gap: 10px; }
+
 .upcoming-groups { display: grid; gap: 14px; }
 .upcoming-day { padding: 12px; }
 .upcoming-day h3 { margin-top: 0; }
 .upcoming-cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-.upcoming-card .poster-wrap { max-height: 380px; }
 
 .empty { padding: 18px; }
 

@@ -61,6 +61,8 @@ const state = {
   upcomingRows: [],
   upcomingFavorites: new Set(),
   collapsedUpcomingDates: new Set(),
+  upcomingFiltersExpanded: true,
+  sidebarScrollTop: 0,
   upcomingFilters: {
     dateFrom: '',
     dateTo: '',
@@ -697,6 +699,8 @@ function renderModal(modalMovie) {
 
 function render() {
   const root = document.getElementById('root')
+  const existingSidebar = document.querySelector('.sidebar')
+  if (existingSidebar) state.sidebarScrollTop = existingSidebar.scrollTop
   const { movieCards, scheduleByDayHour, favoritesCount, modalMovie } = computeViewModel()
   const { groupedRows, availableGenres, availableCountries, totalCount } = computeUpcomingViewModel()
 
@@ -780,29 +784,34 @@ function render() {
           </div>
 
           ${state.mainView === 'upcoming' ? `
-            <div class="row two-col">
-              <div><label>Upcoming date from</label><input id="upcomingDateFrom" type="date" value="${state.upcomingFilters.dateFrom}" /></div>
-              <div><label>Upcoming date to</label><input id="upcomingDateTo" type="date" value="${state.upcomingFilters.dateTo}" /></div>
-            </div>
-            <div class="row two-col">
-              <div><label>Genre</label><select id="upcomingGenre"><option value="all">All genres</option>${availableGenres.map((g) => `<option value="${g}">${g}</option>`).join('')}</select></div>
-              <div><label>Country</label><select id="upcomingCountry"><option value="all">All countries</option>${availableCountries.map((c) => `<option value="${c}">${c}</option>`).join('')}</select></div>
-            </div>
-            <div class="row two-col">
-              <div><label>Min rating</label><input id="upcomingMinRating" type="number" min="0" max="10" step="0.1" value="${state.upcomingFilters.minRating}" /></div>
-              <div><label>Min votes</label><input id="upcomingMinVotes" type="number" min="0" step="1" value="${state.upcomingFilters.minVotes}" /></div>
-            </div>
-            <div class="row two-col">
-              <div><label>Runtime min</label><input id="upcomingRuntimeMin" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMin}" /></div>
-              <div><label>Runtime max</label><input id="upcomingRuntimeMax" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMax}" /></div>
-            </div>
-            <div class="row two-col">
-              <div><label>Sort</label><select id="upcomingSortBy"><option value="rating_desc">Rating (high → low)</option><option value="rating_asc">Rating (low → high)</option><option value="title_asc">Title (A–Z)</option><option value="title_desc">Title (Z–A)</option></select></div>
-              <div><label>Upcoming favorites</label><button id="upcomingFavoritesOnly" class="icon-btn ${state.upcomingFilters.favoritesOnly ? 'active' : ''}">★ only</button></div>
-            </div>
-            <div class="row">
-              <button id="upcomingTheatersOnly" class="icon-btn ${state.upcomingFilters.theatersOnly ? 'active' : ''}">Only with Cines > 0</button>
-            </div>
+            <details class="upcoming-filters-panel panel" id="upcomingFiltersPanel" ${state.upcomingFiltersExpanded ? 'open' : ''}>
+              <summary>Upcoming release filters</summary>
+              <div class="upcoming-filters-body">
+                <div class="row two-col">
+                  <div><label>Upcoming date from</label><input id="upcomingDateFrom" type="date" value="${state.upcomingFilters.dateFrom}" /></div>
+                  <div><label>Upcoming date to</label><input id="upcomingDateTo" type="date" value="${state.upcomingFilters.dateTo}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Genre</label><select id="upcomingGenre"><option value="all">All genres</option>${availableGenres.map((g) => `<option value="${g}">${g}</option>`).join('')}</select></div>
+                  <div><label>Country</label><select id="upcomingCountry"><option value="all">All countries</option>${availableCountries.map((c) => `<option value="${c}">${c}</option>`).join('')}</select></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Min rating</label><input id="upcomingMinRating" type="number" min="0" max="10" step="0.1" value="${state.upcomingFilters.minRating}" /></div>
+                  <div><label>Min votes</label><input id="upcomingMinVotes" type="number" min="0" step="1" value="${state.upcomingFilters.minVotes}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Runtime min</label><input id="upcomingRuntimeMin" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMin}" /></div>
+                  <div><label>Runtime max</label><input id="upcomingRuntimeMax" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMax}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Sort</label><select id="upcomingSortBy"><option value="rating_desc">Rating (high → low)</option><option value="rating_asc">Rating (low → high)</option><option value="title_asc">Title (A–Z)</option><option value="title_desc">Title (Z–A)</option></select></div>
+                  <div><label>Upcoming favorites</label><button id="upcomingFavoritesOnly" class="icon-btn ${state.upcomingFilters.favoritesOnly ? 'active' : ''}">★ only</button></div>
+                </div>
+                <div class="row">
+                  <button id="upcomingTheatersOnly" class="icon-btn ${state.upcomingFilters.theatersOnly ? 'active' : ''}">Only with Cines > 0</button>
+                </div>
+              </div>
+            </details>
           ` : ''}
         </div>
       </aside>
@@ -829,6 +838,8 @@ function render() {
   if (document.getElementById('upcomingSortBy')) document.getElementById('upcomingSortBy').value = state.upcomingFilters.sortBy
 
   bindEvents()
+  const sidebarAfterRender = document.querySelector('.sidebar')
+  if (sidebarAfterRender) sidebarAfterRender.scrollTop = state.sidebarScrollTop
 }
 
 function bindEvents() {
@@ -875,6 +886,11 @@ function bindEvents() {
   document.querySelectorAll('[data-open-modal]').forEach((btn) => {
     btn.onclick = () => { state.modalMovieKey = btn.dataset.openModal; render() }
   })
+
+  const upcomingFiltersPanel = document.getElementById('upcomingFiltersPanel')
+  if (upcomingFiltersPanel) {
+    upcomingFiltersPanel.ontoggle = () => { state.upcomingFiltersExpanded = upcomingFiltersPanel.open }
+  }
 
   const closeModal = document.getElementById('closeModal')
   if (closeModal) closeModal.onclick = () => { state.modalMovieKey = null; render() }
