@@ -994,10 +994,10 @@ async function init() {
 
   const discoverLatestCsv = async (prefix) => {
     try {
-      const listingResp = await fetch('./_1_data/')
+      const listingResp = await fetch('../../data/interim/cinema_sessions/')
       if (!listingResp.ok) return null
       const html = await listingResp.text()
-      const pattern = new RegExp(`${prefix}_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}\.csv`, 'g')
+      const pattern = new RegExp(`${prefix}_[\\d]{4}-[\\d]{2}-[\\d]{2}_[\\d]{2}-[\\d]{2}\\.csv`, 'g')
       const matches = [...new Set([...html.matchAll(pattern)].map((m) => m[0]))]
       return matches.sort().at(-1) || null
     } catch {
@@ -1007,7 +1007,7 @@ async function init() {
 
   let manifest = {}
   try {
-    const manifestResp = await fetch('./_1_data/latest.json')
+    const manifestResp = await fetch('../../data/interim/cinema_sessions/latest.json')
     if (manifestResp.ok) manifest = await manifestResp.json()
   } catch {
     manifest = {}
@@ -1025,7 +1025,7 @@ async function init() {
 
     for (const csvFile of candidates) {
       try {
-        const response = await fetch(`./_1_data/${csvFile}`)
+        const response = await fetch(`../../data/interim/cinema_sessions/${csvFile}`)
         if (!response.ok) continue
         const csvText = await response.text()
         if (manifestFile && csvFile !== manifestFile) {
@@ -1048,10 +1048,10 @@ async function init() {
       const payload = await upcomingResp.json()
       upcomingRaw = payload.rows || []
     } else {
-      state.loadWarnings.push('Upcoming releases endpoint unavailable. Start 3_PillalasSeatMapService.py to enable the third dashboard view.')
+      state.loadWarnings.push('Upcoming releases endpoint unavailable. Start apps/services/seat_map_service.py to enable the third dashboard view.')
     }
   } catch {
-    state.loadWarnings.push('Upcoming releases endpoint unavailable. Start 3_PillalasSeatMapService.py to enable the third dashboard view.')
+    state.loadWarnings.push('Upcoming releases endpoint unavailable. Start apps/services/seat_map_service.py to enable the third dashboard view.')
   }
 
   state.upcomingRows = normalizeUpcomingRows(upcomingRaw)
