@@ -23,6 +23,9 @@ const SEATMAP_API_BASE = (() => {
   return 'http://127.0.0.1:8765'
 })()
 
+const UPCOMING_DEFAULT_MONTHS = 2
+const UPCOMING_API_URL = `${SEATMAP_API_BASE}/api/upcoming-releases`
+
 function buildSeatMapApiUrl(ticketUrl) {
   const encodedTicket = encodeURIComponent(ticketUrl)
   if (/^https?:\/\//i.test(SEATMAP_API_BASE)) {
@@ -54,6 +57,24 @@ const state = {
     error: '',
     data: null,
     sessionId: null,
+  },
+  upcomingRows: [],
+  upcomingFavorites: new Set(),
+  collapsedUpcomingDates: new Set(),
+  upcomingFiltersExpanded: true,
+  sidebarScrollTop: 0,
+  upcomingFilters: {
+    dateFrom: '',
+    dateTo: '',
+    genre: 'all',
+    country: 'all',
+    minRating: 0,
+    minVotes: 0,
+    runtimeMin: 0,
+    runtimeMax: 240,
+    theatersOnly: false,
+    favoritesOnly: false,
+    sortBy: 'rating_desc',
   },
 }
 
@@ -117,6 +138,52 @@ function releaseBucket(weeks) {
   if (weeks <= 2) return 'le2'
   if (weeks <= 4) return 'le4'
   return 'long_running'
+}
+
+function isoDate(dateObj) {
+  return dateObj.toISOString().slice(0, 10)
+}
+
+function addMonths(baseDate, months) {
+  const d = new Date(baseDate)
+  d.setMonth(d.getMonth() + months)
+  return d
+}
+
+function parseJsonArray(value) {
+  if (Array.isArray(value)) return value
+  if (!value) return []
+  try {
+    const parsed = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function normalizeUpcomingRows(rows) {
+  return rows.map((row, idx) => ({
+    id: `${row.movie_id || 'movie'}-${row.release_date || 'date'}-${idx}`,
+    upcomingKey: `${row.movie_id || ''}|${row.release_date || ''}`,
+    movieId: String(row.movie_id || ''),
+    releaseDate: row.release_date || '',
+    title: row.title || 'Unknown title',
+    filmaffinityUrl: row.filmaffinity_url || '',
+    posterUrl: row.poster_url || 'https://placehold.co/360x540?text=No+Poster',
+    durationMin: Number.isFinite(Number(row.duration_min)) ? Number(row.duration_min) : null,
+    year: Number.isFinite(Number(row.year)) ? Number(row.year) : null,
+    countryCode: (row.country_code || '').toUpperCase(),
+    genres: parseJsonArray(row.genres),
+    synopsisShort: row.synopsis_short || '',
+    director: parseJsonArray(row.director),
+    castTop: parseJsonArray(row.cast_top),
+    ratingAvg: Number.isFinite(Number(row.rating_avg)) ? Number(row.rating_avg) : null,
+    ratingCount: Number.isFinite(Number(row.rating_count)) ? Number(row.rating_count) : null,
+    theatersCount: Number.isFinite(Number(row.theaters_count)) ? Number(row.theaters_count) : null,
+    theatersUrl: row.theaters_url || '',
+    trailerAvailable: Boolean(row.trailer_available),
+    scrapedAt: row.scraped_at || '',
+  }))
 }
 
 function parseCSV(text) {
@@ -225,6 +292,20 @@ function loadFavorites() {
   } catch { state.favorites = new Set() }
 }
 
+
+function saveUpcomingFavorites() {
+  localStorage.setItem('cinema-upcoming-favorites-v1', JSON.stringify([...state.upcomingFavorites]))
+}
+
+function loadUpcomingFavorites() {
+  try {
+    const raw = localStorage.getItem('cinema-upcoming-favorites-v1')
+    if (!raw) return
+    const parsed = JSON.parse(raw)
+    if (Array.isArray(parsed)) state.upcomingFavorites = new Set(parsed)
+  } catch { state.upcomingFavorites = new Set() }
+}
+
 function moviePassesReleaseFilter(movie) {
   if (state.releaseFilter === 'all') return true
   if (state.releaseFilter === 'unknown') return movie.releaseCategory === 'unknown'
@@ -292,6 +373,51 @@ function computeViewModel() {
     scheduleByDayHour,
     favoritesCount: movieCards.filter((m) => state.favorites.has(m.movieKey)).length,
     modalMovie: state.modalMovieKey ? movieCards.find((m) => m.movieKey === state.modalMovieKey) : null,
+  }
+}
+
+function computeUpcomingViewModel() {
+  const f = state.upcomingFilters
+  const genres = new Set()
+  const countries = new Set()
+
+  state.upcomingRows.forEach((row) => {
+    row.genres.forEach((g) => genres.add(g))
+    if (row.countryCode) countries.add(row.countryCode)
+  })
+
+  const filtered = state.upcomingRows.filter((row) => (
+    (!f.dateFrom || row.releaseDate >= f.dateFrom)
+    && (!f.dateTo || row.releaseDate <= f.dateTo)
+    && (f.genre === 'all' || row.genres.includes(f.genre))
+    && (f.country === 'all' || row.countryCode === f.country)
+    && (row.durationMin == null || (row.durationMin >= f.runtimeMin && row.durationMin <= f.runtimeMax))
+    && ((row.ratingAvg ?? 0) >= f.minRating)
+    && ((row.ratingCount ?? 0) >= f.minVotes)
+    && (!f.theatersOnly || (row.theatersCount ?? 0) > 0)
+    && (!f.favoritesOnly || state.upcomingFavorites.has(row.upcomingKey))
+  ))
+
+  const sorters = {
+    rating_desc: (a, b) => ((b.ratingAvg ?? -1) - (a.ratingAvg ?? -1)) || a.title.localeCompare(b.title),
+    rating_asc: (a, b) => ((a.ratingAvg ?? 999) - (b.ratingAvg ?? 999)) || a.title.localeCompare(b.title),
+    title_asc: (a, b) => a.title.localeCompare(b.title),
+    title_desc: (a, b) => b.title.localeCompare(a.title),
+  }
+
+  const grouped = {}
+  filtered.forEach((row) => {
+    grouped[row.releaseDate] ||= []
+    grouped[row.releaseDate].push(row)
+  })
+
+  Object.values(grouped).forEach((list) => list.sort(sorters[f.sortBy] || sorters.rating_desc))
+
+  return {
+    groupedRows: Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)),
+    availableGenres: [...genres].sort((a, b) => a.localeCompare(b)),
+    availableCountries: [...countries].sort((a, b) => a.localeCompare(b)),
+    totalCount: filtered.length,
   }
 }
 
@@ -500,6 +626,52 @@ function renderSchedule(scheduleByDayHour) {
 }
 
 
+function renderUpcoming(groupedRows, totalCount) {
+  if (!groupedRows.length) return '<div class="empty panel"><h3>No upcoming releases match the filters.</h3><p>Try widening date, rating, or runtime constraints.</p></div>'
+
+  return `
+    <section>
+      <h2>Upcoming Releases</h2>
+      <p class="upcoming-subtitle">${totalCount} title${totalCount === 1 ? '' : 's'} in selected window</p>
+      <div class="upcoming-groups">
+        ${groupedRows.map(([releaseDate, list]) => {
+          const collapsed = state.collapsedUpcomingDates.has(releaseDate)
+          return `
+            <article class="upcoming-day panel">
+              <button class="upcoming-day-toggle" data-upcoming-day="${releaseDate}">
+                <span>${releaseDate}</span><small>${list.length} title${list.length === 1 ? '' : 's'} ${collapsed ? '▸' : '▾'}</small>
+              </button>
+              ${collapsed ? '' : `
+                <div class="cards upcoming-cards">
+                  ${list.map((m) => `
+                    <article class="card panel upcoming-card">
+                      <div class="poster-wrap upcoming-poster-wrap"><img src="${m.posterUrl}" alt="${m.title}" /></div>
+                      <div class="content">
+                        <div class="card-top">
+                          <h3>${m.title}</h3>
+                          <button class="favorite-btn ${state.upcomingFavorites.has(m.upcomingKey) ? 'is-favorite' : ''}" data-upcoming-favorite="${m.upcomingKey}" title="Toggle upcoming favorite">★</button>
+                        </div>
+                        <p class="meta">${m.year || 'Year n/a'} • ${m.durationMin || 'n/a'} min • ${m.countryCode || '??'}</p>
+                        <div class="tags">${m.genres.map((g) => `<span>${g}</span>`).join('')}</div>
+                        <p class="upcoming-synopsis">${m.synopsisShort || 'No synopsis available.'}</p>
+                        <div class="links">
+                          ${m.filmaffinityUrl ? `<a href="${m.filmaffinityUrl}" target="_blank" rel="noreferrer">Film page</a>` : ''}
+                          ${m.theatersUrl ? `<a href="${m.theatersUrl}" target="_blank" rel="noreferrer">Cines (${m.theatersCount ?? 0})</a>` : ''}
+                        </div>
+                        <p class="meta">Rating: ${m.ratingAvg ?? 'n/a'} (${m.ratingCount ?? 0} votes)</p>
+                      </div>
+                    </article>
+                  `).join('')}
+                </div>
+              `}
+            </article>
+          `
+        }).join('')}
+      </div>
+    </section>
+  `
+}
+
 function renderWarnings() {
   if (!state.loadWarnings.length) return ''
   return `
@@ -527,7 +699,10 @@ function renderModal(modalMovie) {
 
 function render() {
   const root = document.getElementById('root')
+  const existingSidebar = document.querySelector('.sidebar')
+  if (existingSidebar) state.sidebarScrollTop = existingSidebar.scrollTop
   const { movieCards, scheduleByDayHour, favoritesCount, modalMovie } = computeViewModel()
+  const { groupedRows, availableGenres, availableCountries, totalCount } = computeUpcomingViewModel()
 
   root.innerHTML = `
     ${state.sidebarHidden ? '<button id="showSidebarFloating" class="show-floating" title="Show sidebar">☰</button>' : ''}
@@ -542,6 +717,7 @@ function render() {
           <div class="view-toggle">
             <button class="toggle-btn ${state.mainView === 'catalog' ? 'active' : ''}" data-main-view="catalog">Film Catalog</button>
             <button class="toggle-btn ${state.mainView === 'schedule' ? 'active' : ''}" data-main-view="schedule">Schedule</button>
+            <button class="toggle-btn ${state.mainView === 'upcoming' ? 'active' : ''}" data-main-view="upcoming">Upcoming Releases</button>
           </div>
 
           <div class="row two-col">
@@ -606,6 +782,37 @@ function render() {
               <label class="icon-btn" title="Import favorites">⤒<input id="importFavorites" type="file" accept="application/json" /></label>
             </div>
           </div>
+
+          ${state.mainView === 'upcoming' ? `
+            <details class="upcoming-filters-panel panel" id="upcomingFiltersPanel" ${state.upcomingFiltersExpanded ? 'open' : ''}>
+              <summary>Upcoming release filters</summary>
+              <div class="upcoming-filters-body">
+                <div class="row two-col">
+                  <div><label>Upcoming date from</label><input id="upcomingDateFrom" type="date" value="${state.upcomingFilters.dateFrom}" /></div>
+                  <div><label>Upcoming date to</label><input id="upcomingDateTo" type="date" value="${state.upcomingFilters.dateTo}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Genre</label><select id="upcomingGenre"><option value="all">All genres</option>${availableGenres.map((g) => `<option value="${g}">${g}</option>`).join('')}</select></div>
+                  <div><label>Country</label><select id="upcomingCountry"><option value="all">All countries</option>${availableCountries.map((c) => `<option value="${c}">${c}</option>`).join('')}</select></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Min rating</label><input id="upcomingMinRating" type="number" min="0" max="10" step="0.1" value="${state.upcomingFilters.minRating}" /></div>
+                  <div><label>Min votes</label><input id="upcomingMinVotes" type="number" min="0" step="1" value="${state.upcomingFilters.minVotes}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Runtime min</label><input id="upcomingRuntimeMin" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMin}" /></div>
+                  <div><label>Runtime max</label><input id="upcomingRuntimeMax" type="number" min="0" max="300" value="${state.upcomingFilters.runtimeMax}" /></div>
+                </div>
+                <div class="row two-col">
+                  <div><label>Sort</label><select id="upcomingSortBy"><option value="rating_desc">Rating (high → low)</option><option value="rating_asc">Rating (low → high)</option><option value="title_asc">Title (A–Z)</option><option value="title_desc">Title (Z–A)</option></select></div>
+                  <div><label>Upcoming favorites</label><button id="upcomingFavoritesOnly" class="icon-btn ${state.upcomingFilters.favoritesOnly ? 'active' : ''}">★ only</button></div>
+                </div>
+                <div class="row">
+                  <button id="upcomingTheatersOnly" class="icon-btn ${state.upcomingFilters.theatersOnly ? 'active' : ''}">Only with Cines > 0</button>
+                </div>
+              </div>
+            </details>
+          ` : ''}
         </div>
       </aside>
 
@@ -615,7 +822,7 @@ function render() {
           <p>Personal planning dashboard with release-age intelligence and favorites sync.</p>
         </header>
         ${renderWarnings()}
-        ${state.mainView === 'catalog' ? renderCatalog(movieCards) : renderSchedule(scheduleByDayHour)}
+        ${state.mainView === 'catalog' ? renderCatalog(movieCards) : state.mainView === 'schedule' ? renderSchedule(scheduleByDayHour) : renderUpcoming(groupedRows, totalCount)}
       </main>
     </div>
     ${renderModal(modalMovie)}
@@ -626,8 +833,13 @@ function render() {
   document.getElementById('sortBy').value = state.sortBy
   document.getElementById('densityFilter').value = state.densityFilter
   document.getElementById('releaseFilter').value = state.releaseFilter
+  if (document.getElementById('upcomingGenre')) document.getElementById('upcomingGenre').value = state.upcomingFilters.genre
+  if (document.getElementById('upcomingCountry')) document.getElementById('upcomingCountry').value = state.upcomingFilters.country
+  if (document.getElementById('upcomingSortBy')) document.getElementById('upcomingSortBy').value = state.upcomingFilters.sortBy
 
   bindEvents()
+  const sidebarAfterRender = document.querySelector('.sidebar')
+  if (sidebarAfterRender) sidebarAfterRender.scrollTop = state.sidebarScrollTop
 }
 
 function bindEvents() {
@@ -653,9 +865,32 @@ function bindEvents() {
     }
   })
 
+
+  document.querySelectorAll('[data-upcoming-favorite]').forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation()
+      const key = btn.dataset.upcomingFavorite
+      state.upcomingFavorites.has(key) ? state.upcomingFavorites.delete(key) : state.upcomingFavorites.add(key)
+      saveUpcomingFavorites()
+      render()
+    }
+  })
+
+  document.querySelectorAll('[data-upcoming-day]').forEach((btn) => {
+    btn.onclick = () => {
+      const day = btn.dataset.upcomingDay
+      state.collapsedUpcomingDates.has(day) ? state.collapsedUpcomingDates.delete(day) : state.collapsedUpcomingDates.add(day)
+      render()
+    }
+  })
   document.querySelectorAll('[data-open-modal]').forEach((btn) => {
     btn.onclick = () => { state.modalMovieKey = btn.dataset.openModal; render() }
   })
+
+  const upcomingFiltersPanel = document.getElementById('upcomingFiltersPanel')
+  if (upcomingFiltersPanel) {
+    upcomingFiltersPanel.ontoggle = () => { state.upcomingFiltersExpanded = upcomingFiltersPanel.open }
+  }
 
   const closeModal = document.getElementById('closeModal')
   if (closeModal) closeModal.onclick = () => { state.modalMovieKey = null; render() }
@@ -713,6 +948,17 @@ function bindEvents() {
   document.getElementById('durMin').onchange = (e) => { state.durationRange[0] = Number(e.target.value); render() }
   document.getElementById('durMax').onchange = (e) => { state.durationRange[1] = Number(e.target.value); render() }
   document.getElementById('langQuery').oninput = (e) => { state.langQuery = e.target.value; render() }
+  if (document.getElementById('upcomingDateFrom')) document.getElementById('upcomingDateFrom').onchange = (e) => { state.upcomingFilters.dateFrom = e.target.value; render() }
+  if (document.getElementById('upcomingDateTo')) document.getElementById('upcomingDateTo').onchange = (e) => { state.upcomingFilters.dateTo = e.target.value; render() }
+  if (document.getElementById('upcomingGenre')) document.getElementById('upcomingGenre').onchange = (e) => { state.upcomingFilters.genre = e.target.value; render() }
+  if (document.getElementById('upcomingCountry')) document.getElementById('upcomingCountry').onchange = (e) => { state.upcomingFilters.country = e.target.value; render() }
+  if (document.getElementById('upcomingMinRating')) document.getElementById('upcomingMinRating').onchange = (e) => { state.upcomingFilters.minRating = Number(e.target.value) || 0; render() }
+  if (document.getElementById('upcomingMinVotes')) document.getElementById('upcomingMinVotes').onchange = (e) => { state.upcomingFilters.minVotes = Number(e.target.value) || 0; render() }
+  if (document.getElementById('upcomingRuntimeMin')) document.getElementById('upcomingRuntimeMin').onchange = (e) => { state.upcomingFilters.runtimeMin = Number(e.target.value) || 0; render() }
+  if (document.getElementById('upcomingRuntimeMax')) document.getElementById('upcomingRuntimeMax').onchange = (e) => { state.upcomingFilters.runtimeMax = Number(e.target.value) || 240; render() }
+  if (document.getElementById('upcomingTheatersOnly')) document.getElementById('upcomingTheatersOnly').onclick = () => { state.upcomingFilters.theatersOnly = !state.upcomingFilters.theatersOnly; render() }
+  if (document.getElementById('upcomingFavoritesOnly')) document.getElementById('upcomingFavoritesOnly').onclick = () => { state.upcomingFilters.favoritesOnly = !state.upcomingFilters.favoritesOnly; render() }
+  if (document.getElementById('upcomingSortBy')) document.getElementById('upcomingSortBy').onchange = (e) => { state.upcomingFilters.sortBy = e.target.value; render() }
 
   document.getElementById('exportFavorites').onclick = () => {
     const payload = { exported_at: new Date().toISOString(), favorites: [...state.favorites] }
@@ -743,6 +989,7 @@ function bindEvents() {
 
 async function init() {
   loadFavorites()
+  loadUpcomingFavorites()
   state.loadWarnings = []
 
   const discoverLatestCsv = async (prefix) => {
@@ -793,6 +1040,24 @@ async function init() {
     state.loadWarnings.push(`${sourceName} data files could not be loaded (${candidates.join(', ')}).`)
     return []
   }
+
+  let upcomingRaw = []
+  try {
+    const upcomingResp = await fetch(UPCOMING_API_URL)
+    if (upcomingResp.ok) {
+      const payload = await upcomingResp.json()
+      upcomingRaw = payload.rows || []
+    } else {
+      state.loadWarnings.push('Upcoming releases endpoint unavailable. Start 3_PillalasSeatMapService.py to enable the third dashboard view.')
+    }
+  } catch {
+    state.loadWarnings.push('Upcoming releases endpoint unavailable. Start 3_PillalasSeatMapService.py to enable the third dashboard view.')
+  }
+
+  state.upcomingRows = normalizeUpcomingRows(upcomingRaw)
+  const today = new Date()
+  state.upcomingFilters.dateFrom = isoDate(today)
+  state.upcomingFilters.dateTo = isoDate(addMonths(today, UPCOMING_DEFAULT_MONTHS))
 
   const [renoirRows, golemRows] = await Promise.all([
     loadSource('renoir', 'Renoir', 'cines_renoir'),
