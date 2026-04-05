@@ -209,11 +209,24 @@ def parse_duration_min(card: str) -> Optional[int]:
 
 def extract_movie_rows(group_html: str, release_date: str) -> List[Dict[str, object]]:
     rows = []
-    for card, _ in extract_div_blocks(group_html, ["row", "movie-card"]):
+    cards = extract_div_blocks(group_html, ["row", "movie-card"])
+    if not cards:
+        cards = extract_div_blocks(group_html, ["movie-card"])
+    if not cards:
+        # Last-resort fallback: any div carrying data-movie-id.
+        for m in re.finditer(r'<div\b[^>]*data-movie-id="\d+"[^>]*>', group_html, re.IGNORECASE):
+            end = find_matching_div_end(group_html, m.start())
+            cards.append((group_html[m.start():end], None))
+
+    for card, _ in cards:
         movie_id_m = re.search(r'data-movie-id="(\d+)"', card)
         movie_id = movie_id_m.group(1) if movie_id_m else ""
 
         title_m = re.search(r'<div class="fs-6 mc-title">.*?<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
+        if not title_m:
+            title_m = re.search(r'<a[^>]*href="([^"]*film\d+\.html[^"]*)"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
+        if not title_m:
+            title_m = re.search(r'<a[^>]*href="([^"]+)"[^>]*class="[^"]*mc-title[^"]*"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
         filmaffinity_url = urljoin(FA_BASE, title_m.group(1)) if title_m else None
         title = strip_html(title_m.group(2)) if title_m else ""
 
