@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -14,6 +15,53 @@ class CinesRenoirScraper:
         self.soup = None
         self.data = []
         self.film_cache = {}  # NEW: avoid re-scraping same film
+
+    @staticmethod
+    def _extract_duration(block):
+        text = block.get_text(" ", strip=True) if block else ""
+        match = re.search(r"Duraci[oó]n\s*(\d+)", text, flags=re.IGNORECASE)
+        return match.group(1) if match else None
+
+    @staticmethod
+    def _extract_room_from_anchor(anchor):
+        parent = anchor
+        for _ in range(4):  # climb a few levels to find nearby "sala"
+            if not parent:
+                break
+            text = parent.get_text(" ", strip=True)
+            room_match = re.search(r"sala\s*([A-Za-z0-9]+)", text, flags=re.IGNORECASE)
+            if room_match:
+                return room_match.group(1)
+            parent = parent.parent
+        return None
+
+    @staticmethod
+    def _find_movie_blocks(soup):
+        """Return the most likely list of movie blocks with showtimes."""
+        selectors = [
+            "div.my-account-content.mb-15.d-none.d-lg-block",
+            "div.my-account-content",
+            "div[class*='account-content']",
+        ]
+        for selector in selectors:
+            blocks = soup.select(selector)
+            if blocks:
+                return blocks
+
+        # Fallback: blocks that contain both a film link and at least one time button.
+        fallback_blocks = []
+        for candidate in soup.find_all(["div", "section", "article"]):
+            has_film_link = bool(candidate.find("a", href=lambda h: h and "/pelicula/" in h))
+            has_time_link = bool(
+                candidate.find(
+                    "a",
+                    href=True,
+                    string=lambda t: t and re.search(r"\b\d{1,2}:\d{2}\b", t.strip()),
+                )
+            )
+            if has_film_link and has_time_link:
+                fallback_blocks.append(candidate)
+        return fallback_blocks
 
     def fetch_film_details(self, film_relative_url):
         """Fetches and parses a film detail page. Cached by URL."""
@@ -67,12 +115,19 @@ class CinesRenoirScraper:
 
     def extract_movie_data(self, cine_name, date):
         """Extracts movie data from the HTML."""
-        movie_blocks = self.soup.find_all('div', class_='my-account-content mb-15 d-none d-lg-block')
+        movie_blocks = self._find_movie_blocks(self.soup)
+        if not movie_blocks:
+            print(f"⚠️ No movie blocks found for {cine_name} on {date}")
+            return
 
         for block in movie_blocks:
-            # Extract movie details
-            movie_element = block.find('div', class_='col-4 pl-0 pr-0')
-            title_element = movie_element.find('a')
+            # Extract movie details (layout can vary, so keep selectors broad)
+            movie_element = (
+                block.find('div', class_='col-4 pl-0 pr-0')
+                or block.find('div', class_='col-4')
+                or block
+            )
+            title_element = movie_element.find('a', href=lambda h: h and '/pelicula/' in h)
             film_relative_url = title_element["href"] if title_element else None
             title = title_element.text.strip() if title_element else None
 
@@ -81,15 +136,14 @@ class CinesRenoirScraper:
                 if film_relative_url
                 else {}
             )
-            director_element = movie_element.find('small', style="color:#748294")
-            duration_element = movie_element.find(string=lambda t: 'Duración' in t)
+            director_element = movie_element.find('small', string=lambda t: t and t.strip().lower().startswith('de '))
+            duration = self._extract_duration(movie_element)
 
-            title = title_element.text.strip() if title_element else None
             director = director_element.text.strip().replace('de ', '') if director_element else None
-            duration = duration_element.strip().replace('Duración ', '').replace(' minutos', '') if duration_element else None
 
-            # Extract showtimes
-            showtime_section = block.find('div', class_='col-7')
+            # Extract showtimes (try legacy slot containers first, then generic fallback)
+            showtime_entries = []
+            showtime_section = block.find('div', class_='col-7') or block
             time_slots = showtime_section.find_all('div', style="width: 80px; float: left; margin-right: 20px;")
 
             for slot in time_slots:
@@ -103,7 +157,31 @@ class CinesRenoirScraper:
 
                 room = room_element.text.strip().replace('sala ', '') if room_element else None
                 time = time_element.text.strip() if time_element else None
+                if time and re.search(r"\b\d{1,2}:\d{2}\b", time):
+                    showtime_entries.append((room, time, ticket_url))
 
+            if not showtime_entries:
+                candidate_links = showtime_section.find_all(
+                    "a",
+                    href=True,
+                    string=lambda t: t and re.search(r"\b\d{1,2}:\d{2}\b", t.strip()),
+                )
+                seen = set()
+                for time_element in candidate_links:
+                    time = time_element.get_text(strip=True)
+                    if not time:
+                        continue
+                    key = (time_element.get("href"), time)
+                    if key in seen:
+                        continue
+                    seen.add(key)
+
+                    ticket_href = time_element.get("href")
+                    ticket_url = urljoin("https://www.pillalas.com", ticket_href) if ticket_href else None
+                    room = self._extract_room_from_anchor(time_element)
+                    showtime_entries.append((room, time, ticket_url))
+
+            for room, time, ticket_url in showtime_entries:
                 row = {
                     'Pelicula': title,
                     'Director': director,
@@ -130,6 +208,10 @@ class CinesRenoirScraper:
 
     def save_to_csv(self, filename_prefix):
         """Saves the extracted data to a CSV file with today's date and time appended to the filename."""
+        if not self.data:
+            print("❌ Renoir scrape produced 0 rows. Skipping archive move, CSV write, and manifest update.")
+            return
+
         now = datetime.now().strftime('%Y-%m-%d_%H-%M')
         filename = f"{filename_prefix}_{now}.csv"
         data_dir = os.path.dirname(filename_prefix)  # Extract the directory from the prefix
