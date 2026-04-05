@@ -137,9 +137,49 @@ def extract_div_blocks(html: str, class_tokens: List[str], id_pattern: Optional[
 
 def extract_date_groups(html: str) -> List[Tuple[str, str]]:
     out: List[Tuple[str, str]] = []
-    for block, raw_id in extract_div_blocks(html, ["fa-content-card", "rdate-cat"], id_pattern=r"^date-\d{4}-\d{2}-\d{2}$"):
-        if raw_id:
-            out.append((raw_id.replace("date-", "", 1), block))
+    seen = set()
+
+    # Preferred path: old/known container classes with date in id.
+    for block, raw_id in extract_div_blocks(
+        html,
+        ["fa-content-card", "rdate-cat"],
+        id_pattern=r"^date-(\d{4}-\d{2}-\d{2}|\d{8})$",
+    ):
+        if not raw_id:
+            continue
+        release_raw = raw_id.replace("date-", "", 1)
+        if re.fullmatch(r"\d{8}", release_raw):
+            release_raw = f"{release_raw[0:4]}-{release_raw[4:6]}-{release_raw[6:8]}"
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", release_raw) and (release_raw, block) not in seen:
+            out.append((release_raw, block))
+            seen.add((release_raw, block))
+
+    if out:
+        return out
+
+    # Fallback path: accept any DIV with id="date-..." regardless of class tokens.
+    any_date_div_re = re.compile(
+        r'<div\b[^>]*\bid\s*=\s*"date-(\d{4}-\d{2}-\d{2}|\d{8})"[^>]*>',
+        re.IGNORECASE,
+    )
+    for match in any_date_div_re.finditer(html):
+        open_tag = match.group(0)
+        release_raw = match.group(1)
+        if re.fullmatch(r"\d{8}", release_raw):
+            release_raw = f"{release_raw[0:4]}-{release_raw[4:6]}-{release_raw[6:8]}"
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", release_raw):
+            continue
+        end = find_matching_div_end(html, match.start())
+        block = html[match.start():end]
+        key = (release_raw, block)
+        if key in seen:
+            continue
+        # Keep only blocks that look like they contain movies.
+        if "movie-card" not in block:
+            continue
+        out.append((release_raw, block))
+        seen.add(key)
+
     return out
 
 
