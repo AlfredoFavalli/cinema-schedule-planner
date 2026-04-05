@@ -3,6 +3,7 @@ import csv
 import json
 import re
 import shutil
+import sys
 from datetime import UTC, date, datetime
 from html import unescape
 from pathlib import Path
@@ -29,6 +30,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="FilmAffinity upcoming releases scraper.")
     parser.add_argument("--max-stale-scrolls", type=int, default=8)
     parser.add_argument("--backup-keep", type=int, default=15)
+    parser.add_argument("--months-ahead", type=int, default=6, help="Scrape window length in months from start date.")
+    parser.add_argument("--start-date", type=str, default=None, help="Optional start date in YYYY-MM-DD. Defaults to today.")
     parser.add_argument("--no-browser", action="store_true", help="Fallback to plain HTTP fetch (debug).")
     return parser.parse_args()
 
@@ -134,9 +137,49 @@ def extract_div_blocks(html: str, class_tokens: List[str], id_pattern: Optional[
 
 def extract_date_groups(html: str) -> List[Tuple[str, str]]:
     out: List[Tuple[str, str]] = []
-    for block, raw_id in extract_div_blocks(html, ["fa-content-card", "rdate-cat"], id_pattern=r"^date-\d{4}-\d{2}-\d{2}$"):
-        if raw_id:
-            out.append((raw_id.replace("date-", "", 1), block))
+    seen = set()
+
+    # Preferred path: old/known container classes with date in id.
+    for block, raw_id in extract_div_blocks(
+        html,
+        ["fa-content-card", "rdate-cat"],
+        id_pattern=r"^date-(\d{4}-\d{2}-\d{2}|\d{8})$",
+    ):
+        if not raw_id:
+            continue
+        release_raw = raw_id.replace("date-", "", 1)
+        if re.fullmatch(r"\d{8}", release_raw):
+            release_raw = f"{release_raw[0:4]}-{release_raw[4:6]}-{release_raw[6:8]}"
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", release_raw) and (release_raw, block) not in seen:
+            out.append((release_raw, block))
+            seen.add((release_raw, block))
+
+    if out:
+        return out
+
+    # Fallback path: accept any DIV with id="date-..." regardless of class tokens.
+    any_date_div_re = re.compile(
+        r'<div\b[^>]*\bid\s*=\s*"date-(\d{4}-\d{2}-\d{2}|\d{8})"[^>]*>',
+        re.IGNORECASE,
+    )
+    for match in any_date_div_re.finditer(html):
+        open_tag = match.group(0)
+        release_raw = match.group(1)
+        if re.fullmatch(r"\d{8}", release_raw):
+            release_raw = f"{release_raw[0:4]}-{release_raw[4:6]}-{release_raw[6:8]}"
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", release_raw):
+            continue
+        end = find_matching_div_end(html, match.start())
+        block = html[match.start():end]
+        key = (release_raw, block)
+        if key in seen:
+            continue
+        # Keep only blocks that look like they contain movies.
+        if "movie-card" not in block:
+            continue
+        out.append((release_raw, block))
+        seen.add(key)
+
     return out
 
 
@@ -166,11 +209,24 @@ def parse_duration_min(card: str) -> Optional[int]:
 
 def extract_movie_rows(group_html: str, release_date: str) -> List[Dict[str, object]]:
     rows = []
-    for card, _ in extract_div_blocks(group_html, ["row", "movie-card"]):
+    cards = extract_div_blocks(group_html, ["row", "movie-card"])
+    if not cards:
+        cards = extract_div_blocks(group_html, ["movie-card"])
+    if not cards:
+        # Last-resort fallback: any div carrying data-movie-id.
+        for m in re.finditer(r'<div\b[^>]*data-movie-id="\d+"[^>]*>', group_html, re.IGNORECASE):
+            end = find_matching_div_end(group_html, m.start())
+            cards.append((group_html[m.start():end], None))
+
+    for card, _ in cards:
         movie_id_m = re.search(r'data-movie-id="(\d+)"', card)
         movie_id = movie_id_m.group(1) if movie_id_m else ""
 
         title_m = re.search(r'<div class="fs-6 mc-title">.*?<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
+        if not title_m:
+            title_m = re.search(r'<a[^>]*href="([^"]*film\d+\.html[^"]*)"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
+        if not title_m:
+            title_m = re.search(r'<a[^>]*href="([^"]+)"[^>]*class="[^"]*mc-title[^"]*"[^>]*>(.*?)</a>', card, re.IGNORECASE | re.DOTALL)
         filmaffinity_url = urljoin(FA_BASE, title_m.group(1)) if title_m else None
         title = strip_html(title_m.group(2)) if title_m else ""
 
@@ -379,18 +435,48 @@ def write_canonical(path: Path, rows: Dict[Tuple[str, str], Dict[str, object]]) 
         writer.writerows(sorted_rows)
 
 
+def filter_rows_not_before(existing: Dict[Tuple[str, str], Dict[str, object]], start: date) -> Dict[Tuple[str, str], Dict[str, object]]:
+    """Drop entries older than the current scrape window start date."""
+    kept: Dict[Tuple[str, str], Dict[str, object]] = {}
+    for key, row in existing.items():
+        release_str = str(row.get("release_date", "")).strip()
+        try:
+            release_date = datetime.strptime(release_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if release_date >= start:
+            kept[key] = row
+    return kept
+
+
 def main() -> None:
     args = parse_args()
-    start = date.today()
-    end = add_months(start, 2)
+    if args.months_ahead < 1:
+        raise ValueError("--months-ahead must be >= 1")
+
+    start = datetime.strptime(args.start_date, "%Y-%m-%d").date() if args.start_date else date.today()
+    end = add_months(start, args.months_ahead)
 
     try:
         scraped = scrape_window(start, end, args.max_stale_scrolls, args.no_browser)
-    except (URLError, ModuleNotFoundError) as exc:
+    except ModuleNotFoundError as exc:
+        print(f"Scraper runtime warning: {exc}")
+        print("Retrying without browser automation...")
+        try:
+            scraped = scrape_window(start, end, args.max_stale_scrolls, no_browser=True)
+        except URLError as fallback_exc:
+            print(f"Scraper runtime warning: {fallback_exc}")
+            scraped = []
+    except URLError as exc:
         print(f"Scraper runtime warning: {exc}")
         scraped = []
 
+    if not scraped:
+        print("❌ No upcoming releases were scraped. Canonical CSV was left unchanged.")
+        sys.exit(1)
+
     existing = read_existing(CANONICAL_PATH)
+    existing = filter_rows_not_before(existing, start)
     added, updated = merge(existing, scraped)
     backup_file(CANONICAL_PATH, args.backup_keep)
     write_canonical(CANONICAL_PATH, existing)
