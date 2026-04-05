@@ -3,6 +3,7 @@ import csv
 import json
 import re
 import shutil
+import sys
 from datetime import UTC, date, datetime
 from html import unescape
 from pathlib import Path
@@ -29,6 +30,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="FilmAffinity upcoming releases scraper.")
     parser.add_argument("--max-stale-scrolls", type=int, default=8)
     parser.add_argument("--backup-keep", type=int, default=15)
+    parser.add_argument("--months-ahead", type=int, default=6, help="Scrape window length in months from start date.")
+    parser.add_argument("--start-date", type=str, default=None, help="Optional start date in YYYY-MM-DD. Defaults to today.")
     parser.add_argument("--no-browser", action="store_true", help="Fallback to plain HTTP fetch (debug).")
     return parser.parse_args()
 
@@ -379,18 +382,48 @@ def write_canonical(path: Path, rows: Dict[Tuple[str, str], Dict[str, object]]) 
         writer.writerows(sorted_rows)
 
 
+def filter_rows_not_before(existing: Dict[Tuple[str, str], Dict[str, object]], start: date) -> Dict[Tuple[str, str], Dict[str, object]]:
+    """Drop entries older than the current scrape window start date."""
+    kept: Dict[Tuple[str, str], Dict[str, object]] = {}
+    for key, row in existing.items():
+        release_str = str(row.get("release_date", "")).strip()
+        try:
+            release_date = datetime.strptime(release_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if release_date >= start:
+            kept[key] = row
+    return kept
+
+
 def main() -> None:
     args = parse_args()
-    start = date.today()
-    end = add_months(start, 2)
+    if args.months_ahead < 1:
+        raise ValueError("--months-ahead must be >= 1")
+
+    start = datetime.strptime(args.start_date, "%Y-%m-%d").date() if args.start_date else date.today()
+    end = add_months(start, args.months_ahead)
 
     try:
         scraped = scrape_window(start, end, args.max_stale_scrolls, args.no_browser)
-    except (URLError, ModuleNotFoundError) as exc:
+    except ModuleNotFoundError as exc:
+        print(f"Scraper runtime warning: {exc}")
+        print("Retrying without browser automation...")
+        try:
+            scraped = scrape_window(start, end, args.max_stale_scrolls, no_browser=True)
+        except URLError as fallback_exc:
+            print(f"Scraper runtime warning: {fallback_exc}")
+            scraped = []
+    except URLError as exc:
         print(f"Scraper runtime warning: {exc}")
         scraped = []
 
+    if not scraped:
+        print("❌ No upcoming releases were scraped. Canonical CSV was left unchanged.")
+        sys.exit(1)
+
     existing = read_existing(CANONICAL_PATH)
+    existing = filter_rows_not_before(existing, start)
     added, updated = merge(existing, scraped)
     backup_file(CANONICAL_PATH, args.backup_keep)
     write_canonical(CANONICAL_PATH, existing)
