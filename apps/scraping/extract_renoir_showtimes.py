@@ -76,8 +76,14 @@ class CinesRenoirScraper:
             raise Exception(f"Failed to fetch page for {date}: {response.status_code}")
 
         self.soup = BeautifulSoup(response.content, 'html.parser')
-        if not self.soup.select_one('a[href*="/pelicula/"], a[href*="/pase/"], a[href*="pillalas.com/pase"]'):
-            raise Exception(f"Fetched {full_url}, but no Renoir showtime markup was found")
+        has_showtime_markup = self.soup.select_one(
+            'a[href*="/pelicula/"], a[href*="/pase/"], a[href*="pillalas.com/pase"]'
+        )
+        if not has_showtime_markup:
+            print(f"No Renoir showtimes found for {date}; skipping {full_url}")
+            return False
+
+        return True
 
     def _clean_text(self, value):
         return re.sub(r'\s+', ' ', value or '').strip()
@@ -169,8 +175,8 @@ class CinesRenoirScraper:
             for i in range(self.days_in_advance + 1):
                 date = (today + timedelta(days=i)).strftime('%Y-%m-%d')
                 print(f"Scraping data for {cine_name} on {date}...")
-                self.fetch_page(url, date)
-                self.extract_movie_data(cine_name, date)
+                if self.fetch_page(url, date):
+                    self.extract_movie_data(cine_name, date)
 
     def save_to_csv(self, filename_prefix):
         """Saves the extracted data to a CSV file with today's date and time appended to the filename."""
