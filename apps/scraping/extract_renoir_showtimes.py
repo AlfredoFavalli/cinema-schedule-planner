@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -14,6 +15,7 @@ class CinesRenoirScraper:
         self.soup = None
         self.data = []
         self.film_cache = {}  # NEW: avoid re-scraping same film
+        self._seen_rows = set()
 
     def fetch_film_details(self, film_relative_url):
         """Fetches and parses a film detail page. Cached by URL."""
@@ -21,7 +23,12 @@ class CinesRenoirScraper:
             return self.film_cache[film_relative_url]
 
         film_url = urljoin("https://www.cinesrenoir.com", film_relative_url)
-        r = requests.get(film_url)
+        r = requests.get(film_url, headers={
+            'User-Agent': (
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
+                '(KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+            )
+        }, timeout=30)
         if r.status_code != 200:
             return {}
 
@@ -59,50 +66,87 @@ class CinesRenoirScraper:
     def fetch_page(self, url, date):
         """Fetches the webpage content for a specific date and parses it with BeautifulSoup."""
         full_url = f"{url}?fecha={date}"
-        response = requests.get(full_url)
-        if response.status_code == 200:
-            self.soup = BeautifulSoup(response.content, 'html.parser')
-        else:
+        response = requests.get(full_url, headers={
+            'User-Agent': (
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
+                '(KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+            )
+        }, timeout=30)
+        if response.status_code != 200:
             raise Exception(f"Failed to fetch page for {date}: {response.status_code}")
+
+        self.soup = BeautifulSoup(response.content, 'html.parser')
+        if not self.soup.select_one('a[href*="/pelicula/"], a[href*="/pase/"], a[href*="pillalas.com/pase"]'):
+            raise Exception(f"Fetched {full_url}, but no Renoir showtime markup was found")
+
+    def _clean_text(self, value):
+        return re.sub(r'\s+', ' ', value or '').strip()
+
+    def _extract_duration(self, block):
+        duration_text = block.find(string=re.compile(r'Duración\s+\d+', re.I))
+        if not duration_text:
+            return None
+        match = re.search(r'Duración\s+(\d+)', self._clean_text(duration_text), re.I)
+        return match.group(1) if match else None
+
+    def _extract_director(self, movie_element, block):
+        director_element = movie_element.find('small', style=lambda value: value and '#748294' in value)
+        if director_element:
+            return self._clean_text(director_element.get_text()).removeprefix('de ')
+
+        director_text = block.find(string=re.compile(r'^\s*de\s+\S+', re.I))
+        if director_text:
+            return re.sub(r'^de\s+', '', self._clean_text(director_text), flags=re.I)
+        return None
+
+    def _extract_room(self, slot):
+        room_text = slot.find(string=re.compile(r'sala\s*\d+', re.I))
+        if not room_text:
+            return None
+        match = re.search(r'sala\s*(\d+)', self._clean_text(room_text), re.I)
+        return match.group(1).zfill(2) if match else None
+
+    def _extract_showtime_slots(self, block):
+        links = block.select('a[href*="/pase/"], a[href*="pillalas.com/pase"], a.btn.btn-primary')
+        for link in links:
+            time_text = self._clean_text(link.get_text())
+            if not re.fullmatch(r'\d{1,2}:\d{2}', time_text):
+                continue
+
+            slot = link.find_parent('div') or link.parent
+            yield slot, link
 
     def extract_movie_data(self, cine_name, date):
         """Extracts movie data from the HTML."""
-        movie_blocks = self.soup.find_all('div', class_='my-account-content mb-15 d-none d-lg-block')
+        movie_blocks = self.soup.select('div.my-account-content.mb-15')
+        if not movie_blocks:
+            movie_blocks = [link.find_parent('div', class_=lambda c: c and 'my-account-content' in c) for link in self.soup.select('a[href*="/pelicula/"]')]
+            movie_blocks = [block for block in movie_blocks if block]
 
         for block in movie_blocks:
-            # Extract movie details
-            movie_element = block.find('div', class_='col-4 pl-0 pr-0')
-            title_element = movie_element.find('a')
-            film_relative_url = title_element["href"] if title_element else None
-            title = title_element.text.strip() if title_element else None
+            movie_element = block.select_one('div.col-4.pl-0.pr-0') or block
+            title_element = movie_element.select_one('a[href*="/pelicula/"]') or movie_element.find('a')
+            film_relative_url = title_element.get('href') if title_element else None
+            title = self._clean_text(title_element.get_text()) if title_element else None
+            if not title:
+                continue
 
-            film_details = (
-                self.fetch_film_details(film_relative_url)
-                if film_relative_url
-                else {}
-            )
-            director_element = movie_element.find('small', style="color:#748294")
-            duration_element = movie_element.find(string=lambda t: 'Duración' in t)
+            film_details = self.fetch_film_details(film_relative_url) if film_relative_url else {}
+            director = self._extract_director(movie_element, block)
+            duration = self._extract_duration(block)
 
-            title = title_element.text.strip() if title_element else None
-            director = director_element.text.strip().replace('de ', '') if director_element else None
-            duration = duration_element.strip().replace('Duración ', '').replace(' minutos', '') if duration_element else None
-
-            # Extract showtimes
-            showtime_section = block.find('div', class_='col-7')
-            time_slots = showtime_section.find_all('div', style="width: 80px; float: left; margin-right: 20px;")
-
-            for slot in time_slots:
-                room_element = slot.find('span', style="font-size:12px")
-                time_element = slot.find('a', class_='btn btn-primary')
+            for slot, time_element in self._extract_showtime_slots(block):
                 ticket_url = (
                     urljoin("https://www.pillalas.com", time_element.get('href'))
                     if time_element and time_element.get('href')
                     else None
                 )
-
-                room = room_element.text.strip().replace('sala ', '') if room_element else None
-                time = time_element.text.strip() if time_element else None
+                room = self._extract_room(slot)
+                time = self._clean_text(time_element.get_text()) if time_element else None
+                key = (title, room, time, date, cine_name, ticket_url)
+                if key in self._seen_rows:
+                    continue
+                self._seen_rows.add(key)
 
                 row = {
                     'Pelicula': title,
@@ -134,6 +178,9 @@ class CinesRenoirScraper:
         filename = f"{filename_prefix}_{now}.csv"
         data_dir = os.path.dirname(filename_prefix)  # Extract the directory from the prefix
         base_prefix = os.path.basename(filename_prefix)  # Extract the actual prefix without directories
+
+        if not self.data:
+            raise RuntimeError('Renoir scraper extracted 0 rows; refusing to overwrite the latest CSV with an empty file')
 
         # Ensure the archive directory exists
         archive_dir = os.path.join(data_dir, 'archive', 'renoir')
