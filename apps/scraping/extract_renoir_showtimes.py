@@ -42,64 +42,81 @@ class CinesRenoirScraper:
                 if unicodedata.category(char) != 'Mn'
             )
 
-        detail_labels = {
-            "direccion",
-            "duracion",
-            "calificacion",
-            "idioma original",
-            "estreno",
-            "interpretes",
-            "sinopsis",
+        label_to_column = {
+            "calificacion": "Calificación",
+            "idioma original": "Idioma_Original",
+            "estreno": "Estreno",
+            "interpretes": "Intérpretes",
+            "sinopsis": "Sinopsis",
         }
 
-        def is_detail_label(value):
-            return normalize_label(value) in detail_labels
+        def clean_detail_text(value):
+            text = self._clean_text(value)
+            text = re.sub(r'\[\+\s*ver[^\]]*\]', '', text, flags=re.I)
+            return self._clean_text(text) or None
 
-        def get_text(label):
-            """Return the value following a detail label on Renoir film pages.
+        def get_element_text(element):
+            if not element:
+                return None
 
-            Renoir repeats some detail sections for desktop/mobile layouts and
-            the label/value markup varies by field. Labels are usually headings,
-            but the value may be in the next sibling, a nested paragraph, or a
-            nearby text node. Match labels by normalized text and then collect
-            text until the next known detail label.
-            """
-            normalized_label = normalize_label(label)
-            label_element = soup.find(
-                lambda tag: tag.name in {"h1", "h2", "h3", "h4", "h5", "h6", "strong", "b", "dt"}
-                and normalize_label(tag.get_text(" ", strip=True)) == normalized_label
-            )
+            # Work on a detached fragment so removing labels/buttons does not
+            # mutate the soup used by subsequent field extraction.
+            fragment = BeautifulSoup(str(element), "html.parser")
+            for unwanted in fragment.select("p.detalle-label, a, button, script, style"):
+                unwanted.extract()
+            return clean_detail_text(fragment.get_text(" ", strip=True))
+
+        def get_following_value(label_element):
             if not label_element:
                 return None
 
-            parts = []
             for sibling in label_element.next_siblings:
                 text = self._clean_text(
                     sibling.get_text(" ", strip=True)
                     if hasattr(sibling, "get_text")
                     else str(sibling)
                 )
-                if not text or text.startswith('[+ ver'):
-                    continue
-                if is_detail_label(text):
-                    break
-                parts.append(text)
-                if normalized_label not in {"interpretes", "sinopsis"}:
-                    break
+                value = clean_detail_text(text)
+                if value:
+                    return value
+            return get_element_text(label_element.parent)
 
-            if not parts:
-                for element in label_element.find_all_next(["p", "div", "span"], limit=8):
-                    text = self._clean_text(element.get_text(" ", strip=True))
-                    if not text or text.startswith('[+ ver'):
-                        continue
-                    if is_detail_label(text):
-                        break
-                    parts.append(text)
-                    if normalized_label not in {"interpretes", "sinopsis"}:
-                        break
+        def get_long_detail(block, complete_selector):
+            # Desktop descriptions are not truncated. On mobile, Renoir keeps
+            # the full text in hidden "*-completa" blocks and renders a short
+            # teaser plus a "[+ ver ...]" expander separately.
+            for selector in (".d-none.d-md-block", complete_selector):
+                value = get_element_text(block.select_one(selector))
+                if value:
+                    return value
+            return get_following_value(block.select_one("p.detalle-label"))
 
-            value = self._clean_text(" ".join(parts))
-            return value or None
+        detail_values = {
+            "Idioma_Original": None,
+            "Calificación": None,
+            "Estreno": None,
+            "Intérpretes": None,
+            "Sinopsis": None,
+        }
+        detail_container = soup.select_one("div.single_product_desc") or soup
+        for block in detail_container.select("div.short_overview.mb-4"):
+            label_element = block.select_one("p.detalle-label")
+            if not label_element:
+                continue
+
+            column = label_to_column.get(normalize_label(label_element.get_text(" ", strip=True)))
+            if not column:
+                continue
+
+            if column == "Intérpretes":
+                value = get_long_detail(block, ".interpretes-completa")
+            elif column == "Sinopsis":
+                value = get_long_detail(block, ".sinopsis-completa")
+            else:
+                value = get_following_value(label_element)
+
+            if value and (not detail_values[column] or len(value) > len(detail_values[column])):
+                detail_values[column] = value
 
         # Poster
         poster_img = soup.select_one(".single_product_thumb img")
@@ -112,11 +129,11 @@ class CinesRenoirScraper:
         details = {
             "Film_URL": film_url,
             "Poster_URL": poster_url,
-            "Idioma_Original": get_text("Idioma original"),
-            "Calificación": get_text("Calificación"),
-            "Estreno": get_text("Estreno"),
-            "Intérpretes": get_text("Intérpretes"),
-            "Sinopsis": get_text("Sinopsis"),
+            "Idioma_Original": detail_values["Idioma_Original"],
+            "Calificación": detail_values["Calificación"],
+            "Estreno": detail_values["Estreno"],
+            "Intérpretes": detail_values["Intérpretes"],
+            "Sinopsis": detail_values["Sinopsis"],
         }
 
         self.film_cache[film_relative_url] = details
